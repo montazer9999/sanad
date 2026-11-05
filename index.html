@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="h-full">
+<html lang="ar" dir="rtl" class="h-full dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة سَنَد التعليمية - إعداد الأستاذ منتظر حميد</title>
+  <title>منصة سَنَد الملكية - إعداد الأستاذ منتظر حميد</title>
   <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="theme-color" content="#090d16">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -30,8 +30,23 @@
             brand: {
               50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc',
               400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca',
-              800: '#3730a3', 900: '#312e81'
+              800: '#3730a3', 900: '#312e81', 950: '#0f172a'
+            },
+            royal: {
+              dark: '#080c14',
+              card: '#0f172a',
+              cardLight: '#ffffff',
+              border: '#1e293b',
+              gold: '#f59e0b',
+              goldLight: '#fbbf24',
+              goldDark: '#d97706',
+              accent: '#6366f1'
             }
+          },
+          boxShadow: {
+            'glow-gold': '0 0 35px -5px rgba(245, 158, 11, 0.25)',
+            'glow-indigo': '0 0 35px -5px rgba(99, 102, 241, 0.3)',
+            'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
           }
         }
       }
@@ -42,6 +57,24 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
     ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.5); border-radius: 9999px; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .light .glass-panel {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .royal-gradient-bg {
+      background: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #1e1b4b 100%);
+    }
     @media print {
       body * { visibility: hidden; }
       #printArea, #printArea * { visibility: visible; }
@@ -50,232 +83,251 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col transition-colors duration-300 selection:bg-brand-500 selection:text-white">
 
-  <!-- Toast Notification Container -->
+  <!-- Floating Toast Notification -->
   <div id="toastContainer" class="fixed top-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm no-print">
+  <!-- ULTRA-LUXURY TOP BAR -->
+  <header class="sticky top-0 z-40 bg-[#080c14]/90 backdrop-blur-xl border-b border-slate-800 shadow-2xl no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Logo & Branding with Montazer Hameed -->
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Royal Brand Logo & Signature -->
+        <div class="flex items-center gap-3.5">
+          <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-brand-600 to-indigo-500 p-0.5 shadow-glow-gold flex items-center justify-center">
+            <div class="w-full h-full bg-[#080c14] rounded-[14px] flex items-center justify-center text-amber-400">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <span class="absolute -top-1 -right-1 text-xs">👑</span>
           </div>
+
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-brand-600 via-indigo-600 to-amber-500 dark:from-brand-400 dark:to-amber-300">مَنَصّة سَنَد</span>
-              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 font-extrabold border border-amber-300 dark:border-amber-700">
-                إعداد: أ. منتظر حميد
+              <span class="text-2xl font-black tracking-tight gold-gradient-text drop-shadow">مَنَصّة سَنَد</span>
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-brand-500/20 text-amber-300 font-extrabold border border-amber-500/30 flex items-center gap-1 shadow-sm">
+                <span>✨</span> إعداد الأستاذ منتظر حميد
               </span>
             </div>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400">المنظومة المدرسية الذكية الشاملة لجميع المواد والصفوف والشعب</p>
+            <p class="text-[11px] text-slate-400 font-semibold tracking-wide">المنظومة التعليمية الملكية الشاملة لجميع المواد والصفوف</p>
           </div>
         </div>
 
-        <!-- Controls: PWA, Audio, Theme, Backup, WhatsApp Support -->
-        <div class="flex items-center gap-2">
-          <!-- WhatsApp Contact Button -->
-          <a href="https://wa.me/9647732997337" target="_blank" title="تواصل ودعم فني واتساب: 07732997337" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
-            <span>💬</span>
-            <span class="hidden sm:inline">الدعم: 07732997337</span>
+        <!-- Quick Access Actions: Support, PWA, Sound, Theme, Database -->
+        <div class="flex items-center gap-2.5">
+          <!-- WhatsApp Support Button -->
+          <a href="https://wa.me/9647732997337" target="_blank" title="دعم فني واستفسار: 07732997337" class="relative group px-3.5 py-2 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-black transition-all duration-300 shadow-lg shadow-emerald-900/30 flex items-center gap-2">
+            <span class="text-sm">💬</span>
+            <span class="hidden sm:inline">الدعم المباشر: 07732997337</span>
           </a>
 
           <!-- PWA Install Button -->
-          <button id="pwaInstallBtn" class="hidden px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+          <button id="pwaInstallBtn" class="hidden px-3.5 py-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs shadow-glow-indigo transition flex items-center gap-1.5 animate-pulse">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             <span>تثبيت التطبيق</span>
           </button>
 
           <!-- Audio Toggle -->
-          <button id="soundToggleBtn" title="كتم / تشغيل المؤثرات الصوتية" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-            <svg id="soundIconOn" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+          <button id="soundToggleBtn" title="كتم / تشغيل المؤثرات الصوتية" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 transition shadow">
+            <svg id="soundIconOn" class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
             <svg id="soundIconOff" class="w-5 h-5 hidden text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
           </button>
 
           <!-- Theme Toggle -->
-          <button id="themeToggleBtn" title="تبديل الوضع الليلي / النهاري" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+          <button id="themeToggleBtn" title="تبديل النمط الليلي / الفاتح" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 transition shadow">
             <svg id="themeIconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-            <svg id="themeIconMoon" class="w-5 h-5 block dark:hidden text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            <svg id="themeIconMoon" class="w-5 h-5 block dark:hidden text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
           </button>
 
           <!-- Database Backup / Reset -->
-          <button id="dbManageBtn" title="النسخ الاحتياطي وإدارة البيانات" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+          <button id="dbManageBtn" title="النسخ الاحتياطي وإدارة البيانات" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-indigo-400 hover:text-indigo-300 border border-slate-700/80 transition shadow">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
-      <nav class="flex space-x-1 space-x-reverse overflow-x-auto py-2 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm font-bold no-scrollbar">
-        <button data-tab="dashboard" class="nav-tab active flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+      <!-- Segmented Luxury Tabs -->
+      <nav class="flex space-x-1.5 space-x-reverse overflow-x-auto py-2.5 border-t border-slate-800/80 text-xs sm:text-sm font-black no-scrollbar">
+        <button data-tab="dashboard" class="nav-tab active flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap bg-gradient-to-r from-amber-500/20 to-brand-600/30 text-amber-300 border border-amber-500/30 shadow-sm">
           <span>📊</span> لوحة التحكم
         </button>
-        <button data-tab="classManager" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>🏫</span> إدارة الصفوف والشعب (حتى 15 شعبة)
+        <button data-tab="classManager" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>🏫</span> إدارة الصفوف والمواد (حتى 15 شعبة)
         </button>
-        <button data-tab="studentsManager" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>👥</span> إدخال وتعديل الطلاب
+        <button data-tab="studentsManager" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>👥</span> إدخال ولصق الطلاب
         </button>
-        <button data-tab="attendance" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>✅</span> رصد الحضور والغياب
+        <button data-tab="attendance" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>✅</span> رصد الحضور
         </button>
-        <button data-tab="gradebook" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>📝</span> سجل الدرجات والتقويم
+        <button data-tab="gradebook" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>📝</span> دفتر الدرجات والتقويم
         </button>
-        <button data-tab="followupRegister" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>📋</span> سجل المتابعة التخصصي
+        <button data-tab="followupRegister" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>📋</span> سجل المتابعة اليومي
         </button>
-        <button data-tab="annualPlan" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>📅</span> الخطة السنوية والفصلية
+        <button data-tab="annualPlan" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>📅</span> الخطة السنوية
         </button>
-        <button data-tab="planner" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>📑</span> تحضير الدرس اليومي
+        <button data-tab="planner" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>📑</span> تحضير الدرس
         </button>
-        <button data-tab="adminTimetable" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <span>🏛️</span> جدول حصص الإدارة والمدرس
+        <button data-tab="adminTimetable" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
+          <span>🏛️</span> جدول الإدارة والمدرس
         </button>
-        <button data-tab="quiz" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <button data-tab="quiz" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
           <span>❓</span> صانع الاختبارات
         </button>
-        <button data-tab="tools" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <button data-tab="tools" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
           <span>🎯</span> أدوات الصف (القرعة والمؤقت)
         </button>
-        <button data-tab="parentMsgs" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <button data-tab="parentMsgs" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 whitespace-nowrap text-slate-400 hover:text-white hover:bg-slate-800/60">
           <span>✉️</span> رسائل أولياء الأمور
         </button>
       </nav>
     </div>
   </header>
 
-  <!-- Main View Container -->
+  <!-- MAIN VIEWPORT -->
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
     <!-- VIEW 1: DASHBOARD -->
-    <section id="viewDashboard" class="tab-view block space-y-6">
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-800 via-indigo-700 to-amber-600 text-white p-6 sm:p-10 shadow-2xl">
+    <section id="viewDashboard" class="tab-view block space-y-8">
+      
+      <!-- Royal Hero Spotlight -->
+      <div class="relative overflow-hidden rounded-3xl royal-gradient-bg p-8 sm:p-12 border border-slate-700/80 shadow-2xl">
         <div class="relative z-10 max-w-3xl">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur text-xs font-extrabold mb-4 border border-white/25">
-            <span class="text-amber-300">⭐</span>
-            <span>إعداد الأستاذ منتظر حميد | الدعم والاستفسار: 07732997337</span>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-amber-500/40 text-amber-300 text-xs font-black mb-5 shadow-glow-gold">
+            <span>👑</span>
+            <span>المنظومة الرقمية الكبرى | إعداد: الأستاذ منتظر حميد</span>
           </div>
-          <h1 class="text-2xl sm:text-4xl font-black mb-3 leading-tight tracking-tight">
-            مَنَصّة سَنَد المدرسية المرنة
+          <h1 class="text-3xl sm:text-5xl font-black mb-4 leading-tight tracking-tight">
+            إدارة تعليمية احترافية <br>
+            <span class="gold-gradient-text">بأعلى درجات الفخامة والإتقان</span>
           </h1>
-          <p class="text-indigo-100 text-sm sm:text-base mb-6 leading-relaxed">
-            المنصة مصممة بالكامل لتخدمك أنت كمعلم جديد أو إدارة: أضف مادتك وصفوفك وشعبك الخاصة (حتى 15 شعبة لكل صف)، أدخل أسماء طلابك دفعة واحدة، وولد الخطط والجداول وسجلات المتابعة وفق حاجتك تماماً.
+          <p class="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed font-semibold">
+            نظام متكامل ومفتوح مصمم لخدمة المعلم والإدارة: أدخل صفوفك ومادتك وأنشئ حتى 15 شعبة، والصق أسماء طلابك بثانية واحدة، لتتولد تلقائياً سجلات المتابعة والخطط والجداول والاختبارات المنسقة.
           </p>
-          <div class="flex flex-wrap gap-3">
-            <button id="heroAddClassBtn" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black rounded-xl shadow-lg transition text-sm flex items-center gap-2">
-              <span>➕</span> إضافة صف وشعب جديدة
+          <div class="flex flex-wrap gap-3.5">
+            <button id="heroAddClassBtn" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-2xl shadow-glow-gold transition-all duration-300 transform active:scale-95 text-sm flex items-center gap-2">
+              <span>➕</span> إضافة صف ومادة وشعب جديدة
             </button>
-            <button id="heroAddStudentsBtn" class="px-4 py-2.5 bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold rounded-xl transition text-sm flex items-center gap-2">
-              <span>👥</span> إدخال أسماء الطلاب
+            <button id="heroAddStudentsBtn" class="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 transition text-sm flex items-center gap-2">
+              <span>👥</span> لصق وتسجيل الطلاب
             </button>
-            <button id="heroTakeAttBtn" class="px-4 py-2.5 bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold rounded-xl transition text-sm flex items-center gap-2">
-              <span>✅</span> رصد حضور الشعبة الآن
+            <button id="heroTakeAttBtn" class="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 transition text-sm flex items-center gap-2">
+              <span>✅</span> رصد الحضور الآن
             </button>
           </div>
         </div>
-        <div class="absolute -left-12 -bottom-12 w-80 h-80 rounded-full bg-amber-400/20 blur-3xl pointer-events-none"></div>
+
+        <!-- Glowing Decorative Orbs -->
+        <div class="absolute -left-10 -bottom-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute right-10 -top-10 w-80 h-80 rounded-full bg-brand-600/15 blur-3xl pointer-events-none"></div>
       </div>
 
-      <!-- Quick Metrics Cards -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">عدد الصفوف المضافة</p>
-            <h3 id="dashClassCount" class="text-2xl font-black text-slate-800 dark:text-slate-100 mt-1">0 صفوف</h3>
-            <span class="text-[11px] text-brand-600 dark:text-brand-400 font-bold">مع كافة الشعب</span>
+      <!-- Live Counters Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="glass-panel rounded-2xl p-6 shadow-xl border border-slate-800 hover:border-amber-500/30 transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-400">الصفوف المعتمدة</span>
+            <span class="text-xl">🏫</span>
           </div>
-          <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-xl">🏫</div>
+          <h3 id="dashClassCount" class="text-3xl font-black text-white">0 صفوف</h3>
+          <p class="text-[11px] text-amber-400 font-bold mt-1">تشمل الشعب المخصصة</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">إجمالي الطلاب</p>
-            <h3 id="dashStudentCount" class="text-2xl font-black text-slate-800 dark:text-slate-100 mt-1">0 طالب</h3>
-            <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">في الشعب المعتمدة</span>
+        <div class="glass-panel rounded-2xl p-6 shadow-xl border border-slate-800 hover:border-emerald-500/30 transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-400">إجمالي الطلاب</span>
+            <span class="text-xl">👨‍🎓</span>
           </div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 flex items-center justify-center text-xl">👨‍🎓</div>
+          <h3 id="dashStudentCount" class="text-3xl font-black text-white">0 طالب</h3>
+          <p class="text-[11px] text-emerald-400 font-bold mt-1">سجلات إلكترونية جاهزة</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">نسبة الحضور اليوم</p>
-            <h3 id="dashAttendanceRate" class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-1">100%</h3>
-            <span class="text-[11px] text-slate-400 font-semibold">متابعة دقيقة</span>
+        <div class="glass-panel rounded-2xl p-6 shadow-xl border border-slate-800 hover:border-indigo-500/30 transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-400">نسبة الحضور</span>
+            <span class="text-xl">📊</span>
           </div>
-          <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 flex items-center justify-center text-xl">📊</div>
+          <h3 id="dashAttendanceRate" class="text-3xl font-black text-white">100%</h3>
+          <p class="text-[11px] text-indigo-400 font-bold mt-1">متابعة يومية فورية</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">الخطط المحفوظة</p>
-            <h3 id="dashPlansCount" class="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">0 خطط</h3>
-            <span class="text-[11px] text-amber-500 font-bold">سنوية ويومية</span>
+        <div class="glass-panel rounded-2xl p-6 shadow-xl border border-slate-800 hover:border-brand-500/30 transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-400">الخطط المحفوظة</span>
+            <span class="text-xl">📑</span>
           </div>
-          <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 flex items-center justify-center text-xl">📑</div>
+          <h3 id="dashPlansCount" class="text-3xl font-black text-white">0 خطط</h3>
+          <p class="text-[11px] text-brand-400 font-bold mt-1">سنوية ويومية معتمدة</p>
         </div>
       </div>
 
-      <!-- Quick Setup Guide for New User -->
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-        <h3 class="text-base font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
-          <span>🚀</span> خطوات بدء استخدام المنصة بسهولة كمعلم جديد:
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed">
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-750 border border-slate-200 dark:border-slate-700 space-y-2">
-            <span class="w-6 h-6 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center">1</span>
-            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">حدد صفوفك وشعبك ومادتك</h4>
-            <p class="text-slate-500 dark:text-slate-400">انتقل لتبويب "إدارة الصفوف والشعب"، وأضف صفك ومادتك، واختر الشعب التي تدرسها (مثلاً: أ، ب، ج... حتى 15 شعبة).</p>
+      <!-- Quick 3-Step Onboarding Grid -->
+      <div class="glass-panel rounded-3xl p-8 border border-slate-800 shadow-2xl space-y-6">
+        <div>
+          <h3 class="text-lg font-black text-white flex items-center gap-2">
+            <span class="text-amber-400">⚡</span> كيف تبدأ باستخدام المنصة كمعلم جديد في 3 خطوات بسيطة:
+          </h3>
+          <p class="text-xs text-slate-400 mt-1">تمت هندسة المنصة لتكون سريعة وتوفر عليك ساعات من الجهد الورقي</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="p-5 rounded-2xl bg-[#080c14]/70 border border-slate-800 space-y-2.5 hover:border-brand-500/40 transition">
+            <div class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm shadow">1</div>
+            <h4 class="font-extrabold text-sm text-white">أضف مادتك وصفوفك وشعبك</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">انتقل لتبويب "إدارة الصفوف والمواد"، وأدخل اسم صفك ومادتك، وحدد شعبك بحرية (مثلاً: أ، ب، ج، د... حتى 15 شعبة).</p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-750 border border-slate-200 dark:border-slate-700 space-y-2">
-            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center">2</span>
-            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">أدخل أسماء طلابك بلصقة واحدة</h4>
-            <p class="text-slate-500 dark:text-slate-400">من تبويب "إدخال وتعديل الطلاب"، يمكنك كتابة الأسماء أو لصق قائمة الأسماء كاملة بنقرة زر ليتم توزيعهم فوراً.</p>
+
+          <div class="p-5 rounded-2xl bg-[#080c14]/70 border border-slate-800 space-y-2.5 hover:border-emerald-500/40 transition">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-sm shadow">2</div>
+            <h4 class="font-extrabold text-sm text-white">انسخ والصق أسماء الطلاب فوراً</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">من تبويب "إدخال ولصق الطلاب"، اختر الشعبة والصق قائمة الأسماء دفعة واحدة ليتم حفظهم وحساب درجاتهم فوراً.</p>
           </div>
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-750 border border-slate-200 dark:border-slate-700 space-y-2">
-            <span class="w-6 h-6 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center">3</span>
-            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">رصد الحضور، السجل، والخطط</h4>
-            <p class="text-slate-500 dark:text-slate-400">افتح أي سجل أو خطة أو اختبار، وستجد طلابك ومادتك وشعبتك جاهزة للتقويم والرصد والطباعة الرسمية.</p>
+
+          <div class="p-5 rounded-2xl bg-[#080c14]/70 border border-slate-800 space-y-2.5 hover:border-indigo-500/40 transition">
+            <div class="w-8 h-8 rounded-xl bg-indigo-500 text-slate-950 font-black flex items-center justify-center text-sm shadow">3</div>
+            <h4 class="font-extrabold text-sm text-white">استفد من السجلات والخطط والجداول</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">ارصد الحضور بضغطة زر، سجّل الدرجات مع كشوفات Excel، ولّد أوراق الاختبارات، واطبع الخطط السنوية واليومية باسمك.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- VIEW 2: CLASS & SECTION MANAGER (إدارة الصفوف والشعب حتى 15 شعبة) -->
+    <!-- VIEW 2: CLASS & SECTION MANAGER -->
     <section id="viewClassManager" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>🏫</span> إدارة الصفوف والمواد الدراسية والشعب
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">تحديد المادة والصف وإضافة شعب اختيارية مرنة تصل إلى 15 شعبة (أ، ب، ج، د...)</p>
+          <p class="text-xs text-slate-400 mt-1">تحديد المادة والصف وإضافة شعب اختيارية تصل إلى 15 شعبة مرنة</p>
         </div>
       </div>
 
-      <!-- Add New Class Form -->
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">إضافة صف دراسي جديد مع الشعب والمادة:</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+      <!-- Add Class Form -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl space-y-5">
+        <h3 class="font-bold text-sm text-amber-300">إضافة صف دراسي جديد مع الشعب والمادة التخصصية:</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold">
           <div>
-            <label for="newClassGradeInput" class="block font-bold mb-1">الصف الدراسي:</label>
-            <input type="text" id="newClassGradeInput" placeholder="مثال: الثالث متوسط / الأول إعدادي" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="newClassGradeInput" class="block text-slate-300 mb-1.5">الصف الدراسي:</label>
+            <input type="text" id="newClassGradeInput" placeholder="مثال: الثالث متوسط / الأول إعدادي" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
           </div>
           <div>
-            <label for="newClassSubjectInput" class="block font-bold mb-1">المادة الدراسية:</label>
-            <input type="text" id="newClassSubjectInput" placeholder="مثال: الرياضيات / الكيمياء / اللغة العربية" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="newClassSubjectInput" class="block text-slate-300 mb-1.5">المادة الدراسية:</label>
+            <input type="text" id="newClassSubjectInput" placeholder="مثال: الرياضيات / الكيمياء / اللغة العربية" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
           </div>
           <div>
-            <label for="newClassSectionsInput" class="block font-bold mb-1">الشعب المطلوبة (مفصولة بفاصلة حتى 15 شعبة):</label>
-            <input type="text" id="newClassSectionsInput" value="أ, ب, ج, د, هـ" placeholder="أ, ب, ج, د..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="newClassSectionsInput" class="block text-slate-300 mb-1.5">الشعب المطلوبة (مفصولة بفاصلة حتى 15 شعبة):</label>
+            <input type="text" id="newClassSectionsInput" value="أ, ب, ج, د, هـ" placeholder="أ, ب, ج, د..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
           </div>
         </div>
         <div class="flex justify-end">
-          <button id="saveNewClassBtn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs transition shadow flex items-center gap-2">
+          <button id="saveNewClassBtn" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl text-xs transition shadow-glow-gold flex items-center gap-2">
             <span>➕</span> إضافة الصف والشعب للنظام
           </button>
         </div>
@@ -283,80 +335,80 @@
 
       <!-- Existing Classes Grid -->
       <div class="space-y-4">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">الصفوف والشعب المعتمدة حالياً في حسابك:</h3>
-        <div id="classesListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <h3 class="font-bold text-sm text-slate-300">الصفوف والشعب المعتمدة حالياً:</h3>
+        <div id="classesListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <!-- Dynamically populated -->
         </div>
       </div>
     </section>
 
-    <!-- VIEW 3: STUDENTS MANAGER (إدخال وتعديل الطلاب ولصق القوائم) -->
+    <!-- VIEW 3: STUDENTS MANAGER -->
     <section id="viewStudentsManager" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-            <span>👥</span> إدخال وتسجيل بيانات الطلاب
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
+            <span>👥</span> إدارة وتسجيل بيانات الطلاب
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">أدخل الطلاب فرادى أو الصق قائمة الأسماء كاملة بنقرة واحدة</p>
+          <p class="text-xs text-slate-400 mt-1">أدخل الطلاب فرادى أو الصق قائمة أسماء الشعبة دفعة واحدة</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="openBulkPasteBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow flex items-center gap-1.5 transition">
+        <div class="flex items-center gap-3">
+          <button id="openBulkPasteBtn" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-lg flex items-center gap-1.5 transition">
             <span>📋</span> لصق قائمة أسماء كاملة
           </button>
-          <button id="openSingleStudentModalBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow flex items-center gap-1.5 transition">
+          <button id="openSingleStudentModalBtn" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-xs shadow-lg flex items-center gap-1.5 transition">
             <span>➕</span> إضافة طالب فردي
           </button>
         </div>
       </div>
 
-      <!-- Bulk Paste Box (Collapsible) -->
-      <div id="bulkPasteBox" class="hidden bg-emerald-50 dark:bg-slate-800 p-6 rounded-2xl border-2 border-emerald-300 dark:border-emerald-700 space-y-4 text-xs">
+      <!-- Bulk Paste Box -->
+      <div id="bulkPasteBox" class="hidden glass-panel p-6 rounded-3xl border-2 border-emerald-500/40 space-y-4 text-xs">
         <div class="flex items-center justify-between">
-          <h3 class="font-bold text-sm text-emerald-900 dark:text-emerald-300">لصق أسماء طلاب الشعبة دفعة واحدة (كل اسم في سطر جديد):</h3>
-          <button id="closeBulkBoxBtn" class="text-slate-400 hover:text-slate-600 text-base">&times;</button>
+          <h3 class="font-bold text-sm text-emerald-400">لصق أسماء طلاب الشعبة دفعة واحدة (كل اسم في سطر جديد):</h3>
+          <button id="closeBulkBoxBtn" class="text-slate-400 hover:text-white text-base">&times;</button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label for="bulkClassSelect" class="block font-bold mb-1">الصف والشعبة المستهدفة:</label>
-            <select id="bulkClassSelect" class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="bulkClassSelect" class="block font-bold text-slate-300 mb-1">الصف والشعبة المستهدفة:</label>
+            <select id="bulkClassSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-4 py-2.5 text-white font-bold">
               <!-- Dynamically populated -->
             </select>
           </div>
         </div>
         <div>
-          <label for="bulkNamesTextarea" class="block font-bold mb-1">قائمة الأسماء (انسخ من ملفك أو الواتساب والصق هنا):</label>
-          <textarea id="bulkNamesTextarea" rows="6" placeholder="علي حسين كاظم&#10;حيدر جعفر صادق&#10;سجاد فاضل عباس..." class="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl p-3 font-bold"></textarea>
+          <label for="bulkNamesTextarea" class="block font-bold text-slate-300 mb-1">انسخ قائمة الأسماء من ملفك أو الواتساب والصقها هنا:</label>
+          <textarea id="bulkNamesTextarea" rows="6" placeholder="علي حسين كاظم&#10;حيدر جعفر صادق&#10;سجاد فاضل عباس..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl p-3 text-white font-bold"></textarea>
         </div>
-        <div class="flex justify-end gap-2">
-          <button id="executeBulkInsertBtn" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow">
-            إضافة جميع الأسماء فوراً
+        <div class="flex justify-end">
+          <button id="executeBulkInsertBtn" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow">
+            إضافة جميع الأسماء للشعبة فوراً
           </button>
         </div>
       </div>
 
-      <!-- Filter and List of Students -->
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div class="p-4 bg-slate-50 dark:bg-slate-750 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <!-- Filter and List Table -->
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
+        <div class="p-4 bg-[#080c14]/50 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
           <div class="flex items-center gap-2">
-            <span class="font-bold">عرض طلاب الشعبة:</span>
-            <select id="studentFilterClassSelect" class="bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-1.5 font-bold">
+            <span class="font-bold text-slate-300">عرض طلاب الشعبة:</span>
+            <select id="studentFilterClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-4 py-2 font-bold text-white">
               <!-- Dynamically populated -->
             </select>
           </div>
-          <span id="studentCountInFilterBadge" class="font-bold text-slate-500">0 طالب مسجل</span>
+          <span id="studentCountInFilterBadge" class="font-bold text-amber-400">0 طالب مسجل</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-right border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold border-b border-slate-200 dark:border-slate-600">
-                <th class="py-3 px-4">#</th>
-                <th class="py-3 px-4">اسم الطالب الرباعي</th>
-                <th class="py-3 px-4">الصف والشعبة</th>
-                <th class="py-3 px-4">هاتف ولي الأمر</th>
-                <th class="py-3 px-4 text-center">إجراء</th>
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
+                <th class="py-3.5 px-4">#</th>
+                <th class="py-3.5 px-4">اسم الطالب الرباعي</th>
+                <th class="py-3.5 px-4">الصف والشعبة</th>
+                <th class="py-3.5 px-4">هاتف ولي الأمر</th>
+                <th class="py-3.5 px-4 text-center">إجراء</th>
               </tr>
             </thead>
-            <tbody id="studentsManagerTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="studentsManagerTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -364,29 +416,29 @@
       </div>
     </section>
 
-    <!-- VIEW 4: ATTENDANCE TRACKER (رصد الحضور) -->
+    <!-- VIEW 4: ATTENDANCE TRACKER -->
     <section id="viewAttendance" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-            <span>✅</span> سجل رصد الحضور والغياب للشعبة
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
+            <span>✅</span> سجل رصد الحضور والغياب اليومي للشعبة
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">اختر أي صف وشعبة تم إدخالها لرصد حضور وغياب الطلاب اليومي بنقرة زر</p>
+          <p class="text-xs text-slate-400 mt-1">اختر أي صف وشعبة تم إنشاؤها لتسجيل حضور الطلاب وحفظ السجل التراكمي</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto text-xs">
           <div>
-            <label for="attClassSelect" class="block font-bold mb-1">الصف والشعبة:</label>
-            <select id="attClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="attClassSelect" class="block font-bold text-slate-400 mb-1">الشعبة:</label>
+            <select id="attClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
               <!-- Dynamically populated -->
             </select>
           </div>
           <div>
-            <label for="attDateInput" class="block font-bold mb-1">تاريخ اليوم:</label>
-            <input type="date" id="attDateInput" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="attDateInput" class="block font-bold text-slate-400 mb-1">تاريخ اليوم:</label>
+            <input type="date" id="attDateInput" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
           </div>
           <div class="self-end">
-            <button id="markAllPresentBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow flex items-center gap-1.5">
+            <button id="markAllPresentBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition shadow flex items-center gap-1.5">
               الجميع حاضر
             </button>
           </div>
@@ -394,29 +446,29 @@
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-        <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-4">
-          <p class="text-xs text-emerald-700 dark:text-emerald-300 font-bold">الحاضرون</p>
-          <h4 id="attPresentCount" class="text-2xl font-black text-emerald-800 dark:text-emerald-200 mt-1">0</h4>
+        <div class="glass-panel rounded-2xl p-4 border border-emerald-500/20">
+          <p class="text-xs text-emerald-400 font-bold">الحاضرون</p>
+          <h4 id="attPresentCount" class="text-2xl font-black text-white mt-1">0</h4>
         </div>
-        <div class="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 rounded-xl p-4">
-          <p class="text-xs text-rose-700 dark:text-rose-300 font-bold">الغائبون</p>
-          <h4 id="attAbsentCount" class="text-2xl font-black text-rose-800 dark:text-rose-200 mt-1">0</h4>
+        <div class="glass-panel rounded-2xl p-4 border border-rose-500/20">
+          <p class="text-xs text-rose-400 font-bold">الغائبون</p>
+          <h4 id="attAbsentCount" class="text-2xl font-black text-white mt-1">0</h4>
         </div>
-        <div class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-xl p-4">
-          <p class="text-xs text-amber-700 dark:text-amber-300 font-bold">المتأخرون</p>
-          <h4 id="attLateCount" class="text-2xl font-black text-amber-800 dark:text-amber-200 mt-1">0</h4>
+        <div class="glass-panel rounded-2xl p-4 border border-amber-500/20">
+          <p class="text-xs text-amber-400 font-bold">المتأخرون</p>
+          <h4 id="attLateCount" class="text-2xl font-black text-white mt-1">0</h4>
         </div>
-        <div class="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50 rounded-xl p-4">
-          <p class="text-xs text-blue-700 dark:text-blue-300 font-bold">إجازة بعذر</p>
-          <h4 id="attExcusedCount" class="text-2xl font-black text-blue-800 dark:text-blue-200 mt-1">0</h4>
+        <div class="glass-panel rounded-2xl p-4 border border-blue-500/20">
+          <p class="text-xs text-blue-400 font-bold">إجازة بعذر</p>
+          <h4 id="attExcusedCount" class="text-2xl font-black text-white mt-1">0</h4>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-right border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-50 dark:bg-slate-750 text-slate-500 font-extrabold border-b border-slate-200 dark:border-slate-700">
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
                 <th class="py-3 px-4">#</th>
                 <th class="py-3 px-4">اسم الطالب</th>
                 <th class="py-3 px-4 text-center">حالة اليوم</th>
@@ -424,7 +476,7 @@
                 <th class="py-3 px-4 text-center">تغيير الحالة السريع</th>
               </tr>
             </thead>
-            <tbody id="attendanceTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="attendanceTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -432,42 +484,42 @@
       </div>
     </section>
 
-    <!-- VIEW 5: GRADEBOOK (سجل الدرجات) -->
+    <!-- VIEW 5: GRADEBOOK -->
     <section id="viewGradebook" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-            <span>📝</span> سجل الدرجات والتقويم المستمر
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
+            <span>📝</span> سجل الدرجات والتقويم التراكمي
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">رصد درجات المشاركة، الواجبات، الأنشطة، والاختبارات للشعبة وحساب المجموع والتقدير آلياً</p>
+          <p class="text-xs text-slate-400 mt-1">رصد درجات المشاركة، الواجبات، الأنشطة، والاختبارات للشعبة وحساب المجموع والتقدير آلياً</p>
         </div>
         <div class="flex items-center gap-3 text-xs">
-          <label for="gradeClassSelect" class="font-bold">الشعبة:</label>
-          <select id="gradeClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+          <label for="gradeClassSelect" class="font-bold text-slate-400">الشعبة:</label>
+          <select id="gradeClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-4 py-2 font-bold text-white">
             <!-- Dynamically populated -->
           </select>
-          <button id="exportGradesCsvBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition flex items-center gap-1.5">
+          <button id="exportGradesCsvBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition flex items-center gap-1.5 border border-slate-700">
             تصدير كشف Excel / CSV
           </button>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-right border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-50 dark:bg-slate-750 text-slate-600 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700">
-                <th class="py-3 px-4">اسم الطالب</th>
-                <th class="py-3 px-3 text-center">المشاركة (10)</th>
-                <th class="py-3 px-3 text-center">الواجبات (20)</th>
-                <th class="py-3 px-3 text-center">النشاط (20)</th>
-                <th class="py-3 px-3 text-center">الامتحان (50)</th>
-                <th class="py-3 px-3 text-center">المجموع (100)</th>
-                <th class="py-3 px-4 text-center">التقدير</th>
-                <th class="py-3 px-4 text-center">إجراء</th>
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
+                <th class="py-3.5 px-4">اسم الطالب</th>
+                <th class="py-3.5 px-3 text-center">المشاركة (10)</th>
+                <th class="py-3.5 px-3 text-center">الواجبات (20)</th>
+                <th class="py-3.5 px-3 text-center">النشاط (20)</th>
+                <th class="py-3.5 px-3 text-center">الامتحان (50)</th>
+                <th class="py-3.5 px-3 text-center">المجموع (100)</th>
+                <th class="py-3.5 px-4 text-center">التقدير</th>
+                <th class="py-3.5 px-4 text-center">إجراء</th>
               </tr>
             </thead>
-            <tbody id="gradebookTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="gradebookTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -475,31 +527,31 @@
       </div>
     </section>
 
-    <!-- VIEW 6: FOLLOW-UP REGISTER (سجل المتابعة التخصصي) -->
+    <!-- VIEW 6: FOLLOW-UP REGISTER -->
     <section id="viewFollowupRegister" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>📋</span> سجل المتابعة التخصصي والتقويم التكويني
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">متابعة دفتر الواجبات والترتيب والتفاعل العملي للشعبة وفق رغبة المدرس</p>
+          <p class="text-xs text-slate-400 mt-1">متابعة دفتر الواجبات والترتيب والتفاعل العملي للشعبة وفق رغبة المدرس</p>
         </div>
-        <div class="flex items-center gap-2 text-xs">
-          <label for="followupClassSelect" class="font-bold">الشعبة:</label>
-          <select id="followupClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+        <div class="flex items-center gap-3 text-xs">
+          <label for="followupClassSelect" class="font-bold text-slate-400">الشعبة:</label>
+          <select id="followupClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-4 py-2 font-bold text-white">
             <!-- Dynamically populated -->
           </select>
-          <button id="printFollowupBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow">
+          <button id="printFollowupBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl shadow">
             طباعة كشف المتابعة
           </button>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-right border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-50 dark:bg-slate-750 text-slate-600 font-extrabold border-b border-slate-200 dark:border-slate-700">
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
                 <th class="py-3 px-4">#</th>
                 <th class="py-3 px-4">اسم الطالب</th>
                 <th class="py-3 px-3 text-center">حل الواجب</th>
@@ -509,7 +561,7 @@
                 <th class="py-3 px-4 text-center">إجراء سريع</th>
               </tr>
             </thead>
-            <tbody id="followupTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="followupTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -517,27 +569,25 @@
       </div>
     </section>
 
-    <!-- VIEW 7: ANNUAL PLAN (الخطة السنوية والفصلية) -->
+    <!-- VIEW 7: ANNUAL PLAN -->
     <section id="viewAnnualPlan" class="tab-view hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>📅</span> الخطة السنوية وتوزيع المنهج الدراسي
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توزيع مفردات وفصول أي مادة على مدار أشهر السنة (تشرين إلى أيار) مع إمكانية التعديل</p>
+          <p class="text-xs text-slate-400 mt-1">توزيع مفردات وفصول أي مادة على مدار أشهر السنة (تشرين إلى أيار)</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="printAnnualPlanBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow">
-            طباعة الخطة السنوية
-          </button>
-        </div>
+        <button id="printAnnualPlanBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl text-xs shadow">
+          طباعة الخطة السنوية
+        </button>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-right border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold border-b border-slate-200 dark:border-slate-600">
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
                 <th class="py-3 px-4">الشهر</th>
                 <th class="py-3 px-4">الفصل / الوحدة المقررة</th>
                 <th class="py-3 px-6">المفردات والمواضيع</th>
@@ -545,7 +595,7 @@
                 <th class="py-3 px-4 text-center">الوسائل والتقويم</th>
               </tr>
             </thead>
-            <tbody id="annualPlanTableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="annualPlanTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -553,16 +603,16 @@
       </div>
     </section>
 
-    <!-- VIEW 8: DAILY LESSON PLANNER (التحضير اليومي) -->
+    <!-- VIEW 8: DAILY PLANNER -->
     <section id="viewPlanner" class="tab-view hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>📑</span> دفتر تحضير الدروس اليومي
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">تخطيط الدروس اليومية وفق أهداف بلوم السلوكية واستراتيجيات التدريس الحديثة</p>
+          <p class="text-xs text-slate-400 mt-1">تخطيط الدروس اليومية وفق أهداف بلوم السلوكية واستراتيجيات التدريس الحديثة</p>
         </div>
-        <button id="openNewPlanModalBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow flex items-center gap-2">
+        <button id="openNewPlanModalBtn" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl text-xs shadow flex items-center gap-2">
           <span>➕</span> تحضير درس جديد
         </button>
       </div>
@@ -572,36 +622,36 @@
       </div>
     </section>
 
-    <!-- VIEW 9: ADMIN & TEACHER TIMETABLE (جدول الحصص) -->
+    <!-- VIEW 9: ADMIN & TEACHER TIMETABLE -->
     <section id="viewAdminTimetable" class="tab-view hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>🏛️</span> جدول الحصص الأسبوعي للإدارة والمعلم
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توزيع الحصص والمواد على كافة الشعب المضافة</p>
+          <p class="text-xs text-slate-400 mt-1">توزيع الحصص والمواد على كافة الشعب المضافة</p>
         </div>
-        <button id="printAdminTableBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow">
+        <button id="printAdminTableBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl text-xs shadow">
           طباعة الجدول
         </button>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+      <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-center border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold border-b border-slate-200 dark:border-slate-600">
+              <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
                 <th class="py-3 px-4 text-right">الصف والشعبة</th>
                 <th class="py-3 px-3">الأولى</th>
                 <th class="py-3 px-3">الثانية</th>
                 <th class="py-3 px-3">الثالثة</th>
-                <th class="py-3 px-3 bg-amber-50 dark:bg-amber-950/40 text-amber-800 font-bold">الاستراحة</th>
+                <th class="py-3 px-3 bg-amber-500/10 text-amber-300 font-black">الاستراحة</th>
                 <th class="py-3 px-3">الرابعة</th>
                 <th class="py-3 px-3">الخامسة</th>
                 <th class="py-3 px-3">السادسة</th>
               </tr>
             </thead>
-            <tbody id="adminTimetableBody" class="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody id="adminTimetableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamically populated -->
             </tbody>
           </table>
@@ -609,78 +659,78 @@
       </div>
     </section>
 
-    <!-- VIEW 10: QUIZ BUILDER (صانع الاختبارات) -->
+    <!-- VIEW 10: QUIZ BUILDER -->
     <section id="viewQuiz" class="tab-view hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <h2 class="text-xl font-black text-white flex items-center gap-2">
             <span>❓</span> صانع الاختبارات والأسئلة
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">إنشاء أوراق اختبارات لأي مادة وتوليد نموذج امتحاني جاهز للطباعة</p>
+          <p class="text-xs text-slate-400 mt-1">إنشاء أوراق اختبارات لأي مادة وتوليد نموذج امتحاني جاهز للطباعة</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="openNewQuestionBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition">
+        <div class="flex items-center gap-3">
+          <button id="openNewQuestionBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs transition border border-slate-700">
             إضافة سؤال
           </button>
-          <button id="generateExamDocBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow transition">
+          <button id="generateExamDocBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-xs shadow transition">
             توليد ورقة الامتحان
           </button>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+      <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-2xl space-y-3">
         <div id="quizQuestionsContainer" class="space-y-3">
           <!-- Dynamically populated -->
         </div>
       </div>
     </section>
 
-    <!-- VIEW 11: CLASSROOM TOOLS (أدوات الصف التفاعلية) -->
+    <!-- VIEW 11: CLASSROOM TOOLS -->
     <section id="viewTools" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl">
+        <h2 class="text-xl font-black text-white flex items-center gap-2">
           <span>🎯</span> أدوات الصف التفاعلية (القرعة والمؤقت)
         </h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">اختيار طالب عشوائي من أي شعبة مضافة، وضبط مؤقت الأنشطة الصفية</p>
+        <p class="text-xs text-slate-400 mt-1">اختيار طالب عشوائي من أي شعبة مضافة، وضبط مؤقت الأنشطة الصفية</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Wheel -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col items-center">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl flex flex-col items-center">
           <div class="w-full flex items-center justify-between mb-4">
-            <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">قرعة الطالب العشوائي:</h3>
-            <select id="wheelClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs font-bold">
+            <h3 class="font-bold text-white text-sm">قرعة الطالب العشوائي:</h3>
+            <select id="wheelClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-white">
               <!-- Dynamically populated -->
             </select>
           </div>
           <div class="relative w-64 h-64 my-2 flex items-center justify-center">
-            <canvas id="wheelCanvas" width="250" height="250" class="rounded-full shadow-lg border-4 border-white dark:border-slate-700"></canvas>
+            <canvas id="wheelCanvas" width="250" height="250" class="rounded-full shadow-2xl border-4 border-slate-800"></canvas>
           </div>
-          <div id="wheelWinnerBox" class="w-full mt-4 p-4 rounded-xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 text-center min-h-[70px] flex items-center justify-center">
-            <h4 id="wheelWinnerName" class="text-lg font-black text-brand-700 dark:text-brand-300">اضغط لتدوير القرعة</h4>
+          <div id="wheelWinnerBox" class="w-full mt-4 p-4 rounded-2xl bg-[#080c14]/80 border border-amber-500/30 text-center min-h-[70px] flex items-center justify-center">
+            <h4 id="wheelWinnerName" class="text-lg font-black text-amber-300">اضغط لتدوير القرعة</h4>
           </div>
-          <button id="spinWheelBtn" class="mt-4 w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow transition">
+          <button id="spinWheelBtn" class="mt-4 w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl shadow-glow-gold transition">
             تدوير القرعة وسحب اسم
           </button>
         </div>
 
         <!-- Timer -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col items-center justify-between">
-          <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm mb-2">مؤقت الحصة والأنشطة:</h3>
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl flex flex-col items-center justify-between">
+          <h3 class="font-bold text-white text-sm mb-2">مؤقت الحصة والأنشطة:</h3>
           <div class="relative w-52 h-52 flex items-center justify-center my-3">
             <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="#e2e8f0" stroke-width="6"/>
-              <circle id="timerProgressCircle" cx="50" cy="50" r="42" fill="none" stroke="#6366f1" stroke-width="6" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#1e293b" stroke-width="6"/>
+              <circle id="timerProgressCircle" cx="50" cy="50" r="42" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round"/>
             </svg>
             <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span id="timerDisplay" class="text-3xl font-black font-mono">05:00</span>
+              <span id="timerDisplay" class="text-3xl font-black font-mono text-white">05:00</span>
               <span id="timerPresetLabel" class="text-xs font-bold text-slate-400 mt-1">نشاط صفي</span>
             </div>
           </div>
           <div class="flex items-center gap-2 w-full text-xs font-bold">
-            <button id="timerStartBtn" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow">بدء</button>
-            <button id="timerPauseBtn" class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow">إيقاف</button>
-            <button id="timerResetBtn" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-xl">↺</button>
+            <button id="timerStartBtn" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl shadow">بدء</button>
+            <button id="timerPauseBtn" class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl shadow">إيقاف</button>
+            <button id="timerResetBtn" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl">↺</button>
           </div>
         </div>
       </div>
@@ -688,40 +738,40 @@
 
     <!-- VIEW 12: PARENT MESSAGES -->
     <section id="viewParentMsgs" class="tab-view hidden space-y-6">
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl">
+        <h2 class="text-xl font-black text-white flex items-center gap-2">
           <span>✉️</span> مساعد رسائل أولياء الأمور
         </h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توليد إشعارات التفوق، الغياب، والدرجات للتواصل عبر واتساب</p>
+        <p class="text-xs text-slate-400 mt-1">توليد إشعارات التفوق، الغياب، والدرجات للتواصل عبر واتساب</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-xs">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+        <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-2xl space-y-3">
           <div>
-            <label for="parentMsgTypeSelect" class="block font-bold mb-1">نوع الإشعار:</label>
-            <select id="parentMsgTypeSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="parentMsgTypeSelect" class="block font-bold text-slate-300 mb-1">نوع الإشعار:</label>
+            <select id="parentMsgTypeSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
               <option value="praise">رسالة شكر وتقدير لتفوق الطالب</option>
               <option value="warning">إشعار غياب أو متابعة دراسية</option>
             </select>
           </div>
           <div>
-            <label for="parentStudentSelect" class="block font-bold mb-1">الطالب:</label>
-            <select id="parentStudentSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+            <label for="parentStudentSelect" class="block font-bold text-slate-300 mb-1">الطالب:</label>
+            <select id="parentStudentSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
               <!-- Dynamically populated -->
             </select>
           </div>
-          <button id="generateParentMsgBtn" class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow">
+          <button id="generateParentMsgBtn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow">
             توليد الرسالة
           </button>
         </div>
 
-        <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
-          <div id="parentMsgPreviewBox" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-750 border border-slate-200 dark:border-slate-700 leading-relaxed whitespace-pre-wrap min-h-[140px]">
+        <div class="lg:col-span-2 glass-panel rounded-3xl p-6 border border-slate-800 shadow-2xl flex flex-col justify-between">
+          <div id="parentMsgPreviewBox" class="p-4 rounded-xl bg-[#080c14] border border-slate-800 leading-relaxed whitespace-pre-wrap min-h-[140px] text-slate-200">
             اختر نوع الرسالة واضغط على "توليد الرسالة" لعرضها هنا.
           </div>
-          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-end gap-2">
-            <button id="copyParentMsgBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 font-bold rounded-xl">نسخ</button>
-            <button id="openWhatsappBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow">مشاركة واتساب</button>
+          <div class="mt-4 pt-4 border-t border-slate-800 flex justify-end gap-2">
+            <button id="copyParentMsgBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl">نسخ</button>
+            <button id="openWhatsappBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow">مشاركة واتساب</button>
           </div>
         </div>
       </div>
@@ -729,15 +779,15 @@
 
   </main>
 
-  <!-- Official Footer: Montazer Hameed ONLY & Contact -->
-  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 px-6 text-xs text-slate-500 no-print mt-auto">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right">
+  <!-- LUXURY FOOTER: Montazer Hameed ONLY & Contact -->
+  <footer class="bg-[#080c14] border-t border-slate-800 py-8 px-6 text-xs text-slate-400 no-print mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
       <div>
-        <p class="font-extrabold text-slate-800 dark:text-slate-100 text-sm">منصة سَنَد التعليمية &copy; إعداد الأستاذ منتظر حميد</p>
-        <p class="text-[11px] text-slate-400 mt-0.5">منظومة الإدارة الصفية المتكاملة لجميع المواد والصفوف الدراسية</p>
+        <p class="font-extrabold text-white text-base">منصة سَنَد التعليمية &copy; إعداد: الأستاذ منتظر حميد</p>
+        <p class="text-xs text-slate-500 mt-1">المنظومة المدرسية الذكية الشاملة لجميع المواد والصفوف والشعب الدراسية</p>
       </div>
       <div class="flex items-center gap-3">
-        <a href="tel:07732997337" class="px-3 py-1.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 font-extrabold flex items-center gap-1">
+        <a href="tel:07732997337" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-extrabold flex items-center gap-1.5 border border-slate-700 shadow">
           <span>📞</span> هاتف / واتساب: 07732997337
         </a>
       </div>
@@ -747,24 +797,24 @@
   <!-- ==================== MODALS ==================== -->
 
   <!-- MODAL: DATABASE BACKUP / RESTORE / RESET -->
-  <div id="dbModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-4 text-xs">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">إدارة قاعدة البيانات والنسخ الاحتياطي</h3>
-        <button id="closeDbModalBtn" class="text-slate-400 hover:text-slate-600 text-base">&times;</button>
+  <div id="dbModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+        <h3 class="font-bold text-sm text-white">إدارة قاعدة البيانات والنسخ الاحتياطي</h3>
+        <button id="closeDbModalBtn" class="text-slate-400 hover:text-white text-base">&times;</button>
       </div>
-      <p class="text-slate-500 leading-relaxed">
+      <p class="text-slate-400 leading-relaxed">
         بياناتك محفوظة محلياً في متصفحك. يمكنك تنزيل نسخة احتياطية أو استعادتها، أو مسح كل البيانات للبدء من الصفر تماماً.
       </p>
-      <div class="space-y-2">
-        <button id="downloadBackupBtn" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow">
+      <div class="space-y-2.5">
+        <button id="downloadBackupBtn" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow">
           تنزيل نسخة احتياطية من بياناتك (JSON)
         </button>
-        <label for="restoreFileInput" class="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold rounded-xl flex items-center justify-center cursor-pointer border border-dashed border-slate-300">
+        <label for="restoreFileInput" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl flex items-center justify-center cursor-pointer border border-dashed border-slate-600">
           استعادة بيانات سابقة (JSON)
         </label>
         <input type="file" id="restoreFileInput" accept=".json" class="hidden">
-        <button id="resetAllDataBtn" class="w-full py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold rounded-xl">
+        <button id="resetAllDataBtn" class="w-full py-2.5 bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 font-bold rounded-xl border border-rose-500/30">
           تفريغ المنصة والبدء من الصفر
         </button>
       </div>
@@ -772,104 +822,104 @@
   </div>
 
   <!-- MODAL: ADD SINGLE STUDENT -->
-  <div id="studentModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full shadow-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-3 text-xs">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">إضافة طالب جديد</h3>
-        <button id="closeStudentModalBtn" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+  <div id="studentModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-sm w-full p-6 space-y-3 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+        <h3 class="font-bold text-sm text-white">إضافة طالب جديد</h3>
+        <button id="closeStudentModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
       </div>
       <div>
-        <label for="newStudentNameInput" class="block font-bold mb-1">اسم الطالب الرباعي:</label>
-        <input type="text" id="newStudentNameInput" placeholder="اكتب اسم الطالب..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+        <label for="newStudentNameInput" class="block font-bold text-slate-300 mb-1">اسم الطالب الرباعي:</label>
+        <input type="text" id="newStudentNameInput" placeholder="اكتب اسم الطالب..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
       </div>
       <div>
-        <label for="newStudentClassSelect" class="block font-bold mb-1">الصف والشعبة:</label>
-        <select id="newStudentClassSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+        <label for="newStudentClassSelect" class="block font-bold text-slate-300 mb-1">الصف والشعبة:</label>
+        <select id="newStudentClassSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
           <!-- Dynamically populated -->
         </select>
       </div>
       <div>
-        <label for="newStudentPhoneInput" class="block font-bold mb-1">هاتف ولي الأمر (اختياري):</label>
-        <input type="tel" id="newStudentPhoneInput" placeholder="07XXXXXXXXX" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2">
+        <label for="newStudentPhoneInput" class="block font-bold text-slate-300 mb-1">هاتف ولي الأمر (اختياري):</label>
+        <input type="tel" id="newStudentPhoneInput" placeholder="07XXXXXXXXX" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white">
       </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-700">
-        <button id="cancelStudentModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 font-bold rounded-xl">إلغاء</button>
-        <button id="saveStudentBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow">إضافة الطالب</button>
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
+        <button id="cancelStudentModalBtn" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl">إلغاء</button>
+        <button id="saveStudentBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl shadow">إضافة الطالب</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: ADD PLAN -->
-  <div id="planModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-3 text-xs">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">تحضير درس جديد</h3>
-        <button id="closePlanModalBtn" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+  <div id="planModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-lg w-full p-6 space-y-3 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+        <h3 class="font-bold text-sm text-white">تحضير درس جديد</h3>
+        <button id="closePlanModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
       </div>
       <div>
-        <label for="planTitleInput" class="block font-bold mb-1">عنوان الدرس:</label>
-        <input type="text" id="planTitleInput" placeholder="عنوان الدرس..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+        <label for="planTitleInput" class="block font-bold text-slate-300 mb-1">عنوان الدرس:</label>
+        <input type="text" id="planTitleInput" placeholder="عنوان الدرس..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label for="planSubjectInput" class="block font-bold mb-1">المادة:</label>
-          <input type="text" id="planSubjectInput" placeholder="المادة الدراسية..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+          <label for="planSubjectInput" class="block font-bold text-slate-300 mb-1">المادة:</label>
+          <input type="text" id="planSubjectInput" placeholder="المادة الدراسية..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
         </div>
         <div>
-          <label for="planGradeSelect" class="block font-bold mb-1">الصف والشعبة:</label>
-          <select id="planGradeSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold">
+          <label for="planGradeSelect" class="block font-bold text-slate-300 mb-1">الصف والشعبة:</label>
+          <select id="planGradeSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white">
             <!-- Dynamically populated -->
           </select>
         </div>
       </div>
       <div>
-        <label for="planObjectivesInput" class="block font-bold mb-1">الأهداف السلوكية:</label>
-        <textarea id="planObjectivesInput" rows="3" placeholder="الأهداف..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2"></textarea>
+        <label for="planObjectivesInput" class="block font-bold text-slate-300 mb-1">الأهداف السلوكية:</label>
+        <textarea id="planObjectivesInput" rows="3" placeholder="الأهداف..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white"></textarea>
       </div>
       <div>
-        <label for="planStepsInput" class="block font-bold mb-1">سير الحصة:</label>
-        <textarea id="planStepsInput" rows="3" placeholder="التهيئة والعرض والتقويم..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2"></textarea>
+        <label for="planStepsInput" class="block font-bold text-slate-300 mb-1">سير الحصة:</label>
+        <textarea id="planStepsInput" rows="3" placeholder="التهيئة والعرض والتقويم..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white"></textarea>
       </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-700">
-        <button id="cancelPlanModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 font-bold rounded-xl">إلغاء</button>
-        <button id="savePlanBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow">حفظ الخطة</button>
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
+        <button id="cancelPlanModalBtn" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl">إلغاء</button>
+        <button id="savePlanBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl shadow">حفظ الخطة</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: ADD QUESTION -->
-  <div id="questionModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-3 text-xs">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
-        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100">إضافة سؤال للاختبار</h3>
-        <button id="closeQuestionModalBtn" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+  <div id="questionModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-3 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+        <h3 class="font-bold text-sm text-white">إضافة سؤال للاختبار</h3>
+        <button id="closeQuestionModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
       </div>
       <div>
-        <label for="qTextInput" class="block font-bold mb-1">نص السؤال:</label>
-        <textarea id="qTextInput" rows="2" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 font-bold"></textarea>
+        <label for="qTextInput" class="block font-bold text-slate-300 mb-1">نص السؤال:</label>
+        <textarea id="qTextInput" rows="2" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 font-bold text-white"></textarea>
       </div>
       <div>
-        <label for="qAnswerInput" class="block font-bold mb-1">الإجابة النموذجية:</label>
-        <input type="text" id="qAnswerInput" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2">
+        <label for="qAnswerInput" class="block font-bold text-slate-300 mb-1">الإجابة النموذجية:</label>
+        <input type="text" id="qAnswerInput" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white">
       </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-700">
-        <button id="cancelQuestionModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 font-bold rounded-xl">إلغاء</button>
-        <button id="saveQuestionBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow">إضافة السؤال</button>
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
+        <button id="cancelQuestionModalBtn" class="px-4 py-2 bg-slate-800 text-slate-300 font-bold rounded-xl">إلغاء</button>
+        <button id="saveQuestionBtn" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black rounded-xl shadow">إضافة السؤال</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: PRINT PREVIEW -->
-  <div id="printModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[95vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-750 no-print">
-        <h3 id="printModalTitle" class="text-sm font-bold text-slate-800 dark:text-slate-100">معاينة المستند والطباعة</h3>
+  <div id="printModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white text-slate-900 rounded-3xl max-w-3xl w-full max-h-[95vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50 no-print">
+        <h3 id="printModalTitle" class="text-sm font-bold text-slate-800">معاينة المستند والطباعة</h3>
         <div class="flex items-center gap-2">
-          <button id="executePrintBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow">طباعة المستند</button>
+          <button id="executePrintBtn" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs shadow">طباعة المستند</button>
           <button id="closePrintModalBtn" class="text-slate-400 hover:text-slate-600 text-xl px-2">&times;</button>
         </div>
       </div>
-      <div class="p-8 overflow-y-auto bg-white text-slate-900 text-xs leading-relaxed" id="printArea">
+      <div class="p-8 overflow-y-auto text-xs leading-relaxed" id="printArea">
         <!-- Printable preview -->
       </div>
     </div>
@@ -930,7 +980,7 @@
     // --- State Storage ---
     let appState = (function() {
       try {
-        const saved = localStorage.getItem('sanad_teacher_state_montazer_custom_v3');
+        const saved = localStorage.getItem('sanad_teacher_state_legendary_v4');
         if (saved) return JSON.parse(saved);
       } catch (e) {
         console.warn('Storage unavailable:', e);
@@ -940,7 +990,7 @@
 
     function saveState() {
       try {
-        localStorage.setItem('sanad_teacher_state_montazer_custom_v3', JSON.stringify(appState));
+        localStorage.setItem('sanad_teacher_state_legendary_v4', JSON.stringify(appState));
       } catch (e) {}
     }
 
@@ -972,8 +1022,8 @@
     function showToast(msg, type = 'success') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl text-xs font-bold transition-all duration-300 transform translate-y-2 opacity-0 ${
-        type === 'success' ? 'bg-emerald-600 text-white' : 'bg-brand-600 text-white'
+      toast.className = `pointer-events-auto flex items-center gap-2 px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-black transition-all duration-300 transform translate-y-2 opacity-0 ${
+        type === 'success' ? 'bg-emerald-600 text-white shadow-emerald-900/40' : 'bg-brand-600 text-white shadow-brand-900/40'
       }`;
       toast.innerText = msg;
       container.appendChild(toast);
@@ -991,14 +1041,14 @@
         view.classList.remove('block');
       });
       document.querySelectorAll('.nav-tab').forEach(btn => {
-        btn.classList.remove('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-700', 'dark:text-brand-300');
-        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+        btn.classList.remove('active', 'bg-gradient-to-r', 'from-amber-500/20', 'to-brand-600/30', 'text-amber-300', 'border', 'border-amber-500/30');
+        btn.classList.add('text-slate-400');
       });
 
       const activeBtn = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
       if (activeBtn) {
-        activeBtn.classList.add('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-700', 'dark:text-brand-300');
-        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        activeBtn.classList.add('active', 'bg-gradient-to-r', 'from-amber-500/20', 'to-brand-600/30', 'text-amber-300', 'border', 'border-amber-500/30');
+        activeBtn.classList.remove('text-slate-400');
       }
 
       const viewMap = {
@@ -1085,21 +1135,21 @@
     function renderClassesList() {
       const container = document.getElementById('classesListContainer');
       if (!appState.classes.length) {
-        container.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400 text-xs">لم تقم بإضافة أي صف حتى الآن. أضف أول صف وشعبة بالأعلى.</div>';
+        container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500 text-xs">لم تقم بإضافة أي صف حتى الآن. أضف أول صف وشعبة بالأعلى.</div>';
         return;
       }
       container.innerHTML = appState.classes.map(c => `
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+        <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-xl flex flex-col justify-between hover:border-amber-500/40 transition">
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 font-extrabold text-xs">${c.subject}</span>
-              <button onclick="deleteClass('${c.id}')" class="text-rose-500 hover:text-rose-700 text-xs font-bold">حذف الصف</button>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 font-black text-xs">${c.subject}</span>
+              <button onclick="deleteClass('${c.id}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold transition">حذف الصف</button>
             </div>
-            <h4 class="text-sm font-black text-slate-800 dark:text-slate-100 mb-2">${c.grade}</h4>
-            <div class="space-y-1 text-xs text-slate-600 dark:text-slate-300">
-              <p class="font-bold text-slate-500">الشعب المعتمدة (${c.sections.length} شعبة):</p>
+            <h4 class="text-base font-black text-white mb-3">${c.grade}</h4>
+            <div class="space-y-1.5 text-xs">
+              <p class="font-bold text-slate-400">الشعب المعتمدة (${c.sections.length} شعبة):</p>
               <div class="flex flex-wrap gap-1.5 pt-1">
-                ${c.sections.map(s => `<span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 font-bold">شعبة ${s}</span>`).join('')}
+                ${c.sections.map(s => `<span class="px-2.5 py-1 rounded-lg bg-[#080c14] border border-slate-700 text-slate-200 font-bold">شعبة ${s}</span>`).join('')}
               </div>
             </div>
           </div>
@@ -1129,18 +1179,18 @@
       badge.innerText = `${filtered.length} طالب مسجل`;
 
       if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-slate-400">لا يوجد طلاب في هذه الشعبة. استخدم زر "لصق قائمة أسماء كاملة" لإضافتهم بثانية واحدة.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة. استخدم زر "لصق قائمة أسماء كاملة" لإضافتهم بثانية واحدة.</td></tr>';
         return;
       }
 
       tbody.innerHTML = filtered.map((s, idx) => `
-        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-          <td class="py-3 px-4 font-mono text-slate-400">${idx + 1}</td>
-          <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
-          <td class="py-3 px-4 font-semibold text-brand-600">${s.classGrade} - شعبة (${s.section})</td>
-          <td class="py-3 px-4 text-slate-500">${s.phone || '-'}</td>
-          <td class="py-3 px-4 text-center">
-            <button onclick="deleteStudent(${s.id})" class="text-rose-500 hover:text-rose-700 font-bold">حذف</button>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3.5 px-4 font-mono text-slate-500">${idx + 1}</td>
+          <td class="py-3.5 px-4 font-bold text-white text-sm">${s.name}</td>
+          <td class="py-3.5 px-4 font-semibold text-amber-300">${s.classGrade} - شعبة (${s.section})</td>
+          <td class="py-3.5 px-4 text-slate-400 font-mono">${s.phone || '-'}</td>
+          <td class="py-3.5 px-4 text-center">
+            <button onclick="deleteStudent(${s.id})" class="text-rose-400 hover:text-rose-300 font-bold transition">حذف</button>
           </td>
         </tr>
       `).join('');
@@ -1174,25 +1224,25 @@
       document.getElementById('attExcusedCount').innerText = exc;
 
       if (!students.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-slate-400">لا يوجد طلاب في هذه الشعبة.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
         return;
       }
 
       tbody.innerHTML = students.map((s, idx) => `
-        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-          <td class="py-3 px-4 font-mono text-slate-400">${idx + 1}</td>
-          <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-mono text-slate-500">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-white">${s.name}</td>
           <td class="py-3 px-4 text-center">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${s.attendance==='present'?'bg-emerald-100 text-emerald-800':s.attendance==='absent'?'bg-rose-100 text-rose-800':'bg-amber-100 text-amber-800'}">
+            <span class="px-3 py-1 rounded-full text-xs font-bold ${s.attendance==='present'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':s.attendance==='absent'?'bg-rose-500/20 text-rose-300 border border-rose-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
               ${s.attendance==='present'?'حاضر':s.attendance==='absent'?'غائب':s.attendance==='late'?'متأخر':'إجازة'}
             </span>
           </td>
-          <td class="py-3 px-4 text-center font-bold text-slate-600">${s.absentCount || 0} أيام</td>
+          <td class="py-3 px-4 text-center font-bold text-slate-300">${s.absentCount || 0} أيام</td>
           <td class="py-3 px-4 text-center">
-            <div class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 p-0.5">
-              <button onclick="setAttendance(${s.id}, 'present')" class="px-2 py-0.5 rounded ${s.attendance==='present'?'bg-emerald-600 text-white font-bold':''}">حاضر</button>
-              <button onclick="setAttendance(${s.id}, 'absent')" class="px-2 py-0.5 rounded ${s.attendance==='absent'?'bg-rose-600 text-white font-bold':''}">غائب</button>
-              <button onclick="setAttendance(${s.id}, 'late')" class="px-2 py-0.5 rounded ${s.attendance==='late'?'bg-amber-500 text-white font-bold':''}">تأخر</button>
+            <div class="inline-flex rounded-xl border border-slate-700 p-0.5 bg-[#080c14]">
+              <button onclick="setAttendance(${s.id}, 'present')" class="px-2.5 py-1 rounded-lg ${s.attendance==='present'?'bg-emerald-600 text-white font-bold':''}">حاضر</button>
+              <button onclick="setAttendance(${s.id}, 'absent')" class="px-2.5 py-1 rounded-lg ${s.attendance==='absent'?'bg-rose-600 text-white font-bold':''}">غائب</button>
+              <button onclick="setAttendance(${s.id}, 'late')" class="px-2.5 py-1 rounded-lg ${s.attendance==='late'?'bg-amber-500 text-slate-950 font-bold':''}">تأخر</button>
             </div>
           </td>
         </tr>
@@ -1216,7 +1266,7 @@
       const students = appState.students.filter(s => sel.includes(s.classGrade) && sel.includes(`(${s.section})`));
 
       if (!students.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="py-6 text-center text-slate-400">لا يوجد طلاب في هذه الشعبة.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
         return;
       }
 
@@ -1224,26 +1274,26 @@
         const total = (Number(s.participation)||0) + (Number(s.homework)||0) + (Number(s.activity)||0) + (Number(s.exam)||0);
         let label = total >= 90 ? 'ممتاز' : total >= 75 ? 'جيد جداً' : total >= 60 ? 'متوسط' : total >= 50 ? 'مقبول' : 'يحتاج دعم';
         return `
-          <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-            <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="py-3 px-4 font-bold text-white">${s.name}</td>
             <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="10" value="${s.participation}" onchange="updateGrade(${s.id}, 'participation', this.value)" class="w-14 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 font-bold">
+              <input type="number" min="0" max="10" value="${s.participation}" onchange="updateGrade(${s.id}, 'participation', this.value)" class="w-14 text-center bg-[#080c14] border border-slate-700 rounded-lg p-1.5 font-bold text-white">
             </td>
             <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="20" value="${s.homework}" onchange="updateGrade(${s.id}, 'homework', this.value)" class="w-14 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 font-bold">
+              <input type="number" min="0" max="20" value="${s.homework}" onchange="updateGrade(${s.id}, 'homework', this.value)" class="w-14 text-center bg-[#080c14] border border-slate-700 rounded-lg p-1.5 font-bold text-white">
             </td>
             <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="20" value="${s.activity}" onchange="updateGrade(${s.id}, 'activity', this.value)" class="w-14 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 font-bold">
+              <input type="number" min="0" max="20" value="${s.activity}" onchange="updateGrade(${s.id}, 'activity', this.value)" class="w-14 text-center bg-[#080c14] border border-slate-700 rounded-lg p-1.5 font-bold text-white">
             </td>
             <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="50" value="${s.exam}" onchange="updateGrade(${s.id}, 'exam', this.value)" class="w-14 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 font-bold">
+              <input type="number" min="0" max="50" value="${s.exam}" onchange="updateGrade(${s.id}, 'exam', this.value)" class="w-14 text-center bg-[#080c14] border border-slate-700 rounded-lg p-1.5 font-bold text-white">
             </td>
-            <td class="py-3 px-3 text-center font-black text-brand-600 dark:text-brand-400">${total}</td>
+            <td class="py-3 px-3 text-center font-black text-amber-400 text-sm">${total}</td>
             <td class="py-3 px-4 text-center">
-              <span class="px-2 py-0.5 rounded-full text-xs font-bold ${total>=50?'bg-emerald-100 text-emerald-800':'bg-rose-100 text-rose-800'}">${label}</span>
+              <span class="px-3 py-1 rounded-full text-xs font-bold ${total>=50?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':'bg-rose-500/20 text-rose-300 border border-rose-500/30'}">${label}</span>
             </td>
             <td class="py-3 px-4 text-center">
-              <button onclick="deleteStudent(${s.id})" class="text-rose-500 font-bold">حذف</button>
+              <button onclick="deleteStudent(${s.id})" class="text-rose-400 hover:text-rose-300 font-bold">حذف</button>
             </td>
           </tr>
         `;
@@ -1266,22 +1316,22 @@
       const students = appState.students.filter(s => sel.includes(s.classGrade) && sel.includes(`(${s.section})`));
 
       if (!students.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-slate-400">لا يوجد طلاب في هذه الشعبة.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
         return;
       }
 
       tbody.innerHTML = students.map((s, idx) => `
-        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-          <td class="py-3 px-4 text-slate-400 font-mono">${idx + 1}</td>
-          <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
-          <td class="py-3 px-3 text-center font-bold text-emerald-600">${s.homework >= 15 ? 'منجز ممتاز' : 'يحتاج متابعة'}</td>
-          <td class="py-3 px-3 text-center font-bold text-blue-600">مرتب</td>
-          <td class="py-3 px-3 text-center font-bold">${s.participation} / 10</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 text-slate-500 font-mono">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-white">${s.name}</td>
+          <td class="py-3 px-3 text-center font-bold text-emerald-400">${s.homework >= 15 ? 'منجز ممتاز' : 'يحتاج متابعة'}</td>
+          <td class="py-3 px-3 text-center font-bold text-indigo-300">مرتب</td>
+          <td class="py-3 px-3 text-center font-bold text-white">${s.participation} / 10</td>
           <td class="py-3 px-4 text-center">
-            <span class="px-2 py-0.5 rounded-full text-xs font-bold ${s.status === 'ملتزم' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${s.status || 'ملتزم'}</span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold ${s.status === 'ملتزم' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'}">${s.status || 'ملتزم'}</span>
           </td>
           <td class="py-3 px-4 text-center">
-            <button onclick="toggleFollowupStatus(${s.id})" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 font-bold">تغيير</button>
+            <button onclick="toggleFollowupStatus(${s.id})" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700">تغيير</button>
           </td>
         </tr>
       `).join('');
@@ -1300,12 +1350,12 @@
     function renderAnnualPlanTable() {
       const tbody = document.getElementById('annualPlanTableBody');
       tbody.innerHTML = appState.annualPlan.map(m => `
-        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-          <td class="py-3 px-4 font-bold text-brand-700 dark:text-brand-300">${m.month}</td>
-          <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${m.unit}</td>
-          <td class="py-3 px-6 text-slate-600 dark:text-slate-300 leading-relaxed">${m.topics}</td>
-          <td class="py-3 px-4 text-center font-bold">${m.periods} حصص</td>
-          <td class="py-3 px-4 text-center text-slate-500">${m.tools}</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3.5 px-4 font-bold text-amber-300">${m.month}</td>
+          <td class="py-3.5 px-4 font-bold text-white">${m.unit}</td>
+          <td class="py-3.5 px-6 text-slate-300 leading-relaxed">${m.topics}</td>
+          <td class="py-3.5 px-4 text-center font-bold text-emerald-400">${m.periods} حصص</td>
+          <td class="py-3.5 px-4 text-center text-slate-400">${m.tools}</td>
         </tr>
       `).join('');
     }
@@ -1313,17 +1363,17 @@
     function renderPlans() {
       const container = document.getElementById('plansListGrid');
       container.innerHTML = appState.plans.map(p => `
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+        <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-xl flex flex-col justify-between hover:border-amber-500/40 transition">
           <div>
             <div class="flex items-center justify-between text-xs text-slate-400 mb-2 font-bold">
-              <span class="px-2 py-0.5 rounded-full bg-brand-50 text-brand-700">${p.subject}</span>
+              <span class="px-3 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">${p.subject}</span>
               <span>${p.date}</span>
             </div>
-            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-1">${p.title}</h4>
-            <p class="text-xs text-slate-500 mb-3 font-semibold">${p.grade}</p>
-            <div class="bg-slate-50 dark:bg-slate-750 p-3 rounded-xl text-xs text-slate-600 mb-4 whitespace-pre-line">${p.objectives}</div>
+            <h4 class="text-base font-bold text-white mb-1">${p.title}</h4>
+            <p class="text-xs text-amber-300 mb-3 font-semibold">${p.grade}</p>
+            <div class="bg-[#080c14]/70 p-4 rounded-2xl text-xs text-slate-300 mb-4 whitespace-pre-line border border-slate-800">${p.objectives}</div>
           </div>
-          <button onclick="previewPlanPrint(${p.id})" class="w-full py-2 bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold rounded-xl text-xs transition">معاينة وطباعة الخطة</button>
+          <button onclick="previewPlanPrint(${p.id})" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs transition border border-slate-700">معاينة وطباعة الخطة</button>
         </div>
       `).join('');
     }
@@ -1376,20 +1426,20 @@
       const options = getAllClassSectionOptions();
 
       if (!options.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="py-6 text-center text-slate-400">أضف صفوفك وشعبك أولاً لتوليد جدول الحصص.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-slate-500">أضف صفوفك وشعبك أولاً لتوليد جدول الحصص.</td></tr>';
         return;
       }
 
       tbody.innerHTML = options.map(o => `
-        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
-          <td class="py-3 px-4 font-bold text-right text-brand-700 dark:text-brand-300 bg-slate-50 dark:bg-slate-750">${o.grade} (${o.section})</td>
-          <td class="py-3 px-3 font-semibold">${o.subject}</td>
-          <td class="py-3 px-3 font-semibold">اللغة العربية</td>
-          <td class="py-3 px-3 font-semibold">الرياضيات</td>
-          <td class="py-3 px-3 bg-amber-50 text-amber-800 font-bold">استراحة</td>
-          <td class="py-3 px-3 font-semibold">اللغة الإنجليزية</td>
-          <td class="py-3 px-3 font-semibold">الكيمياء / العلوم</td>
-          <td class="py-3 px-3 font-semibold">التربية الإسلامية</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-bold text-right text-amber-300 bg-[#080c14]">${o.grade} (${o.section})</td>
+          <td class="py-3 px-3 font-semibold text-white">${o.subject}</td>
+          <td class="py-3 px-3 font-semibold text-slate-300">الرياضيات</td>
+          <td class="py-3 px-3 font-semibold text-slate-300">اللغة العربية</td>
+          <td class="py-3 px-3 bg-amber-500/10 text-amber-300 font-bold">استراحة</td>
+          <td class="py-3 px-3 font-semibold text-slate-300">اللغة الإنجليزية</td>
+          <td class="py-3 px-3 font-semibold text-slate-300">الكيمياء / العلوم</td>
+          <td class="py-3 px-3 font-semibold text-slate-300">التربية الإسلامية</td>
         </tr>
       `).join('');
     }
@@ -1397,10 +1447,10 @@
     function renderQuizQuestions() {
       const container = document.getElementById('quizQuestionsContainer');
       container.innerHTML = appState.questions.map((q, idx) => `
-        <div class="p-3.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-750 flex items-start justify-between">
+        <div class="p-4 rounded-2xl border border-slate-800 bg-[#080c14]/70 flex items-start justify-between">
           <div>
-            <span class="font-bold text-xs">س${idx + 1}: ${q.text}</span>
-            <p class="text-xs text-emerald-600 font-bold mt-1">الحل: ${q.answer}</p>
+            <span class="font-bold text-sm text-white">س${idx + 1}: ${q.text}</span>
+            <p class="text-xs text-emerald-400 font-bold mt-1.5">الحل: ${q.answer}</p>
           </div>
         </div>
       `).join('');
@@ -1433,7 +1483,7 @@
         ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
         ctx.fill();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = '#080c14';
         ctx.stroke();
 
         ctx.save();
@@ -1448,8 +1498,11 @@
 
       ctx.beginPath();
       ctx.arc(0, 0, 20, 0, 2 * Math.PI);
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#f59e0b';
       ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#080c14';
+      ctx.stroke();
       ctx.restore();
     }
 
@@ -1525,7 +1578,7 @@
       document.getElementById('heroAddStudentsBtn').addEventListener('click', () => switchTab('studentsManager'));
       document.getElementById('heroTakeAttBtn').addEventListener('click', () => switchTab('attendance'));
 
-      // Add Class Handler (Supports up to 15 sections!)
+      // Add Class Handler
       document.getElementById('saveNewClassBtn').addEventListener('click', () => {
         const grade = document.getElementById('newClassGradeInput').value.trim();
         const subject = document.getElementById('newClassSubjectInput').value.trim() || 'المادة العامة';
@@ -1537,9 +1590,7 @@
         }
 
         const sections = sectionsRaw.split(/[,،]/).map(s => s.trim()).filter(Boolean);
-        if (!sections.length) {
-          sections.push('أ');
-        }
+        if (!sections.length) sections.push('أ');
 
         appState.classes.push({
           id: `cls-${Date.now()}`,
@@ -1574,8 +1625,6 @@
         const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
         if (!lines.length) return;
 
-        // Parse class and section from label
-        // Format: "الثالث متوسط - شعبة (أ) [الفيزياء]"
         const gradeMatch = targetClass.split(' - شعبة (')[0] || 'الصف الافتراضي';
         const secMatch = (targetClass.split(' - شعبة (')[1] || 'أ)').split(')')[0] || 'أ';
 
