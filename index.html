@@ -2,22 +2,22 @@
 <html lang="ar" dir="rtl" class="h-full dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة سَنَد التعليمية — SANAD ULTRA PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>منصة سَنَد التعليمية — SANAD PRO</title>
   
-  <!-- PWA & Mobile Meta -->
+  <!-- PWA Meta -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b1120">
+  <meta name="theme-color" content="#090d16">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="سَنَد بريميوم">
+  <meta name="apple-mobile-web-app-title" content="سَنَد">
   <link rel="apple-touch-icon" href="icon-192.png">
 
   <!-- Typography: Google Fonts (Cairo & IBM Plex Sans Arabic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS 3.4.17 -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -55,8 +55,7 @@
             goldAccent: {
               300: '#fde047',
               400: '#facc15',
-              500: '#eab308',
-              600: '#ca8a04'
+              500: '#eab308'
             }
           }
         }
@@ -73,18 +72,15 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.04);
+      background: rgba(0, 0, 0, 0.05);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.3);
+      background: rgba(148, 163, 184, 0.25);
       border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(148, 163, 184, 0.5);
     }
     .panel-card {
       background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
     }
     html:not(.dark) .panel-card {
@@ -119,179 +115,200 @@
   <div id="toastPortal" class="fixed top-5 left-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
 
   <!-- Mobile Drawer Backdrop -->
-  <div id="mobileDrawerBackdrop" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
+  <div id="mobileDrawerBackdrop" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
 
-  <!-- App Header -->
-  <header class="sticky top-0 z-30 bg-midnight-900/90 dark:bg-midnight-900/95 backdrop-blur-md border-b border-midnight-700/80 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <!-- ULTRA-CLEAN LUXURY HEADER (NO CLUTTER, NO WRAPPING, PERFECT ALIGNMENT) -->
+  <header class="sticky top-0 z-30 bg-midnight-900/95 border-b border-midnight-700/70 backdrop-blur-md no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
       
-      <!-- Brand & Mobile Toggle -->
-      <div class="flex items-center gap-3">
-        <button id="toggleSidebarMobileBtn" class="lg:hidden p-2 rounded-xl text-slate-300 hover:text-white hover:bg-midnight-800 transition">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <!-- Right: Brand Identity & Creator Name (Compact & Clean) -->
+      <div class="flex items-center gap-3 min-w-0">
+        <!-- Mobile Sidebar Toggle -->
+        <button id="toggleSidebarMobileBtn" class="lg:hidden p-2 rounded-xl text-slate-300 hover:text-white hover:bg-midnight-800 transition shrink-0" aria-label="فتح القائمة">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-tealAccent-600 to-indigo-600 flex items-center justify-center text-white shadow-md font-black text-lg">
-            س
+        <!-- Brand Icon -->
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-tealAccent-600 to-indigo-600 flex items-center justify-center text-white shadow-md font-black text-base shrink-0">
+          س
+        </div>
+
+        <!-- Brand Titles -->
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="text-base sm:text-lg font-black text-white tracking-wide truncate">سَنَد</span>
+            <span class="text-[9px] px-2 py-0.5 rounded-full bg-tealAccent-500/15 text-tealAccent-400 font-extrabold border border-tealAccent-500/30 whitespace-nowrap">
+              PRO
+            </span>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="text-lg font-black text-white tracking-wide">سَنَد</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-tealAccent-500/15 text-tealAccent-400 font-extrabold border border-tealAccent-500/25 tracking-wider">
-                ULTRA PRO
-              </span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-medium">إعداد: الأستاذ منتظر حميد</p>
-          </div>
+          <p class="text-[10px] sm:text-[11px] text-slate-400 truncate">إعداد: الأستاذ منتظر حميد</p>
         </div>
       </div>
 
-      <!-- Header Tools & Toggles -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Demo Mode Indicator & Switch -->
-        <div id="demoModeContainer" class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-700 bg-midnight-850 text-xs">
-          <span class="text-slate-400 hidden sm:inline font-semibold">الوضع التجريبي:</span>
-          <button id="demoModeToggleBtn" class="px-2.5 py-0.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white">
-            مُعطّل
-          </button>
-        </div>
+      <!-- Left: Harmonized Clean Action Group (Unified Heights, No Misaligned Loose Icons) -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        
+        <!-- Demo Mode Minimalist Toggle -->
+        <button id="demoModeToggleBtn" title="التبديل بين بيانات التجربة وقاعدة البيانات الحقيقية" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-700/80 bg-midnight-850 hover:bg-midnight-800 text-slate-300 hover:text-white text-[11px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-slate-500" id="demoModeDot"></span>
+          <span id="demoModeLabelText">الوضع الحقيقي</span>
+        </button>
 
-        <!-- Direct WhatsApp Support Contact -->
-        <a href="https://wa.me/9647732997337" target="_blank" title="دعم واستفسار مباشر" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600/15 hover:bg-emerald-600/25 border border-emerald-500/30 text-emerald-400 text-xs font-bold transition">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>07732997337</span>
+        <!-- WhatsApp Support Link -->
+        <a href="https://wa.me/9647732997337" target="_blank" title="دعم فني واستفسار: 07732997337" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-600/15 hover:bg-emerald-600/25 text-emerald-400 text-[11px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <span>💬</span>
+          <span class="hidden md:inline font-mono">07732997337</span>
         </a>
 
-        <!-- Sound Toggle -->
-        <button id="soundToggleBtn" title="كتم / تشغيل المؤثرات الصوتية" class="p-2 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-300 border border-slate-700/80 transition">
+        <!-- Sound Toggle Button -->
+        <button id="soundToggleBtn" title="كتم / تشغيل المؤثرات الصوتية" class="w-8 h-8 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-300 border border-slate-700/80 flex items-center justify-center transition">
           <svg id="soundIconOn" class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
           <svg id="soundIconOff" class="w-4 h-4 hidden text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
         </button>
 
-        <!-- Theme Toggle -->
-        <button id="themeToggleBtn" title="تبديل المظهر (فاتح / داكن)" class="p-2 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-300 border border-slate-700/80 transition">
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" title="تبديل المظهر (فاتح / داكن)" class="w-8 h-8 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-300 border border-slate-700/80 flex items-center justify-center transition">
           <svg id="themeIconSun" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           <svg id="themeIconMoon" class="w-4 h-4 block dark:hidden text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
 
-        <!-- PWA Install Button -->
-        <button id="pwaInstallBtn" class="hidden px-3 py-1.5 rounded-xl bg-tealAccent-600 hover:bg-tealAccent-500 text-white text-xs font-bold shadow transition flex items-center gap-1.5">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          <span class="hidden sm:inline">تثبيت التطبيق</span>
-        </button>
       </div>
     </div>
   </header>
 
-  <!-- Layout Container: Sidebar + Workspace -->
+  <!-- APP SHELL: SIDEBAR + WORKSPACE -->
   <div class="flex-1 max-w-7xl w-full mx-auto flex overflow-hidden">
     
-    <!-- Sidebar Navigation (Desktop Persistent + Mobile Drawer) -->
-    <aside id="appSidebar" class="fixed inset-y-0 right-0 z-40 w-64 bg-midnight-900 border-l border-midnight-700/80 transform translate-x-full lg:translate-x-0 lg:static lg:block transition-transform duration-300 ease-in-out overflow-y-auto no-print">
+    <!-- SIDEBAR (PERSISTENT DESKTOP + SLIDING DRAWER MOBILE) -->
+    <aside id="appSidebar" class="fixed inset-y-0 right-0 z-40 w-64 bg-midnight-900 border-l border-midnight-700/70 transform translate-x-full lg:translate-x-0 lg:static lg:block transition-transform duration-300 ease-in-out overflow-y-auto no-print">
       
       <!-- Mobile Drawer Close Header -->
-      <div class="p-4 border-b border-midnight-700/80 flex items-center justify-between lg:hidden">
-        <span class="text-sm font-bold text-white">قائمة المنصة</span>
+      <div class="p-4 border-b border-midnight-700/70 flex items-center justify-between lg:hidden">
+        <div>
+          <span class="text-xs font-bold text-slate-400 block">منصة سَنَد التعليمية</span>
+          <span class="text-sm font-black text-white">قائمة الأقسام</span>
+        </div>
         <button id="closeSidebarMobileBtn" class="p-1.5 text-slate-400 hover:text-white rounded-lg">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
 
-      <!-- Navigation Links -->
-      <nav class="p-3.5 space-y-1 text-xs font-bold">
-        <button data-tab="dashboard" class="sidebar-nav-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right bg-tealAccent-600/15 text-tealAccent-400 border border-tealAccent-500/25">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-          <span>لوحة التحكم الرئيسية</span>
-        </button>
+      <!-- Navigation Categorized Sections -->
+      <nav class="p-3 space-y-4 text-xs font-bold">
+        
+        <!-- Category: Core -->
+        <div>
+          <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider px-3 mb-1 block">الرئيسية</span>
+          <button data-tab="dashboard" class="sidebar-nav-btn active w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right bg-tealAccent-600/15 text-tealAccent-400 border border-tealAccent-500/30">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span>لوحة المتابعة الشاملة</span>
+          </button>
+        </div>
 
-        <button data-tab="classManager" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-          <span>الصفوف والشعب (حتى 15 شعبة)</span>
-        </button>
+        <!-- Category: Academic & Students -->
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider px-3 mb-1 block">الشؤون الصفية والطلاب</span>
+          
+          <button data-tab="classManager" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <span>الصفوف والشعب (حتى 15 شعبة)</span>
+          </button>
 
-        <button data-tab="studentsManager" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <span>سجل الطلاب واستيراد Excel</span>
-        </button>
+          <button data-tab="studentsManager" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span>شؤون الطلاب واستيراد Excel</span>
+          </button>
 
-        <button data-tab="attendance" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-          <span>الحضور والغياب التاريخي</span>
-        </button>
+          <button data-tab="attendance" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <span>سجل الحضور اليومي والتاريخي</span>
+          </button>
 
-        <button data-tab="gradebook" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          <span>دفتر الدرجات والتقويم</span>
-        </button>
+          <button data-tab="gradebook" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>دفتر الدرجات والتقويم الأكاديمي</span>
+          </button>
 
-        <button data-tab="followupRegister" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-          <span>سجل المتابعة اليومي</span>
-        </button>
+          <button data-tab="followupRegister" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            <span>سجل المتابعة اليومي</span>
+          </button>
+        </div>
 
-        <button data-tab="annualPlan" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          <span>الخطة السنوية والمنهج</span>
-        </button>
+        <!-- Category: Planning & Timetables -->
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider px-3 mb-1 block">التخطيط والجداول</span>
+          
+          <button data-tab="annualPlan" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>الخطة السنوية وتوزيع المنهج</span>
+          </button>
 
-        <button data-tab="planner" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-          <span>تحضير الدروس اليومي</span>
-        </button>
+          <button data-tab="planner" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <span>تحضير الدروس اليومي</span>
+          </button>
 
-        <button data-tab="adminTimetable" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-          <span>جدول الحصص المدرسي</span>
-        </button>
+          <button data-tab="adminTimetable" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <span>جدول الحصص الأسبوعي</span>
+          </button>
+        </div>
 
-        <button data-tab="quiz" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>صانع الاختبارات والأسئلة</span>
-        </button>
+        <!-- Category: Evaluation & Tools -->
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider px-3 mb-1 block">التقييم والتفاعل</span>
+          
+          <button data-tab="quiz" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>صانع الاختبارات والأسئلة</span>
+          </button>
 
-        <button data-tab="tools" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>أدوات الصف (القرعة والمؤقت)</span>
-        </button>
+          <button data-tab="tools" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>أدوات الصف (القرعة والمؤقت)</span>
+          </button>
 
-        <button data-tab="parentMsgs" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-          <span>رسائل أولياء الأمور</span>
-        </button>
+          <button data-tab="parentMsgs" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+            <span>رسائل أولياء الأمور</span>
+          </button>
 
-        <button data-tab="backupSettings" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
-          <span>النسخ الاحتياطي والإعدادات</span>
-        </button>
+          <button data-tab="backupSettings" class="sidebar-nav-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition text-right text-slate-400 hover:text-white hover:bg-midnight-800">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+            <span>النسخ الاحتياطي والبيانات</span>
+          </button>
+        </div>
+
       </nav>
 
-      <!-- Sidebar Footer Badge -->
-      <div class="p-4 mt-6 border-t border-midnight-700/80 text-[11px] text-slate-400 leading-relaxed">
+      <!-- Sidebar Footnote -->
+      <div class="p-4 mt-4 border-t border-midnight-700/70 text-[11px] text-slate-400 leading-relaxed">
         <p class="font-bold text-slate-300">نظام سَنَد الذكي</p>
         <p>إعداد الأستاذ منتظر حميد</p>
-        <p class="text-[10px] text-slate-500 mt-1">هاتف: 07732997337</p>
+        <p class="text-[10px] text-slate-500 font-mono mt-0.5">07732997337</p>
       </div>
     </aside>
 
-    <!-- Main Workspace Content Area -->
+    <!-- MAIN WORKSPACE -->
     <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-full">
       
-      <!-- TAB 1: DASHBOARD -->
+      <!-- VIEW 1: DASHBOARD -->
       <section id="viewDashboard" class="tab-view block space-y-6">
-        <!-- Calm Luxury Banner -->
-        <div class="panel-card rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+        
+        <!-- Welcome Hero (Calm, Elegant, No visual clash) -->
+        <div class="panel-card rounded-2xl p-6 sm:p-7 relative overflow-hidden">
           <div class="relative z-10 max-w-2xl">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tealAccent-500/10 text-tealAccent-400 text-xs font-bold mb-3 border border-tealAccent-500/20">
-              <span>●</span> مرحباً بك في منظومة سَنَد المتطورة
-            </span>
-            <h1 class="text-2xl sm:text-3xl font-black text-white dark:text-white mb-2">لوحة متابعة الأعمال اليومية</h1>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tealAccent-500/10 text-tealAccent-400 text-xs font-bold mb-3 border border-tealAccent-500/20">
+              <span>●</span> مركز المتابعة المدرسية الشامل
+            </div>
+            <h1 class="text-xl sm:text-2xl font-black text-white mb-2">لوحة متابعة الأعمال اليومية</h1>
             <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-5">
-              متابعة حضور الطلاب، السجلات المدرسية، الخطط السنوية واليومية، وتوليد الاختبارات بأعلى درجات الهدوء والتنظيم.
+              متابعة دقيقة لحضور وغياب الطلاب، السجلات المدرسية، الخطط السنوية واليومية، وتوليد الاختبارات بأعلى معايير الهدوء والتنظيم.
             </p>
             <div class="flex flex-wrap gap-2.5">
               <button id="dashQuickAddClassBtn" class="px-4 py-2 rounded-xl bg-tealAccent-600 hover:bg-tealAccent-500 text-white font-bold text-xs shadow transition flex items-center gap-1.5">
-                <span>➕</span> إضافة صف ومادة
+                <span>➕</span> إضافة صف وشعب جديدة
               </button>
               <button id="dashQuickAttendanceBtn" class="px-4 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 font-bold text-xs transition flex items-center gap-1.5">
                 <span>✅</span> رصد الحضور اليومي
@@ -300,78 +317,69 @@
           </div>
         </div>
 
-        <!-- Metrics Cards -->
+        <!-- Real Coherent Dashboard Metrics (Verified Arab Plurals, No 100% on empty, No division by zero) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="panel-card rounded-2xl p-5">
-            <span class="text-xs font-semibold text-slate-400 block mb-1">الصفوف والشعب</span>
-            <h3 id="statClassesCount" class="text-2xl sm:text-3xl font-black text-white">0</h3>
-            <span id="statClassesDetail" class="text-[11px] text-slate-500 block mt-1">لا توجد صفوف</span>
+            <span class="text-xs font-semibold text-slate-400 block mb-1">الصفوف والشعب المعتمدة</span>
+            <h3 id="statClassesCount" class="text-2xl sm:text-3xl font-black text-white">0 صفوف</h3>
+            <span id="statClassesDetail" class="text-[11px] text-slate-500 block mt-1">لا توجد صفوف بعد</span>
           </div>
 
           <div class="panel-card rounded-2xl p-5">
-            <span class="text-xs font-semibold text-slate-400 block mb-1">إجمالي الطلاب</span>
-            <h3 id="statStudentsCount" class="text-2xl sm:text-3xl font-black text-tealAccent-400">0</h3>
+            <span class="text-xs font-semibold text-slate-400 block mb-1">إجمالي الطلاب المسجلين</span>
+            <h3 id="statStudentsCount" class="text-2xl sm:text-3xl font-black text-tealAccent-400">0 طالب</h3>
             <span id="statStudentsDetail" class="text-[11px] text-slate-500 block mt-1">لا يوجد طلاب مسجلون</span>
           </div>
 
           <div class="panel-card rounded-2xl p-5">
-            <span class="text-xs font-semibold text-slate-400 block mb-1">حضور اليوم</span>
+            <span class="text-xs font-semibold text-slate-400 block mb-1">نسبة حضور اليوم</span>
             <h3 id="statAttendancePercent" class="text-2xl sm:text-3xl font-black text-indigo-400">—</h3>
-            <span id="statAttendanceDetail" class="text-[11px] text-slate-500 block mt-1">لم يُسجّل حضور اليوم</span>
+            <span id="statAttendanceDetail" class="text-[11px] text-slate-500 block mt-1">لم يُسجّل حضور اليوم بعد</span>
           </div>
 
           <div class="panel-card rounded-2xl p-5">
             <span class="text-xs font-semibold text-slate-400 block mb-1">الخطط المحفوظة</span>
-            <h3 id="statPlansCount" class="text-2xl sm:text-3xl font-black text-amber-400">0</h3>
+            <h3 id="statPlansCount" class="text-2xl sm:text-3xl font-black text-amber-400">0 خطط</h3>
             <span id="statPlansDetail" class="text-[11px] text-slate-500 block mt-1">سنوية ويومية</span>
           </div>
         </div>
 
-        <!-- Activity & Getting Started Empty State or Overview -->
+        <!-- Dashboard Center Split: Today Schedule & Audit Log -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 panel-card rounded-2xl p-6">
-            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
-              <span>📌</span> جدول حصص اليوم المجدولة
-            </h3>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span>📌</span> جدول حصص اليوم المجدولة
+              </h3>
+              <span id="dashTodayDayBadge" class="text-[11px] px-2.5 py-0.5 rounded-lg bg-midnight-800 text-slate-300 font-bold">اليوم الدراسي</span>
+            </div>
             <div id="dashTodayScheduleList" class="space-y-2.5">
-              <!-- Dynamically populated or empty state -->
+              <!-- Dynamically populated or clean empty state -->
             </div>
           </div>
 
+          <!-- Audit Activity Log & System Health -->
           <div class="panel-card rounded-2xl p-6 flex flex-col justify-between">
             <div>
-              <h3 class="text-sm font-bold text-white mb-3">حالة المنظومة</h3>
-              <div class="space-y-3 text-xs text-slate-400">
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-midnight-850 border border-midnight-700/60">
-                  <span>قاعدة البيانات المحلية:</span>
-                  <span class="text-emerald-400 font-bold flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> آمنة ونشطة
-                  </span>
-                </div>
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-midnight-850 border border-midnight-700/60">
-                  <span>الوضع الحالي:</span>
-                  <span id="dashActiveModeLabel" class="text-slate-300 font-bold">الوضع الحقيقي (فارغ)</span>
-                </div>
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-midnight-850 border border-midnight-700/60">
-                  <span>العام الدراسي:</span>
-                  <span class="text-slate-300 font-bold">2026 - 2027</span>
-                </div>
+              <h3 class="text-sm font-bold text-white mb-3">سجل آخر العمليات بالنظام</h3>
+              <div id="dashActivityLogList" class="space-y-2 text-xs text-slate-400">
+                <!-- Activity records -->
               </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-midnight-700/60 text-[11px] text-slate-500 text-center">
-              جميع التعديلات تُحفظ بشكل فوري محلياً دون الحاجة لاتصال مستمر.
+            <div class="mt-4 pt-3 border-t border-midnight-700/70 text-[11px] text-slate-500 text-center">
+              النظام يحفظ كافة التعديلات محلياً بسلامة بيانات كاملة.
             </div>
           </div>
         </div>
       </section>
 
-      <!-- TAB 2: CLASS & SECTION MANAGER -->
+      <!-- VIEW 2: CLASS & SECTION MANAGER -->
       <section id="viewClassManager" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h2 class="text-lg font-black text-white">إدارة الصفوف والمواد الدراسية والشعب</h2>
-            <p class="text-xs text-slate-400 mt-1">تحديد الصفوف والمواد وتعيين حتى 15 شعبة لكل صف مع حماية الروابط</p>
+            <p class="text-xs text-slate-400 mt-1">تحديد الصف والمادة وتعيين حتى 15 شعبة لكل صف مع حماية سلامة العلاقات</p>
           </div>
           <button id="openAddClassModalBtn" class="px-4 py-2.5 rounded-xl bg-tealAccent-600 hover:bg-tealAccent-500 text-white text-xs font-bold shadow transition flex items-center gap-1.5">
             <span>➕</span> إضافة صف ومادة جديدة
@@ -383,7 +391,7 @@
         </div>
       </section>
 
-      <!-- TAB 3: STUDENTS DIRECTORY & EXCEL IMPORT -->
+      <!-- VIEW 3: STUDENTS DIRECTORY & EXCEL IMPORT -->
       <section id="viewStudentsManager" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -395,7 +403,7 @@
               <span>📥</span> استيراد Excel
             </button>
             <button id="openBulkPasteModalBtn" class="px-3.5 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5">
-              <span>📋</span> لصق قائمة
+              <span>📋</span> لصق قائمة أسماء
             </button>
             <button id="openSingleStudentModalBtn" class="px-3.5 py-2 rounded-xl bg-tealAccent-600 hover:bg-tealAccent-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow">
               <span>➕</span> إضافة طالب
@@ -408,7 +416,7 @@
           <div class="flex items-center gap-2.5 flex-1 min-w-[240px]">
             <span class="font-bold text-slate-400 whitespace-nowrap">تصفية حسب الشعبة:</span>
             <select id="studentsFilterSelect" class="bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none w-full max-w-xs">
-              <!-- Dynamically populated options -->
+              <!-- Dynamically populated options with IDs -->
             </select>
           </div>
           <div class="flex items-center gap-2">
@@ -428,7 +436,7 @@
                   <th class="py-3 px-4">#</th>
                   <th class="py-3 px-4">اسم الطالب</th>
                   <th class="py-3 px-4">الصف والشعبة</th>
-                  <th class="py-3 px-4">رقم ولي الأمر</th>
+                  <th class="py-3 px-4">هاتف ولي الأمر</th>
                   <th class="py-3 px-4 text-center">إجراءات</th>
                 </tr>
               </thead>
@@ -440,7 +448,7 @@
         </div>
       </section>
 
-      <!-- TAB 4: HISTORICAL ATTENDANCE -->
+      <!-- VIEW 4: HISTORICAL ATTENDANCE -->
       <section id="viewAttendance" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
@@ -507,7 +515,7 @@
         </div>
       </section>
 
-      <!-- TAB 5: GRADEBOOK -->
+      <!-- VIEW 5: GRADEBOOK -->
       <section id="viewGradebook" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
@@ -555,7 +563,7 @@
         </div>
       </section>
 
-      <!-- TAB 6: FOLLOW-UP REGISTER -->
+      <!-- VIEW 6: FOLLOW-UP REGISTER -->
       <section id="viewFollowupRegister" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -594,7 +602,7 @@
         </div>
       </section>
 
-      <!-- TAB 7: ANNUAL CURRICULUM PLAN -->
+      <!-- VIEW 7: ANNUAL CURRICULUM PLAN -->
       <section id="viewAnnualPlan" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -626,7 +634,7 @@
         </div>
       </section>
 
-      <!-- TAB 8: DAILY LESSON PLANNER -->
+      <!-- VIEW 8: DAILY LESSON PLANNER -->
       <section id="viewPlanner" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -643,7 +651,7 @@
         </div>
       </section>
 
-      <!-- TAB 9: MASTER TIMETABLE -->
+      <!-- VIEW 9: MASTER TIMETABLE -->
       <section id="viewAdminTimetable" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -678,7 +686,7 @@
         </div>
       </section>
 
-      <!-- TAB 10: QUIZ & QUESTION BANK -->
+      <!-- VIEW 10: QUIZ & QUESTION BANK -->
       <section id="viewQuiz" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -700,7 +708,7 @@
         </div>
       </section>
 
-      <!-- TAB 11: CLASSROOM TOOLS (WHEEL, TIMER, POINTS) -->
+      <!-- VIEW 11: CLASSROOM TOOLS (WHEEL, TIMER) -->
       <section id="viewTools" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6">
           <h2 class="text-lg font-black text-white">أدوات التفاعل الصفي الذكية</h2>
@@ -749,7 +757,7 @@
         </div>
       </section>
 
-      <!-- TAB 12: PARENT COMMUNICATION -->
+      <!-- VIEW 12: PARENT COMMUNICATION -->
       <section id="viewParentMsgs" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6">
           <h2 class="text-lg font-black text-white">مساعد رسائل وتقارير أولياء الأمور</h2>
@@ -800,7 +808,7 @@
         </div>
       </section>
 
-      <!-- TAB 13: BACKUP, RESTORE & SETTINGS -->
+      <!-- VIEW 13: BACKUP, RESTORE & SETTINGS -->
       <section id="viewBackupSettings" class="tab-view hidden space-y-6">
         <div class="panel-card rounded-2xl p-6">
           <h2 class="text-lg font-black text-white">النسخ الاحتياطي، الاستعادة، وإدارة البيانات</h2>
@@ -844,30 +852,12 @@
     </main>
   </div>
 
-  <!-- App Global Footer -->
-  <footer class="bg-midnight-900 border-t border-midnight-700/80 py-4 px-6 text-xs text-slate-400 no-print mt-auto">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-right">
-      <div>
-        <span class="font-extrabold text-white">منصة سَنَد التعليمية — SANAD ULTRA PRO</span>
-        <span class="text-slate-500 mx-2">|</span>
-        <span>إعداد: الأستاذ منتظر حميد</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <a href="tel:07732997337" class="text-tealAccent-400 font-bold hover:underline">هاتف / واتساب: 07732997337</a>
-        <span class="text-slate-600">•</span>
-        <span class="text-emerald-400 flex items-center gap-1 font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> تخزين محلي هجين
-        </span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==================== PRINT CONTAINER ==================== -->
+  <!-- PRINT CONTAINER -->
   <div id="printContainer" class="hidden"></div>
 
-  <!-- ==================== MODALS ==================== -->
+  <!-- MODALS -->
 
-  <!-- MODAL: ADD CLASS -->
+  <!-- MODAL: ADD CLASS (WITH UP TO 15 SECTIONS) -->
   <div id="modalAddClass" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="panel-card rounded-2xl max-w-md w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
       <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
@@ -961,7 +951,7 @@
       <div>
         <label class="block font-bold text-slate-300 mb-1">اختر ملف Excel من جهازك:</label>
         <input type="file" id="inputExcelFile" accept=".xlsx, .xls, .csv" class="w-full bg-midnight-950 border border-slate-700 rounded-xl p-2.5 text-slate-300 text-xs">
-        <p class="text-[10px] text-slate-500 mt-1">يقوم النظام تلقائياً بقراءة عمود الأسماء وإدراجهم في الشعبة المحددة.</p>
+        <p class="text-[10px] text-slate-500 mt-1">يقوم النظام بقراءة أسماء الطلاب وإضافتهم إلى الشعبة المحددة.</p>
       </div>
       <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
         <button id="cancelExcelImportModalBtn" class="px-4 py-2 rounded-xl bg-midnight-800 text-slate-300 font-bold">إلغاء</button>
@@ -1032,7 +1022,7 @@
     </div>
   </div>
 
-  <!-- MODAL: CONFIRM DELETION (WITH STUDENT WARNING) -->
+  <!-- MODAL: CONFIRM DELETION -->
   <div id="modalConfirmAction" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="panel-card rounded-2xl max-w-sm w-full p-6 space-y-3.5 text-xs border border-slate-700 shadow-2xl text-center">
       <div class="w-10 h-10 rounded-full bg-rose-500/20 text-rose-400 font-bold flex items-center justify-center mx-auto text-lg">⚠️</div>
@@ -1045,9 +1035,9 @@
     </div>
   </div>
 
-  <!-- APPLICATION JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // --- Security Helper: Prevent XSS ---
+    // --- Security Helper: Sanitize Strings ---
     function sanitize(str) {
       if (!str) return '';
       return String(str)
@@ -1058,19 +1048,27 @@
         .replace(/'/g, '&#039;');
     }
 
-    // --- Demo Data Isolated Set ---
+    // --- Isolated Demo Dataset (Coherent, 3 classes, 15 students, realistic stats) ---
     const DEMO_STATE = {
       teacher: { name: "الأستاذ منتظر حميد", contact: "07732997337", academicYear: "2026 - 2027" },
       classes: [
-        { id: "demo-cls-1", grade: "الثالث متوسط", subject: "الفيزياء", sections: ["أ", "ب", "ج"] },
-        { id: "demo-cls-2", grade: "الرابع علمي", subject: "الكيمياء", sections: ["أ", "ب"] }
+        { id: "c_demo_1", grade: "الثالث متوسط", subject: "الفيزياء", sections: ["أ", "ب"] },
+        { id: "c_demo_2", grade: "الرابع علمي", subject: "الكيمياء", sections: ["أ", "ب"] },
+        { id: "c_demo_3", grade: "الخامس علمي", subject: "الرياضيات", sections: ["أ"] }
       ],
       students: [
         { id: 101, name: "علي حسين كاظم", classGrade: "الثالث متوسط", section: "أ", phone: "07711111111" },
         { id: 102, name: "حيدر جعفر صادق", classGrade: "الثالث متوسط", section: "أ", phone: "07722222222" },
         { id: 103, name: "سجاد فاضل عباس", classGrade: "الثالث متوسط", section: "أ", phone: "07733333333" },
         { id: 104, name: "محمد باقر سلام", classGrade: "الثالث متوسط", section: "ب", phone: "07744444444" },
-        { id: 105, name: "يوسف عمار هادي", classGrade: "الثالث متوسط", section: "ب", phone: "07755555555" }
+        { id: 105, name: "يوسف عمار هادي", classGrade: "الثالث متوسط", section: "ب", phone: "07755555555" },
+        { id: 106, name: "مصطفى قاسم داود", classGrade: "الثالث متوسط", section: "ب", phone: "07766666666" },
+        { id: 201, name: "سيف الدين رائد", classGrade: "الرابع علمي", section: "أ", phone: "07811111111" },
+        { id: 202, name: "ضرغام حازم فائق", classGrade: "الرابع علمي", section: "أ", phone: "07822222222" },
+        { id: 203, name: "طه عدنان فاضل", classGrade: "الرابع علمي", section: "ب", phone: "07833333333" },
+        { id: 204, name: "مهند نزار كمال", classGrade: "الرابع علمي", section: "ب", phone: "07844444444" },
+        { id: 301, name: "رضا باسم كاظم", classGrade: "الخامس علمي", section: "أ", phone: "07511111111" },
+        { id: 302, name: "ياسين صفاء صبحي", classGrade: "الخامس علمي", section: "أ", phone: "07522222222" }
       ],
       attendance: {
         "2026-11-05": {
@@ -1078,7 +1076,14 @@
           "102": { status: "present" },
           "103": { status: "absent" },
           "104": { status: "present" },
-          "105": { status: "late" }
+          "105": { status: "late" },
+          "106": { status: "present" },
+          "201": { status: "present" },
+          "202": { status: "present" },
+          "203": { status: "present" },
+          "204": { status: "absent" },
+          "301": { status: "present" },
+          "302": { status: "present" }
         }
       },
       grades: {
@@ -1086,18 +1091,21 @@
         "102": { participation: 10, homework: 20, activity: 20, exam: 50 },
         "103": { participation: 8, homework: 16, activity: 17, exam: 42 },
         "104": { participation: 7, homework: 14, activity: 15, exam: 36 },
-        "105": { participation: 9, homework: 18, activity: 18, exam: 45 }
+        "105": { participation: 9, homework: 18, activity: 18, exam: 45 },
+        "106": { participation: 10, homework: 19, activity: 20, exam: 47 },
+        "201": { participation: 10, homework: 20, activity: 20, exam: 49 },
+        "202": { participation: 9, homework: 18, activity: 18, exam: 44 }
       },
       followup: {
-        "101": { homework: "ممتاز", notebook: "مرتب", participation: "10 / 10", status: "ملتزم" },
-        "102": { homework: "ممتاز", notebook: "مرتب جداً", participation: "10 / 10", status: "ملتزم" },
+        "101": { homework: "منجز ممتاز", notebook: "مرتب جداً", participation: "10 / 10", status: "ملتزم" },
+        "102": { homework: "منجز ممتاز", notebook: "مرتب", participation: "10 / 10", status: "ملتزم" },
         "103": { homework: "يحتاج متابعة", notebook: "ناقص", participation: "8 / 10", status: "تنبيه واجب" }
       },
       annualPlan: [
-        { month: "تشرين الأول (10)", unit: "الفصل الأول: الكهربائية الساكنة", topics: "المفاهيم والقوانين والمسائل", periods: 12, tools: "الكتاب ووسائل الإيضاح" },
-        { month: "تشرين الثاني (11)", unit: "الفصل الثاني: المغناطيسية", topics: "المجال والتطبيقات المعملية", periods: 12, tools: "أوراق عمل وتجارب" },
-        { month: "كانون الأول (12)", unit: "الفصل الثالث: التيار الكهربائي", topics: "قانون أوم وتوصيل المقاومات", periods: 14, tools: "المختبر وبنك الأسئلة" },
-        { month: "كانون الثاني (1)", unit: "مراجعة امتحانات نصف السنة", topics: "حل نماذج الأسئلة الوزارية", periods: 8, tools: "الملخصات الوزارية" }
+        { month: "تشرين الأول (10)", unit: "الفصل الأول: الكهربائية الساكنة", topics: "المفاهيم والقوانين والمسائل النموذجية", periods: 12, tools: "الكتاب ووسائل الإيضاح" },
+        { month: "تشرين الثاني (11)", unit: "الفصل الثاني: المغناطيسية", topics: "المجال المغناطيسي والتطبيقات المعملية", periods: 12, tools: "أوراق عمل وتجارب" },
+        { month: "كانون الأول (12)", unit: "الفصل الثالث: التيار الكهربائي", topics: "قانون أوم وتوصيل المقاومات الكهربائية", periods: 14, tools: "المختبر وبنك الأسئلة" },
+        { month: "كانون الثاني (1)", unit: "مراجعة امتحانات نصف السنة", topics: "حل نماذج الأسئلة الوزارية السابقة", periods: 8, tools: "الملخصات الوزارية" }
       ],
       dailyPlans: [
         {
@@ -1105,13 +1113,18 @@
           title: "الضغط وقانون باسكال في السوائل الساكنة",
           subject: "الفيزياء",
           grade: "الثالث متوسط (أ)",
-          objectives: "1. أن يفهم الطالب انتقال الضغط بالتساوي.\n2. أن يحل مسائل المكبس الهيدروليكي.",
+          objectives: "1. أن يفهم الطالب مبدأ انتقال الضغط بالتساوي.\n2. أن يحل مسائل المكبس الهيدروليكي.",
           steps: "• التهيئة والعصف الذهني (5د)\n• العرض الرياضي والتجريبي (25د)\n• التقويم وبطاقة الخروج (15د)"
         }
       ],
       quizzes: [
         { id: 1, text: "ما هي وحدة قياس الضغط في النظام الدولي للوحدات (SI)؟", answer: "باسكال (N/m²)" },
         { id: 2, text: "علل: تصنع السدود بحيث تكون قاعدتها أكثر سمكاً من قمتها؟", answer: "لأن ضغط السائل يزداد بزيادة العمق نحو القاع." }
+      ],
+      activityLog: [
+        { text: "تم تسجيل حضور طلاب الشعبة لتاريخ اليوم", time: "قبل 10 دقائق" },
+        { text: "تم تحديث درجات الاختبار الشهري", time: "قبل ساعة" },
+        { text: "تمت إضافة خطة درس جديدة بنجاح", time: "اليوم" }
       ]
     };
 
@@ -1125,35 +1138,37 @@
       followup: {},
       annualPlan: [],
       dailyPlans: [],
-      quizzes: []
+      quizzes: [],
+      activityLog: []
     };
 
-    // --- Storage & Migration Engine (v5.0) ---
+    // --- State Storage & Auto-Migration ---
     let appState = null;
     let isDemoActive = false;
     let pendingConfirmCallback = null;
 
     function initAppState() {
       try {
-        const savedV5 = localStorage.getItem('sanad_teacher_state_v5');
-        if (savedV5) {
-          appState = JSON.parse(savedV5);
+        const savedV6 = localStorage.getItem('sanad_teacher_state_v6');
+        if (savedV6) {
+          appState = JSON.parse(savedV6);
         } else {
-          // Check for legacy v4 data to migrate smoothly without data loss
-          const legacyV4 = localStorage.getItem('sanad_teacher_state_legendary_v4') || localStorage.getItem('sanad_teacher_state_montazer_custom_v3');
-          if (legacyV4) {
+          // Check for legacy v5 or v4 data to migrate smoothly without loss
+          const legacyV5 = localStorage.getItem('sanad_teacher_state_v5') || localStorage.getItem('sanad_teacher_state_legendary_v4');
+          if (legacyV5) {
             try {
-              const old = JSON.parse(legacyV4);
+              const old = JSON.parse(legacyV5);
               appState = JSON.parse(JSON.stringify(CLEAN_PRODUCTION_STATE));
               if (old.classes) appState.classes = old.classes;
               if (old.students) appState.students = old.students;
+              if (old.attendance) appState.attendance = old.attendance;
+              if (old.grades) appState.grades = old.grades;
+              if (old.followup) appState.followup = old.followup;
               if (old.annualPlan) appState.annualPlan = old.annualPlan;
-              if (old.plans) appState.dailyPlans = old.plans;
-              if (old.questions) appState.quizzes = old.questions;
-              // Save backup of old state
-              localStorage.setItem('sanad_legacy_v4_backup', legacyV4);
+              if (old.dailyPlans) appState.dailyPlans = old.dailyPlans;
+              if (old.quizzes) appState.quizzes = old.quizzes;
+              localStorage.setItem('sanad_legacy_v5_backup', legacyV5);
               saveState();
-              console.log('Sanad: Successfully migrated legacy data to v5.0 format.');
             } catch (err) {
               appState = JSON.parse(JSON.stringify(CLEAN_PRODUCTION_STATE));
             }
@@ -1162,17 +1177,16 @@
           }
         }
       } catch (e) {
-        console.warn('Storage read warning:', e);
         appState = JSON.parse(JSON.stringify(CLEAN_PRODUCTION_STATE));
       }
     }
 
     function saveState() {
-      if (isDemoActive) return; // Do not overwrite real data with demo test data!
+      if (isDemoActive) return; // Never overwrite real database with demo session data
       try {
-        localStorage.setItem('sanad_teacher_state_v5', JSON.stringify(appState));
+        localStorage.setItem('sanad_teacher_state_v6', JSON.stringify(appState));
       } catch (err) {
-        console.warn('LocalStorage save failed:', err);
+        console.warn('Save failed:', err);
       }
     }
 
@@ -1180,7 +1194,16 @@
       return isDemoActive ? DEMO_STATE : appState;
     }
 
-    // --- Sound Synthesis (Web Audio API) ---
+    function addActivityLog(text) {
+      const state = getActiveState();
+      if (!state.activityLog) state.activityLog = [];
+      state.activityLog.unshift({ text: text, time: "الآن" });
+      if (state.activityLog.length > 8) state.activityLog.pop();
+      saveState();
+      renderActivityLog();
+    }
+
+    // --- Sound Synthesis ---
     let soundEnabled = true;
     let audioCtx = null;
     function playTone(freq, type, duration) {
@@ -1204,7 +1227,7 @@
       } catch (e) {}
     }
 
-    // --- Toast Engine ---
+    // --- Toast System ---
     function showToast(message, type = 'success') {
       const portal = document.getElementById('toastPortal');
       const toast = document.createElement('div');
@@ -1235,13 +1258,13 @@
         v.classList.remove('block');
       });
       document.querySelectorAll('.sidebar-nav-btn').forEach(b => {
-        b.classList.remove('active', 'bg-tealAccent-600/15', 'text-tealAccent-400', 'border', 'border-tealAccent-500/25');
+        b.classList.remove('active', 'bg-tealAccent-600/15', 'text-tealAccent-400', 'border', 'border-tealAccent-500/30');
         b.classList.add('text-slate-400');
       });
 
       const activeBtn = document.querySelector(`.sidebar-nav-btn[data-tab="${tabId}"]`);
       if (activeBtn) {
-        activeBtn.classList.add('active', 'bg-tealAccent-600/15', 'text-tealAccent-400', 'border', 'border-tealAccent-500/25');
+        activeBtn.classList.add('active', 'bg-tealAccent-600/15', 'text-tealAccent-400', 'border', 'border-tealAccent-500/30');
         activeBtn.classList.remove('text-slate-400');
       }
 
@@ -1275,7 +1298,7 @@
       if (tabId === 'tools') drawWheel();
     }
 
-    // --- Helper: Get All Distinct Class-Section Combos ---
+    // --- Section Helper Options ---
     function getSectionOptions() {
       const state = getActiveState();
       const list = [];
@@ -1313,7 +1336,7 @@
         }
       });
 
-      // Populate student select for parent msgs
+      // Populate student select for parent messages
       const pSel = document.getElementById('parentMsgStudentSelect');
       const state = getActiveState();
       if (pSel) {
@@ -1332,16 +1355,21 @@
       const studentCount = (state.students || []).length;
       const plansCount = (state.dailyPlans || []).length + (state.annualPlan || []).length;
 
-      document.getElementById('statClassesCount').textContent = classCount;
-      document.getElementById('statClassesDetail').textContent = classCount === 0 ? 'لا توجد صفوف بعد' : `${classCount} صفوف معتمدة`;
+      // Proper Arabic grammar rules
+      const classText = classCount === 0 ? '0 صفوف' : classCount === 1 ? 'صف واحد' : classCount === 2 ? 'صفان اثنان' : classCount <= 10 ? `${classCount} صفوف` : `${classCount} صفاً`;
+      const studentText = studentCount === 0 ? '0 طالب' : studentCount === 1 ? 'طالب واحد' : studentCount === 2 ? 'طالبان اثنان' : studentCount <= 10 ? `${studentCount} طلاب` : `${studentCount} طالباً`;
+      const planText = plansCount === 0 ? '0 خطط' : plansCount === 1 ? 'خطة واحدة' : plansCount === 2 ? 'خطتان اثنتان' : plansCount <= 10 ? `${plansCount} خطط` : `${plansCount} خطة`;
 
-      document.getElementById('statStudentsCount').textContent = studentCount;
+      document.getElementById('statClassesCount').textContent = classText;
+      document.getElementById('statClassesDetail').textContent = classCount === 0 ? 'لا توجد صفوف مسجلة' : `${classCount} صفوف معتمدة`;
+
+      document.getElementById('statStudentsCount').textContent = studentText;
       document.getElementById('statStudentsDetail').textContent = studentCount === 0 ? 'لا يوجد طلاب مسجلون' : `${studentCount} طالب في السجلات`;
 
-      document.getElementById('statPlansCount').textContent = plansCount;
+      document.getElementById('statPlansCount').textContent = planText;
       document.getElementById('statPlansDetail').textContent = plansCount === 0 ? 'لا توجد خطط بعد' : `${plansCount} خطة محفوظة`;
 
-      // True calculation of today's attendance (NO 100% on empty, NO division by zero)
+      // Today attendance (strict check: no division by zero, no 100% on empty)
       const todayStr = document.getElementById('attendanceDateInput').value || new Date().toISOString().split('T')[0];
       const todayRecords = (state.attendance && state.attendance[todayStr]) ? state.attendance[todayStr] : null;
 
@@ -1356,12 +1384,17 @@
         document.getElementById('statAttendanceDetail').textContent = `حاضر: ${presentCount} من ${recordedIds.length} مسجل`;
       }
 
-      // Today Schedule List
+      // Day name badge
+      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      const todayName = days[new Date().getDay()] || 'الأحد';
+      document.getElementById('dashTodayDayBadge').textContent = `جدول يوم ${todayName}`;
+
+      // Schedule List
       const scheduleContainer = document.getElementById('dashTodayScheduleList');
       if (!classCount) {
         scheduleContainer.innerHTML = `
           <div class="text-center py-8 text-slate-500 text-xs">
-            لم تسجل صفوفاً أو حصصاً حتى الآن. اضغط "إضافة صف ومادة" في الأعلى للبدء.
+            لم تسجل صفوفاً أو حصصاً حتى الآن. اضغط "إضافة صف وشعب جديدة" للبدء.
           </div>
         `;
       } else {
@@ -1383,6 +1416,23 @@
           </div>
         `).join('');
       }
+
+      renderActivityLog();
+    }
+
+    function renderActivityLog() {
+      const state = getActiveState();
+      const listEl = document.getElementById('dashActivityLogList');
+      if (!state.activityLog || !state.activityLog.length) {
+        listEl.innerHTML = '<div class="text-center py-4 text-slate-500">لا توجد عمليات مسجلة حديثاً</div>';
+        return;
+      }
+      listEl.innerHTML = state.activityLog.map(log => `
+        <div class="flex items-center justify-between p-2 rounded-lg bg-midnight-850 border border-midnight-700/60">
+          <span class="text-slate-300 font-semibold truncate">${sanitize(log.text)}</span>
+          <span class="text-[10px] text-slate-500 font-mono shrink-0 mr-2">${sanitize(log.time)}</span>
+        </div>
+      `).join('');
     }
 
     function renderClassesList() {
@@ -1405,7 +1455,7 @@
               <span class="px-2.5 py-0.5 rounded-full bg-tealAccent-500/15 text-tealAccent-400 font-bold text-xs border border-tealAccent-500/25">
                 ${sanitize(c.subject)}
               </span>
-              <button onclick="promptDeleteClass('${sanitize(c.id)}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold">
+              <button onclick="promptDeleteClass('${sanitize(c.id)}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold transition">
                 حذف الصف
               </button>
             </div>
@@ -1429,12 +1479,13 @@
       const affected = state.students.filter(s => s.classGrade === cls.grade);
       let msg = `هل أنت متأكد من حذف ${cls.grade} (${cls.subject})؟`;
       if (affected.length > 0) {
-        msg = `تحذير هام: يوجد (${affected.length}) طالب مسجل مرتبط بهذا الصف. حذف الصف سيحذف أيضاً سجلات هؤلاء الطلاب نهائياً. هل أنت متأكد؟`;
+        msg = `تحذير هام: يوجد (${affected.length}) طالب مسجل مرتبط بهذا الصف. حذف الصف سيحذف سجلات هؤلاء الطلاب نهائياً. هل أنت متأكد تماماً؟`;
       }
 
       openConfirmModal('تأكيد حذف الصف', msg, () => {
         state.classes = state.classes.filter(c => c.id !== classId);
         state.students = state.students.filter(s => s.classGrade !== cls.grade);
+        addActivityLog(`تم حذف الصف الدراسي: ${cls.grade}`);
         saveState();
         populateAllSelects();
         renderClassesList();
@@ -1482,6 +1533,14 @@
 
       openConfirmModal('حذف الطالب', `هل أنت متأكد من حذف الطالب (${st.name}) من السجل؟`, () => {
         state.students = state.students.filter(s => s.id !== id);
+        // Clean related records
+        if (state.grades && state.grades[id]) delete state.grades[id];
+        if (state.followup && state.followup[id]) delete state.followup[id];
+        Object.keys(state.attendance || {}).forEach(d => {
+          if (state.attendance[d][id]) delete state.attendance[d][id];
+        });
+
+        addActivityLog(`تم حذف الطالب: ${st.name}`);
         saveState();
         renderStudentsTable();
         renderAttendanceTable();
@@ -1489,11 +1548,11 @@
         renderFollowupTable();
         renderDashboard();
         populateAllSelects();
-        showToast('تم حذف الطالب بنجاح', 'info');
+        showToast('تم حذف الطالب وتنظيف سجلاته التابعة', 'info');
       });
     }
 
-    // --- Historical Attendance Renderer & Handler ---
+    // --- Historical Attendance Handler ---
     function renderAttendanceTable() {
       const state = getActiveState();
       const filter = document.getElementById('attendanceSectionSelect').value;
@@ -1509,7 +1568,6 @@
       if (!state.attendance[dateStr]) state.attendance[dateStr] = {};
       const dayRecords = state.attendance[dateStr];
 
-      // Counters for this day
       let pres = 0, abs = 0, late = 0, exc = 0;
       students.forEach(s => {
         const rec = dayRecords[s.id];
@@ -1534,7 +1592,6 @@
       tbody.innerHTML = students.map((s, idx) => {
         const status = dayRecords[s.id] ? dayRecords[s.id].status : 'none';
         
-        // Compute real cumulative absences across ALL historical dates
         let totalAbs = 0;
         Object.keys(state.attendance).forEach(d => {
           if (state.attendance[d][s.id] && state.attendance[d][s.id].status === 'absent') {
@@ -1584,7 +1641,7 @@
       renderDashboard();
     }
 
-    // --- Gradebook Guarded Renderer & Inputs ---
+    // --- Gradebook Guarded Engine ---
     function renderGradebookTable() {
       const state = getActiveState();
       const filter = document.getElementById('gradebookSectionSelect').value;
@@ -1649,6 +1706,7 @@
       if (!state.grades[studentId]) state.grades[studentId] = { participation: 0, homework: 0, activity: 0, exam: 0 };
 
       state.grades[studentId][field] = val;
+      addActivityLog('تم تعديل درجات طالب في السجل');
       saveState();
       renderGradebookTable();
       renderGradeDistributionChart();
@@ -2023,7 +2081,7 @@
       showToast('تم تصدير ملف Excel بنجاح', 'success');
     }
 
-    // --- On Window Load Initialization ---
+    // --- Window Onload Wiring ---
     window.addEventListener('load', () => {
       initAppState();
 
@@ -2070,17 +2128,15 @@
       // Demo Mode Switch
       document.getElementById('demoModeToggleBtn').addEventListener('click', () => {
         isDemoActive = !isDemoActive;
-        const btn = document.getElementById('demoModeToggleBtn');
-        const label = document.getElementById('dashActiveModeLabel');
+        const btnDot = document.getElementById('demoModeDot');
+        const btnText = document.getElementById('demoModeLabelText');
         if (isDemoActive) {
-          btn.textContent = 'مُفعّل (تجربة)';
-          btn.className = 'px-2.5 py-0.5 rounded-lg text-xs font-bold transition bg-amber-500 text-slate-950';
-          label.textContent = 'وضع التجربة (بيانات استعراضية)';
-          showToast('تم تفعيل وضع التجربة الاستعراضي', 'info');
+          btnDot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+          btnText.textContent = 'وضع التجربة (نشط)';
+          showToast('تم تفعيل وضع التجربة ببيانات استعراضية', 'info');
         } else {
-          btn.textContent = 'مُعطّل';
-          btn.className = 'px-2.5 py-0.5 rounded-lg text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white';
-          label.textContent = 'الوضع الحقيقي (بياناتك النظيفة)';
+          btnDot.className = 'w-2 h-2 rounded-full bg-slate-500';
+          btnText.textContent = 'الوضع الحقيقي';
           showToast('تم الرجوع لقاعدة بياناتك الحقيقية', 'success');
         }
         populateAllSelects();
@@ -2137,12 +2193,13 @@
         if (!sections.length) sections.push('أ');
 
         state.classes.push({
-          id: `cls-${Date.now()}`,
+          id: `cls_${Date.now()}`,
           grade,
           subject,
           sections
         });
 
+        addActivityLog(`تمت إضافة صف جديد: ${grade} (${subject})`);
         saveState();
         populateAllSelects();
         renderClassesList();
@@ -2180,6 +2237,7 @@
           phone
         });
 
+        addActivityLog(`تمت إضافة طالب: ${name} إلى ${gradeMatch} (${secMatch})`);
         saveState();
         modalAddStudent.classList.add('hidden');
         document.getElementById('inputStudentName').value = '';
@@ -2223,6 +2281,7 @@
           });
         });
 
+        addActivityLog(`تمت إضافة ${lines.length} طالباً إلى ${gradeMatch} (${secMatch})`);
         saveState();
         modalBulkPaste.classList.add('hidden');
         document.getElementById('textareaBulkNames').value = '';
@@ -2279,6 +2338,7 @@
               }
             });
 
+            addActivityLog(`تم استيراد ${count} طالباً من Excel إلى ${gradeMatch} (${secMatch})`);
             saveState();
             modalExcel.classList.add('hidden');
             renderStudentsTable();
@@ -2295,7 +2355,7 @@
         reader.readAsArrayBuffer(file);
       });
 
-      // Attendance Controls
+      // Attendance Date & Day Navigation Controls
       document.getElementById('studentsFilterSelect').addEventListener('change', renderStudentsTable);
       document.getElementById('attendanceSectionSelect').addEventListener('change', renderAttendanceTable);
       document.getElementById('attendanceDateInput').addEventListener('change', () => {
@@ -2330,6 +2390,7 @@
             state.attendance[dateStr][s.id] = { status: 'present', updatedAt: Date.now() };
           }
         });
+        addActivityLog(`تم تسجيل حضور الشعبة بالكامل لتاريخ: ${dateStr}`);
         saveState();
         renderAttendanceTable();
         renderDashboard();
@@ -2529,6 +2590,7 @@
           steps
         });
 
+        addActivityLog(`تم إعداد خطة درس: ${title}`);
         saveState();
         modalDailyPlan.classList.add('hidden');
         document.getElementById('inputPlanTitle').value = '';
@@ -2555,6 +2617,7 @@
         if (!state.quizzes) state.quizzes = [];
         state.quizzes.push({ id: Date.now(), text, answer });
 
+        addActivityLog(`تمت إضافة سؤال جديد لبنك الاختبارات`);
         saveState();
         modalAddQ.classList.add('hidden');
         document.getElementById('inputQuestionText').value = '';
@@ -2570,7 +2633,7 @@
             <div style="border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
               <div>
                 <h3 style="margin: 0; font-size: 14px; font-weight: bold;">جمهورية العراق — وزارة التربية</h3>
-                <p style="margin: 3px 0 0; font-size: 12px;">إعداد: ${sanitize(state.teacher.name)}</p>
+                <p style="margin: 3px 0 0; font-size: 12px;">إعداد المدرس: ${sanitize(state.teacher.name)}</p>
               </div>
               <div style="text-align: center;">
                 <h2 style="margin: 0; font-size: 16px; font-weight: 800; border: 2px solid #000; padding: 4px 16px; border-radius: 4px;">ورقة الاختبار الشهري</h2>
@@ -2644,21 +2707,11 @@
 
         let msg = '';
         if (type === 'praise') {
-          msg = `السلام عليكم ورحمة الله وبركاته، تحية طيبة لولي أمر الطالب العزيز (${s.name}) في (${s.classGrade} - شعبة ${s.section}).
-يسعدنا إبلاغكم بالمستوى المتميز لنجلكم وتفاعله الإيجابي وحصوله على مجموع (${total}/100).
-نبارك لكم هذا الجهد الطيب ونتمنى له دوام التفوق الباهر.
-${note ? `ملاحظة: ${note}
-` : ''}مع التقدير: ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
+          msg = `السلام عليكم ورحمة الله وبركاته، تحية طيبة لولي أمر الطالب العزيز (${s.name}) في (${s.classGrade} - شعبة ${s.section}).\nيسعدنا إبلاغكم بالمستوى المتميز لنجلكم وتفاعله الإيجابي وحصوله على مجموع (${total}/100).\nنبارك لكم هذا الجهد الطيب ونتمنى له دوام التفوق الباهر.\n${note ? `ملاحظة: ${note}\n` : ''}مع التقدير: ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
         } else if (type === 'attendance_warning') {
-          msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${s.name}) المحترم (${s.classGrade} - شعبة ${s.section}).
-نود إشعاركم بضرورة متابعة انتظام الدوام والحضور لنجلكم حرصاً على مستواه العلمي واستيعاب المادة.
-${note ? `ملاحظة: ${note}
-` : ''}شاكرين حسن تعاونكم - ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
+          msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${s.name}) المحترم (${s.classGrade} - شعبة ${s.section}).\nنود إشعاركم بضرورة متابعة انتظام الدوام والحضور لنجلكم حرصاً على مستواه العلمي واستيعاب المادة.\n${note ? `ملاحظة: ${note}\n` : ''}شاكرين حسن تعاونكم - ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
         } else {
-          msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${s.name}) المحترم (${s.classGrade} - شعبة ${s.section}).
-حرصاً منا على مسيرة نجلكم الدراسية، بلغت درجاته الأخيرة (${total}/100)، ونأمل متابعة حل التمارين المنزلية بانتظام.
-${note ? `ملاحظة خاصة: ${note}
-` : ''}دمتم بخير - ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
+          msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${s.name}) المحترم (${s.classGrade} - شعبة ${s.section}).\nحرصاً منا على مسيرة نجلكم الدراسية، بلغت درجاته الأخيرة (${total}/100)، ونأمل متابعة حل التمارين المنزلية بانتظام.\n${note ? `ملاحظة خاصة: ${note}\n` : ''}دمتم بخير - ${state.teacher.name} (هاتف: ${state.teacher.contact}).`;
         }
 
         document.getElementById('parentMsgPreviewBox').textContent = msg;
@@ -2681,15 +2734,16 @@ ${note ? `ملاحظة خاصة: ${note}
         const state = getActiveState();
         const exportPayload = {
           app: "SANAD_ULTRA_PRO",
-          version: "5.0",
+          version: "6.0",
           exportDate: new Date().toISOString(),
           state: state
         };
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
         const a = document.createElement('a');
         a.href = dataStr;
-        a.download = `sanad_ultra_pro_backup_${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `sanad_pro_backup_${new Date().toISOString().split('T')[0]}.json`;
         a.click();
+        addActivityLog('تم تصدير نسخة احتياطية للمنظومة');
         showToast('تم تصدير النسخة الاحتياطية بنجاح', 'success');
       });
 
@@ -2742,28 +2796,6 @@ ${note ? `ملاحظة خاصة: ${note}
         document.getElementById('modalConfirmAction').classList.add('hidden');
         pendingConfirmCallback = null;
       });
-
-      // PWA Install Event
-      let deferredPrompt = null;
-      const installBtn = document.getElementById('pwaInstallBtn');
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        if (installBtn) installBtn.classList.remove('hidden');
-      });
-      if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-          if (!deferredPrompt) {
-            showToast('لتثبيت التطبيق: افتح خيارات المتصفح واضغط "إضافة إلى الشاشة الرئيسية"', 'info');
-            return;
-          }
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          if (outcome === 'accepted') showToast('شكراً لتثبيت تطبيق سَنَد على جهازك!', 'success');
-          deferredPrompt = null;
-          installBtn.classList.add('hidden');
-        });
-      }
     });
   </script>
 </body>
