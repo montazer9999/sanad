@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة سَنَد - المساعد الذكي للمعلم</title>
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="سَنَد المعلم">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            },
+            emerald: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.7);
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo & Branding -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-600 dark:from-brand-400 dark:to-indigo-300">مَنَصّة سَنَد</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-semibold">مساعد المدرس</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">رفيق المعلم في إدارة الصف والتحضير والتقويم</p>
+          </div>
+        </div>
+
+        <!-- Controls: Sound Toggle, Dark Mode, Quick Actions -->
+        <div class="flex items-center gap-2">
+                    <!-- PWA Install Button (Dynamic) -->
+          <button id="pwaInstallBtn" class="hidden px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5 animate-bounce">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>تثبيت التطبيق</span>
+          </button>
+
+          <!-- Audio Toggle -->
+          <button id="soundToggleBtn" title="كتم / تشغيل المؤثرات الصوتية" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <svg id="soundIconOn" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+            <svg id="soundIconOff" class="w-5 h-5 hidden text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button id="themeToggleBtn" title="تبديل الوضع الليلي / النهاري" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <svg id="themeIconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="themeIconMoon" class="w-5 h-5 block dark:hidden text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Teacher Profile Mini -->
+          <div class="hidden sm:flex items-center gap-2 pr-3 border-r border-slate-200 dark:border-slate-700">
+            <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-bold flex items-center justify-center text-sm">
+              أ.ع
+            </div>
+            <div class="text-xs">
+              <p class="font-bold text-slate-700 dark:text-slate-200">أ. أحمد المنصور</p>
+              <p class="text-slate-400">معلم العلوم والفيزياء</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (Scrollable on small screens) -->
+      <nav class="flex space-x-1 space-x-reverse overflow-x-auto py-2 border-t border-slate-100 dark:border-slate-800 text-sm font-medium no-scrollbar">
+        <button data-tab="dashboard" class="nav-tab active flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+          لوحة التحكم
+        </button>
+        <button data-tab="planner" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          تحضير الدروس
+        </button>
+        <button data-tab="quiz" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          صانع الاختبارات
+        </button>
+        <button data-tab="attendance" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+          رصد الحضور
+        </button>
+        <button data-tab="gradebook" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          سجل الدرجات
+        </button>
+        <button data-tab="tools" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          أدوات الصف التفاعلية
+        </button>
+        <button data-tab="parentMsgs" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+          رسائل أولياء الأمور
+        </button>
+        <button data-tab="timetable" class="nav-tab flex items-center gap-2 px-3 py-2 rounded-lg transition whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          الجدول الأسبوعي
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content View Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- TAB 1: DASHBOARD -->
+    <section id="viewDashboard" class="tab-view block space-y-6">
+      <!-- Welcome Hero Banner -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-700 via-indigo-600 to-indigo-800 text-white p-6 sm:p-8 shadow-lg">
+        <div class="relative z-10 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur text-xs font-semibold mb-3">
+            <span>✨ مرحباً بك يا أستاذ أحمد في منصتك التعليمية</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold mb-2">مساعدك الذكي لإدارة اليوم الدراسي بكل سهولة</h1>
+          <p class="text-indigo-100 text-sm sm:text-base mb-6 leading-relaxed">
+            جهّز خطط دروسك النموذجية، أنشئ أوراق الاختبارات، ارصد غياب وحضور الطلاب بنقرة زر، وشجع التفاعل الصفي عبر الأدوات الذكية.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <button id="heroQuickPlanBtn" class="px-4 py-2 bg-white text-brand-700 font-bold rounded-xl shadow hover:bg-indigo-50 transition text-sm flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              إنشاء تحضير درس جديد
+            </button>
+            <button id="heroQuickQuizBtn" class="px-4 py-2 bg-indigo-500/50 hover:bg-indigo-500/70 border border-white/20 text-white font-medium rounded-xl transition text-sm flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+              توليد نموذج اختبار
+            </button>
+            <button id="heroQuickWheelBtn" class="px-4 py-2 bg-indigo-500/50 hover:bg-indigo-500/70 border border-white/20 text-white font-medium rounded-xl transition text-sm flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              قرعة الطالب العشوائي
+            </button>
+          </div>
+        </div>
+        <!-- Decorative Background Circles -->
+        <div class="absolute -left-10 -bottom-10 w-72 h-72 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+        <div class="absolute right-1/2 -top-10 w-60 h-60 rounded-full bg-indigo-400/20 blur-3xl pointer-events-none"></div>
+      </div>
+
+      <!-- Quick Metrics Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">الفصول والشعب</p>
+            <h3 id="dashClassCount" class="text-2xl font-black text-slate-800 dark:text-slate-100 mt-1">3 فصول</h3>
+            <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">الثالث متوسط + الرابع علمي</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">إجمالي الطلاب المسجلين</p>
+            <h3 id="dashStudentCount" class="text-2xl font-black text-slate-800 dark:text-slate-100 mt-1">28 طالباً</h3>
+            <span class="text-[11px] text-brand-600 dark:text-brand-400 font-medium">متابعة الأداء اليومي</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">نسبة الحضور اليومية</p>
+            <h3 id="dashAttendanceRate" class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">96.4%</h3>
+            <span class="text-[11px] text-slate-400">غياب طالب واحد اليوم</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">الخطط المحضرة</p>
+            <h3 id="dashPlansCount" class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-1">4 خطط</h3>
+            <span class="text-[11px] text-indigo-500 font-medium">جاهزة للطباعة والعرض</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Today & Quick Tools Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Today's Schedule Card -->
+        <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h2 class="text-lg font-bold text-slate-800 dark:text-slate-100">حصص اليوم المجدولة</h2>
+            </div>
+            <span id="dashCurrentDay" class="text-xs px-2.5 py-1 bg-slate-100 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 font-semibold">اليوم الدراسي</span>
+          </div>
+
+          <div id="todayClassesList" class="space-y-3">
+            <!-- Dynamically populated classes for today -->
+          </div>
+        </div>
+
+        <!-- Class Quick Actions & Gamification Leaders -->
+        <div class="space-y-6">
+          <!-- Top Active Students (Points) -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <span class="text-amber-500">⭐</span> نجوم المشاركة الصفية
+              </h3>
+              <button id="viewAllPointsBtn" class="text-xs text-brand-600 dark:text-brand-400 hover:underline">إدارة النقاط</button>
+            </div>
+            <div id="topStudentsLeaderboard" class="space-y-2.5">
+              <!-- Dynamically populated top 4 students -->
+            </div>
+          </div>
+
+          <!-- Quick Tip Card -->
+          <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-800 dark:to-amber-950/20 border border-amber-200 dark:border-amber-800/40 rounded-2xl p-5">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">💡</span>
+              <div>
+                <h4 class="text-sm font-bold text-amber-900 dark:text-amber-300 mb-1">فائدة تربوية اليوم</h4>
+                <p class="text-xs text-amber-800 dark:text-amber-200/80 leading-relaxed">
+                  "التنويع بين التعلم التعاوني والعصف الذهني يرفع تركيز الطلاب بنسبة تتجاوز 40%، استخدم مؤقت الحصة التفاعلي لتحديد 3 دقائق لكل نشاط."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LESSON PLANNER (تحضير الدروس) -->
+    <section id="viewPlanner" class="tab-view hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            دفتر تحضير الدروس النموذجي
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">تخطيط الدروس وفق استراتيجيات التدريس الحديثة ومعايير بلوم للأهداف السلوكية</p>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button id="openNewPlanModalBtn" class="w-full sm:w-auto px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md shadow-brand-500/20 text-sm flex items-center justify-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            إضافة تحضير جديد
+          </button>
+        </div>
+      </div>
+
+      <!-- Plans Grid -->
+      <div id="plansListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: QUIZ & EXAM MAKER (صانع الاختبارات) -->
+    <section id="viewQuiz" class="tab-view hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            بنك الأسئلة ومنشئ الاختبارات
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توليد أوراق امتحانات منسقة وجاهزة للطباعة مع مفتاح الإجابة ونموذج الحل</p>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button id="openNewQuestionBtn" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            إضافة سؤال للبنك
+          </button>
+          <button id="generateExamDocBtn" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md shadow-brand-500/20 text-sm flex items-center justify-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            توليد ورقة الامتحان الآن
+          </button>
+        </div>
+      </div>
+
+      <!-- Questions List Filter and Count -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-700">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-slate-700 dark:text-slate-300">الأسئلة المتوفرة في النموذج:</span>
+            <span id="quizQuestionsCountBadge" class="px-2.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 text-xs font-bold">5 أسئلة</span>
+            <span class="text-xs text-slate-400">(مجموع الدرجات: <span id="quizTotalPointsBadge">20</span> درجة)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="selectAllQuestionsBtn" class="text-xs text-brand-600 dark:text-brand-400 hover:underline">تحديد الكل</button>
+            <span class="text-slate-300">|</span>
+            <button id="resetQuestionsSampleBtn" class="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400">استعادة النموذج الافتراضي</button>
+          </div>
+        </div>
+
+        <div id="quizQuestionsContainer" class="space-y-3">
+          <!-- Dynamically populated questions with checkboxes and edit/delete -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: ATTENDANCE (رصد الحضور والغياب) -->
+    <section id="viewAttendance" class="tab-view hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            سجل رصد الحضور والغياب
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">تسجيل سريع بضغطة زر وتحديث فوري لإحصائيات الفصل</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div>
+            <label for="attClassSelect" class="block text-[11px] font-bold text-slate-500 mb-1">الصف والشعبة:</label>
+            <select id="attClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="class-3a">الثالث متوسط - أ</option>
+              <option value="class-3b">الثالث متوسط - ب</option>
+              <option value="class-4s">الرابع علمي</option>
+            </select>
+          </div>
+          <div>
+            <label for="attDateInput" class="block text-[11px] font-bold text-slate-500 mb-1">تاريخ اليوم:</label>
+            <input type="date" id="attDateInput" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <div class="self-end">
+            <button id="markAllPresentBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition flex items-center gap-1.5 shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              الجميع حاضر
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance Stats Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-xl p-4 text-center">
+          <p class="text-xs text-emerald-700 dark:text-emerald-300 font-semibold">الحاضرون</p>
+          <h4 id="attPresentCount" class="text-2xl font-black text-emerald-800 dark:text-emerald-200 mt-1">0</h4>
+        </div>
+        <div class="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 rounded-xl p-4 text-center">
+          <p class="text-xs text-rose-700 dark:text-rose-300 font-semibold">الغائبون</p>
+          <h4 id="attAbsentCount" class="text-2xl font-black text-rose-800 dark:text-rose-200 mt-1">0</h4>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-xl p-4 text-center">
+          <p class="text-xs text-amber-700 dark:text-amber-300 font-semibold">المتأخرون</p>
+          <h4 id="attLateCount" class="text-2xl font-black text-amber-800 dark:text-amber-200 mt-1">0</h4>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50 rounded-xl p-4 text-center">
+          <p class="text-xs text-blue-700 dark:text-blue-300 font-semibold">إجازة بعذر</p>
+          <h4 id="attExcusedCount" class="text-2xl font-black text-blue-800 dark:text-blue-200 mt-1">0</h4>
+        </div>
+      </div>
+
+      <!-- Students Attendance Table -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-750 text-xs font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                <th class="py-3 px-4">#</th>
+                <th class="py-3 px-4">اسم الطالب</th>
+                <th class="py-3 px-4 text-center">الحالة اليومية</th>
+                <th class="py-3 px-4 text-center">مجموع الغياب التراكمي</th>
+                <th class="py-3 px-4 text-center">إجراء سريع</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody" class="divide-y divide-slate-100 dark:divide-slate-700 text-sm">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: GRADEBOOK (دفتر الدرجات) -->
+    <section id="viewGradebook" class="tab-view hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            سجل الدرجات والتقويم المستمر
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">رصد درجات الواجبات، الأنشطة، والاختبارات الشهرية وحساب المجموع تلقائياً</p>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <select id="gradeClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="class-3a">الثالث متوسط - أ</option>
+            <option value="class-3b">الثالث متوسط - ب</option>
+            <option value="class-4s">الرابع علمي</option>
+          </select>
+          <button id="openNewStudentModalBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm transition flex items-center gap-1.5 shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+            إضافة طالب
+          </button>
+        </div>
+      </div>
+
+      <!-- Grade Analytics Chart & Metrics -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <h3 class="text-base font-bold text-slate-800 dark:text-slate-100 mb-3">توزيع التقديرات في الفصل (منحنى الأداء)</h3>
+          <div class="relative h-64">
+            <canvas id="gradeDistributionChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+          <h3 class="text-base font-bold text-slate-800 dark:text-slate-100 mb-4">مؤشرات أداء الفصل</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-750">
+              <span class="text-xs text-slate-500 dark:text-slate-400">متوسط درجات الفصل</span>
+              <span id="gradeAvgScore" class="text-lg font-black text-brand-600 dark:text-brand-400">84.5%</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-750">
+              <span class="text-xs text-slate-500 dark:text-slate-400">أعلى درجة</span>
+              <span id="gradeTopScore" class="text-lg font-black text-emerald-600 dark:text-emerald-400">98 / 100</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-750">
+              <span class="text-xs text-slate-500 dark:text-slate-400">نسبة النجاح المتوقعة</span>
+              <span id="gradePassRate" class="text-lg font-black text-indigo-600 dark:text-indigo-400">92%</span>
+            </div>
+          </div>
+          <button id="exportGradesCsvBtn" class="mt-4 w-full py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            تصدير كشف الدرجات (CSV)
+          </button>
+        </div>
+      </div>
+
+      <!-- Gradebook Interactive Table -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-750 text-xs font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                <th class="py-3 px-4">اسم الطالب</th>
+                <th class="py-3 px-3 text-center">المشاركة (10)</th>
+                <th class="py-3 px-3 text-center">الواجبات (20)</th>
+                <th class="py-3 px-3 text-center">النشاط (20)</th>
+                <th class="py-3 px-3 text-center">الامتحان (50)</th>
+                <th class="py-3 px-3 text-center">المجموع (100)</th>
+                <th class="py-3 px-4 text-center">التقدير</th>
+                <th class="py-3 px-4 text-center">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="gradebookTableBody" class="divide-y divide-slate-100 dark:divide-slate-700 text-sm">
+              <!-- Dynamically populated grade rows with direct inline edits -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: CLASSROOM INTERACTIVE TOOLS (أدوات الصف) -->
+    <section id="viewTools" class="tab-view hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          أدوات إدارة الصف والتفاعل المباشر
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">أدوات مساعدة لضبط وقت الأنشطة، اختيار الطلاب عشوائياً، وتحفيز السلوك الإيجابي</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- TOOL 1: Random Name Picker / Wheel -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col items-center">
+          <div class="w-full flex items-center justify-between mb-4">
+            <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <span class="text-xl">🎯</span> منتقي الأسماء العشوائي (القرعة)
+            </h3>
+            <select id="wheelClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs text-slate-700 dark:text-slate-200">
+              <option value="class-3a">الثالث متوسط - أ</option>
+              <option value="class-3b">الثالث متوسط - ب</option>
+              <option value="class-4s">الرابع علمي</option>
+            </select>
+          </div>
+
+          <!-- Interactive Wheel Canvas -->
+          <div class="relative w-64 h-64 my-2 flex items-center justify-center">
+            <!-- Arrow indicator -->
+            <div class="absolute -top-3 z-20 text-rose-500">
+              <svg class="w-8 h-8 fill-current drop-shadow" viewBox="0 0 24 24">
+                <path d="M12 21l-7-14h14l-7 14z"/>
+              </svg>
+            </div>
+            <canvas id="wheelCanvas" width="250" height="250" class="rounded-full shadow-lg border-4 border-white dark:border-slate-700"></canvas>
+          </div>
+
+          <!-- Selected Winner Display Box -->
+          <div id="wheelWinnerBox" class="w-full mt-4 p-4 rounded-xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 text-center min-h-[80px] flex flex-col items-center justify-center transition-all">
+            <span class="text-xs text-slate-500 dark:text-slate-400">الطالب المختار للإجابة:</span>
+            <h4 id="wheelWinnerName" class="text-xl font-black text-brand-700 dark:text-brand-300 mt-1">اضغط على زر السحب</h4>
+            <div id="winnerActions" class="mt-2 hidden flex items-center gap-2">
+              <button id="awardWinnerStarBtn" class="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg transition flex items-center gap-1 shadow-sm">
+                <span>⭐</span> منح نجمة تفوق (+1)
+              </button>
+            </div>
+          </div>
+
+          <!-- Spin Button -->
+          <button id="spinWheelBtn" class="mt-5 w-full py-3 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-extrabold rounded-xl shadow-lg shadow-brand-500/25 transition transform active:scale-95 text-base flex items-center justify-center gap-2">
+            <svg class="w-5 h-5 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            تدوير القرعة وسحب اسم
+          </button>
+        </div>
+
+        <!-- TOOL 2: Lesson & Activity Timer -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col items-center justify-between">
+          <div class="w-full flex items-center justify-between mb-2">
+            <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <span class="text-xl">⏱️</span> مؤقت الحصة والأنشطة الصفية
+            </h3>
+            <span id="timerStatusBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">جاهز</span>
+          </div>
+
+          <!-- Circular Graphic Timer -->
+          <div class="relative w-56 h-56 flex items-center justify-center my-3">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#e2e8f0" stroke-width="6" class="dark:stroke-slate-700"/>
+              <circle id="timerProgressCircle" cx="50" cy="50" r="42" fill="none" stroke="#6366f1" stroke-width="6" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round" class="transition-all duration-300"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span id="timerDisplay" class="text-4xl font-black text-slate-800 dark:text-slate-100 font-mono tracking-wider">05:00</span>
+              <span id="timerPresetLabel" class="text-xs font-semibold text-slate-400 mt-1">نشاط جماعي</span>
+            </div>
+          </div>
+
+          <!-- Quick Preset Buttons -->
+          <div class="grid grid-cols-4 gap-2 w-full mb-4">
+            <button class="timer-preset-btn px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition" data-seconds="60" data-label="عصف ذهني">1 دقيقة</button>
+            <button class="timer-preset-btn px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition" data-seconds="180" data-label="سؤال فردي">3 دقائق</button>
+            <button class="timer-preset-btn active px-2 py-1.5 rounded-lg border border-brand-500 bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-300 text-xs font-bold transition" data-seconds="300" data-label="نشاط جماعي">5 دقائق</button>
+            <button class="timer-preset-btn px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-700 transition" data-seconds="900" data-label="اختبار قصير">15 دقيقة</button>
+          </div>
+
+          <!-- Timer Controls -->
+          <div class="flex items-center gap-3 w-full">
+            <button id="timerStartBtn" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition text-sm flex items-center justify-center gap-1.5 shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+              بدء المؤقت
+            </button>
+            <button id="timerPauseBtn" class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition text-sm flex items-center justify-center gap-1.5 shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/></svg>
+              إيقاف مؤقت
+            </button>
+            <button id="timerResetBtn" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl transition text-sm" title="إعادة تعيين">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavioral Points & Stars Leaderboard -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <span>⭐</span> نظام تحفيز السلوك والمشاركة الصفية
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">امنح نجوماً تشجيعية للطلاب لتعزيز التفاعل الإيجابي داخل الحصة</p>
+          </div>
+          <select id="starsClassSelect" class="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-1.5 text-xs text-slate-700 dark:text-slate-200">
+            <option value="class-3a">الثالث متوسط - أ</option>
+            <option value="class-3b">الثالث متوسط - ب</option>
+            <option value="class-4s">الرابع علمي</option>
+          </select>
+        </div>
+
+        <div id="starsStudentsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Dynamically populated student cards with + and - stars -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: PARENT MESSAGES (رسائل أولياء الأمور) -->
+    <section id="viewParentMsgs" class="tab-view hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          مساعد إرسال رسائل وتقارير أولياء الأمور
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توليد رسائل نموذجية احترافية للتواصل الفوري مع ولي الأمر بضغطة زر</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Message Generator Form -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div>
+            <label for="parentMsgTypeSelect" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">نوع الإشعار:</label>
+            <select id="parentMsgTypeSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="praise">رسالة شكر وتقدير لتفوق وتميز الطالب</option>
+              <option value="attendance_warning">إشعار غياب أو تأخر متكرر</option>
+              <option value="grade_followup">متابعة تدني مستوى في الاختبار الشهري</option>
+              <option value="meeting_invite">دعوة لحضور اجتماع أولياء الأمور</option>
+              <option value="homework_reminder">تذكير بتسليم الواجب والمهام المطلوبة</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="parentStudentSelect" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">اختيار الطالب:</label>
+            <select id="parentStudentSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+
+          <div>
+            <label for="parentCustomNotesInput" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">ملاحظة إضافية (اختياري):</label>
+            <textarea id="parentCustomNotesInput" rows="2" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="مثال: نرجو متابعة حل تمارين صفحة 45..."></textarea>
+          </div>
+
+          <button id="generateParentMsgBtn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm transition shadow-sm flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            توليد نص الرسالة
+          </button>
+        </div>
+
+        <!-- Output Preview & Copy Box -->
+        <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-slate-800 dark:text-slate-100">معاينة الرسالة الموجهة لولي الأمر</h3>
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-semibold">جاهزة للإرسال عبر واتساب أو SMS</span>
+            </div>
+
+            <div id="parentMsgPreviewBox" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-750 border border-slate-200 dark:border-slate-700 font-sans text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200 min-h-[160px]">
+              اختر نوع الرسالة واضغط على "توليد نص الرسالة" لعرضها هنا.
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+            <div class="text-xs text-slate-400">
+              يتم إدراج اسم الطالب والصف والمادة وتوقيع المعلم آلياً.
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="copyParentMsgBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                نسخ النص للحافظة
+              </button>
+              <button id="openWhatsappBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                مشاركة عبر واتساب
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 8: WEEKLY TIMETABLE (الجدول الأسبوعي) -->
+    <section id="viewTimetable" class="tab-view hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            جدول الحصص الأسبوعي للمعلم
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">توزيع الحصص والفصول عبر أيام الأسبوع الدراسي (الأحد إلى الخميس)</p>
+        </div>
+        <button id="printTimetableBtn" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          طباعة الجدول
+        </button>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-center border-collapse">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-750 text-xs font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                <th class="py-3 px-4 text-right">اليوم</th>
+                <th class="py-3 px-3">الحصة 1<br><span class="text-[10px] text-slate-400">08:00 - 08:45</span></th>
+                <th class="py-3 px-3">الحصة 2<br><span class="text-[10px] text-slate-400">08:50 - 09:35</span></th>
+                <th class="py-3 px-3">الحصة 3<br><span class="text-[10px] text-slate-400">09:40 - 10:25</span></th>
+                <th class="py-3 px-3 bg-amber-50/50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300">الاستراحة<br><span class="text-[10px]">10:25 - 10:50</span></th>
+                <th class="py-3 px-3">الحصة 4<br><span class="text-[10px] text-slate-400">10:50 - 11:35</span></th>
+                <th class="py-3 px-3">الحصة 5<br><span class="text-[10px] text-slate-400">11:40 - 12:25</span></th>
+                <th class="py-3 px-3">الحصة 6<br><span class="text-[10px] text-slate-400">12:30 - 01:15</span></th>
+              </tr>
+            </thead>
+            <tbody id="timetableBody" class="divide-y divide-slate-100 dark:divide-slate-700 text-xs">
+              <!-- Dynamically populated timetable rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4 px-6 text-center text-xs text-slate-400 no-print mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>منصة سَنَد التعليمية &copy; مساعد المدرس الشامل - تم التطوير لتمكين المعلمين ودعم الإدارة الصفية الذكية</p>
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1 text-emerald-500 font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> حفظ محلي نشط
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- MODAL: ADD / EDIT LESSON PLAN -->
+  <div id="planModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-750">
+        <h3 id="planModalTitle" class="text-base font-bold text-slate-800 dark:text-slate-100">إضافة خطة درس جديدة</h3>
+        <button id="closePlanModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg p-1">&times;</button>
+      </div>
+
+      <!-- Modal Body (Form) -->
+      <div class="p-6 overflow-y-auto space-y-4 text-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="planTitleInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">عنوان الدرس:</label>
+            <input type="text" id="planTitleInput" placeholder="مثال: الضغط وقانون باسكال" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <div>
+            <label for="planSubjectInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">المادة الدراسية:</label>
+            <input type="text" id="planSubjectInput" value="الفيزياء والعلوم العامة" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <div>
+            <label for="planGradeSelect" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الصف والشعبة:</label>
+            <select id="planGradeSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="الثالث متوسط - أ">الثالث متوسط - أ</option>
+              <option value="الثالث متوسط - ب">الثالث متوسط - ب</option>
+              <option value="الرابع علمي">الرابع علمي</option>
+            </select>
+          </div>
+          <div>
+            <label for="planDurationInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">مدة الحصة:</label>
+            <input type="text" id="planDurationInput" value="45 دقيقة" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+        </div>
+
+        <div>
+          <label for="planObjectivesInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الأهداف السلوكية والمعرفية:</label>
+          <textarea id="planObjectivesInput" rows="3" placeholder="1. أن يعرّف الطالب مفهوم الضغط.&#10;2. أن يستنتج العلاقة بين القوة والمساحة.&#10;3. أن يحل مسائل تطبيقية على قانون باسكال." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="planStrategyInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">استراتيجيات التدريس:</label>
+            <input type="text" id="planStrategyInput" value="العصف الذهني، التعلم التعاوني، الاستقصاء الموجه" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <div>
+            <label for="planToolsInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الوسائل التعليمية والمصادر:</label>
+            <input type="text" id="planToolsInput" value="الكتاب المدرسي، جهاز عرض، أنبوبة سوائل تجريبية" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+        </div>
+
+        <div>
+          <label for="planStepsInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">سير وإجراءات الدرس (التوزيع الزمني):</label>
+          <textarea id="planStepsInput" rows="3" placeholder="• التمهيد والتهيئة (5 دقائق): طرح سؤال استكشافي عن ضغط الماء في القاع.&#10;• العرض والشرح (20 دقيقة): استنتاج القانون الرياضي وعرض تجربة محاكاة.&#10;• النشاط الجماعي (15 دقيقة): حل تمارين في مجموعات ثنائية.&#10;• التقويم الختامي (5 دقائق): سؤال سريع لتأكيد الفهم." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+        </div>
+
+        <div>
+          <label for="planHomeworkInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الواجب المنزلي وأنشطة التمايز:</label>
+          <input type="text" id="planHomeworkInput" value="حل المسائل 1 و 3 من تمارين الفصل صفحة 56" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-750 flex items-center justify-end gap-2">
+        <button id="cancelPlanModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm transition">إلغاء</button>
+        <button id="savePlanBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm shadow-md transition">حفظ الخطة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD QUESTION TO BANK -->
+  <div id="questionModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-750">
+        <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">إضافة سؤال جديد لبنك الاختبار</h3>
+        <button id="closeQuestionModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg p-1">&times;</button>
+      </div>
+      <div class="p-6 space-y-4 text-sm">
+        <div>
+          <label for="qTextInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نص السؤال:</label>
+          <textarea id="qTextInput" rows="2" placeholder="اكتب نص السؤال هنا..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="qTypeSelect" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">نوع السؤال:</label>
+            <select id="qTypeSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+              <option value="mcq">اختيار من متعدد</option>
+              <option value="truefalse">صح أو خطأ</option>
+              <option value="essay">سؤال مقالي / مسألة</option>
+            </select>
+          </div>
+          <div>
+            <label for="qPointsInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الدرجة المخصصة:</label>
+            <input type="number" id="qPointsInput" value="4" min="1" max="50" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+          </div>
+        </div>
+        <div id="qOptionsWrapper">
+          <label for="qOptionsInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الخيارات (مفصولة بفاصلة):</label>
+          <input type="text" id="qOptionsInput" placeholder="أ، ب، ج، د" value="الضغط، الكثافة، الكتلة، القوة" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+        </div>
+        <div>
+          <label for="qAnswerInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الإجابة النموذجية الصحيحة:</label>
+          <input type="text" id="qAnswerInput" placeholder="الإجابة الصحيحة أو الحل النموذجي" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+        </div>
+      </div>
+      <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-750 flex items-center justify-end gap-2">
+        <button id="cancelQuestionModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">إلغاء</button>
+        <button id="saveQuestionBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm shadow-md">إضافة السؤال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD STUDENT -->
+  <div id="studentModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-750">
+        <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">إضافة طالب جديد</h3>
+        <button id="closeStudentModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg p-1">&times;</button>
+      </div>
+      <div class="p-6 space-y-4 text-sm">
+        <div>
+          <label for="newStudentNameInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">اسم الطالب الرباعي:</label>
+          <input type="text" id="newStudentNameInput" placeholder="مثال: يوسف عمار حسن علي" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+        </div>
+        <div>
+          <label for="newStudentClassSelect" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">الصف والشعبة:</label>
+          <select id="newStudentClassSelect" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+            <option value="class-3a">الثالث متوسط - أ</option>
+            <option value="class-3b">الثالث متوسط - ب</option>
+            <option value="class-4s">الرابع علمي</option>
+          </select>
+        </div>
+        <div>
+          <label for="newStudentPhoneInput" class="block font-bold text-slate-700 dark:text-slate-300 mb-1">رقم هاتف ولي الأمر:</label>
+          <input type="tel" id="newStudentPhoneInput" placeholder="07XXXXXXXXX" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-slate-800 dark:text-slate-100">
+        </div>
+      </div>
+      <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-750 flex items-center justify-end gap-2">
+        <button id="cancelStudentModalBtn" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">إلغاء</button>
+        <button id="saveStudentBtn" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm shadow-md">إضافة الطالب</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PRINT PREVIEW (For Exams, Plans & Timetable) -->
+  <div id="printModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[95vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-750 no-print">
+        <h3 id="printModalTitle" class="text-base font-bold text-slate-800 dark:text-slate-100">معاينة المستند والطباعة</h3>
+        <div class="flex items-center gap-2">
+          <button id="executePrintBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            طباعة المستند (Print)
+          </button>
+          <button id="closePrintModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl px-2">&times;</button>
+        </div>
+      </div>
+      <div class="p-8 overflow-y-auto bg-white text-slate-900 text-sm leading-relaxed" id="printArea">
+        <!-- Rendered printable content goes here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION JAVASCRIPT LOGIC -->
+  <script>
+    // --- Data Store & Initial Mock State ---
+    const DEFAULT_DATA = {
+      teacher: {
+        name: "أ. أحمد المنصور",
+        subject: "العلوم والفيزياء",
+        school: "ثانوية الرواد النموذجية",
+        academicYear: "2026 - 2027"
+      },
+      classes: [
+        { id: "class-3a", name: "الثالث متوسط - أ", count: 10 },
+        { id: "class-3b", name: "الثالث متوسط - ب", count: 9 },
+        { id: "class-4s", name: "الرابع علمي", count: 9 }
+      ],
+      students: [
+        // Class 3-A
+        { id: 1, name: "علي حسين كاظم", classId: "class-3a", phone: "07712345678", attendance: "present", absentCount: 1, participation: 9, homework: 18, activity: 19, exam: 48, stars: 12 },
+        { id: 2, name: "حيدر جعفر صادق", classId: "class-3a", phone: "07723456789", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 20, exam: 50, stars: 16 },
+        { id: 3, name: "سجاد فاضل عباس", classId: "class-3a", phone: "07734567890", attendance: "present", absentCount: 2, participation: 8, homework: 16, activity: 17, exam: 42, stars: 9 },
+        { id: 4, name: "محمد باقر سلام", classId: "class-3a", phone: "07745678901", attendance: "absent", absentCount: 3, participation: 7, homework: 14, activity: 15, exam: 35, stars: 5 },
+        { id: 5, name: "مصطفى قاسم داود", classId: "class-3a", phone: "07756789012", attendance: "present", absentCount: 0, participation: 10, homework: 19, activity: 19, exam: 47, stars: 14 },
+        { id: 6, name: "يوسف عمار هادي", classId: "class-3a", phone: "07767890123", attendance: "late", absentCount: 1, participation: 8, homework: 17, activity: 18, exam: 44, stars: 8 },
+        { id: 7, name: "كرار حيدر مجيد", classId: "class-3a", phone: "07778901234", attendance: "present", absentCount: 0, participation: 9, homework: 18, activity: 19, exam: 46, stars: 11 },
+        { id: 8, name: "أمير وسام نوري", classId: "class-3a", phone: "07789012345", attendance: "present", absentCount: 1, participation: 9, homework: 17, activity: 18, exam: 43, stars: 10 },
+        { id: 9, name: "عبدالله مهدي صالح", classId: "class-3a", phone: "07790123456", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 20, exam: 49, stars: 15 },
+        { id: 10, name: "حمزة رياض كريم", classId: "class-3a", phone: "07701234567", attendance: "present", absentCount: 0, participation: 9, homework: 19, activity: 18, exam: 45, stars: 11 },
+
+        // Class 3-B
+        { id: 11, name: "أحمد ليث خضير", classId: "class-3b", phone: "07811122334", attendance: "present", absentCount: 0, participation: 9, homework: 18, activity: 19, exam: 47, stars: 11 },
+        { id: 12, name: "زيد طارق عبد", classId: "class-3b", phone: "07822233445", attendance: "present", absentCount: 1, participation: 8, homework: 16, activity: 17, exam: 40, stars: 7 },
+        { id: 13, name: "عمر سامر شاكر", classId: "class-3b", phone: "07833344556", attendance: "present", absentCount: 0, participation: 10, homework: 19, activity: 20, exam: 48, stars: 13 },
+        { id: 14, name: "بلال هيثم محمود", classId: "class-3b", phone: "07844455667", attendance: "present", absentCount: 0, participation: 9, homework: 17, activity: 18, exam: 45, stars: 10 },
+        { id: 15, name: "إبراهيم خليل اسماعيل", classId: "class-3b", phone: "07855566778", attendance: "excused", absentCount: 2, participation: 7, homework: 15, activity: 16, exam: 38, stars: 6 },
+        { id: 16, name: "حسام فراس عزيز", classId: "class-3b", phone: "07866677889", attendance: "present", absentCount: 1, participation: 8, homework: 18, activity: 18, exam: 44, stars: 9 },
+        { id: 17, name: "عباس سمير جواد", classId: "class-3b", phone: "07877788990", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 19, exam: 49, stars: 14 },
+        { id: 18, name: "منتظر بشير رشيد", classId: "class-3b", phone: "07888899001", attendance: "present", absentCount: 0, participation: 9, homework: 19, activity: 19, exam: 46, stars: 12 },
+        { id: 19, name: "يحيى قتيبة مروان", classId: "class-3b", phone: "07899900112", attendance: "present", absentCount: 1, participation: 8, homework: 17, activity: 17, exam: 42, stars: 8 },
+
+        // Class 4-Science
+        { id: 20, name: "سيف الدين رائد", classId: "class-4s", phone: "07512341234", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 20, exam: 50, stars: 17 },
+        { id: 21, name: "ذو الفقار ماجد", classId: "class-4s", phone: "07523452345", attendance: "present", absentCount: 0, participation: 9, homework: 19, activity: 19, exam: 47, stars: 13 },
+        { id: 22, name: "ضرغام حازم فائق", classId: "class-4s", phone: "07534563456", attendance: "present", absentCount: 1, participation: 8, homework: 17, activity: 18, exam: 43, stars: 9 },
+        { id: 23, name: "طه عدنان فاضل", classId: "class-4s", phone: "07545674567", attendance: "present", absentCount: 2, participation: 8, homework: 16, activity: 17, exam: 41, stars: 7 },
+        { id: 24, name: "مهند نزار كمال", classId: "class-4s", phone: "07556785678", attendance: "present", absentCount: 0, participation: 10, homework: 19, activity: 20, exam: 48, stars: 14 },
+        { id: 25, name: "أوس ميثم عمران", classId: "class-4s", phone: "07567896789", attendance: "present", absentCount: 0, participation: 9, homework: 18, activity: 18, exam: 45, stars: 10 },
+        { id: 26, name: "غيث منير حمودي", classId: "class-4s", phone: "07578907890", attendance: "present", absentCount: 1, participation: 8, homework: 17, activity: 17, exam: 43, stars: 8 },
+        { id: 27, name: "رضا باسم كاظم", classId: "class-4s", phone: "07589018901", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 19, exam: 49, stars: 15 },
+        { id: 28, name: "ياسين صفاء صبحي", classId: "class-4s", phone: "07590129012", attendance: "present", absentCount: 0, participation: 9, homework: 18, activity: 19, exam: 46, stars: 11 }
+      ],
+      plans: [
+        {
+          id: 1,
+          title: "الضغط وتطبيقات قانون باسكال في السوائل",
+          subject: "الفيزياء",
+          grade: "الثالث متوسط - أ",
+          duration: "45 دقيقة",
+          date: "2026-11-05",
+          objectives: "1. أن يعرّف الطالب مفهوم الضغط في السوائل الساكنة بدقة.\n2. أن يوضح نص قانون باسكال ومبدأ انتقال الضغط.\n3. أن يطبق القانون في حساب القوة الناتجة في المكبس الهيدروليكي.",
+          strategy: "العصف الذهني، التعلم التعاوني، المحاكاة العملية",
+          tools: "الكتاب المدرسي، محاكاة رقمية، جهاز ضغط يدوي",
+          steps: "• التهيئة (5د): عرض مقطع قصير لمكابح السيارة وطرح تساؤل فيزيائي.\n• العرض (20د): شرح المفهوم واستنتاج العلاقة الرياضية F1/A1 = F2/A2.\n• التطبيق الجماعي (15د): حل تدريب جماعي للمجموعات مع توجيه المعلم.\n• التقويم (5د): تمرين ختامي لقياس تحقيق الأهداف.",
+          homework: "حل تمارين الفصل (السؤال الثاني والرابع ص 68)."
+        },
+        {
+          id: 2,
+          title: "الخلية النباتية والحيوانية وأوجه المقارنة",
+          subject: "علم الأحياء",
+          grade: "الثالث متوسط - ب",
+          duration: "45 دقيقة",
+          date: "2026-11-06",
+          objectives: "1. أن يحدد الطالب العضيات الخلوية ووظيفة كل منها.\n2. أن يرسم الطالب مخططاً مبسطاً للخلية الحية.\n3. أن يقارن بين الجدار الخلوي والغشاء البلازمي.",
+          strategy: "التعلم الاستقصائي، خرائط المفاهيم",
+          tools: "المجهر الضوئي، شرائح مجهزة لبشرة البصل، مجسمات ثلاثية الأبعاد",
+          steps: "• التهيئة (5د): فحص قطرة ماء بالمجهر.\n• العرض (20د): توضيح وظائف الميتوكوندريا والبلاستيدات.\n• النشاط (15د): رسم ومقارنة بين الخليتين في مجموعات ثنائية.\n• الغلق (5د): تلخيص أهم الفروق.",
+          homework: "رسم الخلية النباتية وتأشير أجزائها في الدفتر المدرسي."
+        },
+        {
+          id: 3,
+          title: "الحركة في خط مستقيم والسرعة المتجهة",
+          subject: "الفيزياء",
+          grade: "الرابع علمي",
+          duration: "45 دقيقة",
+          date: "2026-11-07",
+          objectives: "1. أن يميز الطالب بين الكميات القياسية والاتجاهية.\n2. أن يحسب السرعة المتوسطة بيانياً ورياضياً.\n3. أن يفسر منحنى (الموقع - الزمن).",
+          strategy: "حل المشكلات، الاستنتاج الرياضي",
+          tools: "السبورة التفاعلية، مسطرة ورقية، شريط توقيت",
+          steps: "• التهيئة (5د): حركة سيارة سباق.\n• العرض (25د): اشتقاق معادلات الحركة.\n• التدريب (10د): حل مسألة تدريبية.\n• التقويم (5د): بطاقة خروج سريعة.",
+          homework: "حل مسائل الفصل الأول من الكتاب صفحة 32."
+        }
+      ],
+      questions: [
+        { id: 1, text: "ما هي وحدة قياس الضغط في النظام الدولي للوحدات (SI)؟", type: "mcq", options: ["باسكال (N/m²)", "نيوتن", "جول", "واط"], answer: "باسكال (N/m²)", points: 4 },
+        { id: 2, text: "ينص مبدأ باسكال على أن الضغط المسلط على سائل محصور ينتقل بالتساوي إلى جميع أجزاء السائل وجدران الإناء.", type: "truefalse", options: ["صح", "خطأ"], answer: "صح", points: 4 },
+        { id: 3, text: "علل: تصنع السدود بحيث تكون قاعدتها أكثر سمكاً من قمتها.", type: "essay", options: [], answer: "لأن ضغط السائل يزداد بزيادة العمق، فالقاعدة تتحمل ضغطاً أكبر.", points: 4 },
+        { id: 4, text: "إذا أثرت قوة مقدارها 200 نيوتن على مكبس مساحته 0.05 م²، فكم يكون الضغط المتولد؟", type: "essay", options: [], answer: "الضغط = القوة ÷ المساحة = 200 ÷ 0.05 = 4000 باسكال.", points: 4 },
+        { id: 5, text: "أي من العضيات التالية توجد في الخلية النباتية ولا توجد في الخلية الحيوانية؟", type: "mcq", options: ["البلاستيدات الخضراء", "الميتوكوندريا", "الغشاء البلازمي", "الريبوسومات"], answer: "البلاستيدات الخضراء", points: 4 }
+      ],
+      timetable: [
+        { day: "الأحد", p1: "الفيزياء (3-أ)", p2: "الفيزياء (3-ب)", p3: "فراغ / تحضير", p4: "العلوم (4-علمي)", p5: "الفيزياء (3-أ)", p6: "ريادة صف" },
+        { day: "الإثنين", p1: "العلوم (4-علمي)", p2: "الفيزياء (3-أ)", p3: "الفيزياء (3-ب)", p4: "مختبر علمي", p5: "فراغ", p6: "نشاط لاصفي" },
+        { day: "الثلاثاء", p1: "فراغ", p2: "العلوم (4-علمي)", p3: "الفيزياء (3-أ)", p4: "الفيزياء (3-ب)", p5: "مختبر حاسوب", p6: "فراغ" },
+        { day: "الأربعاء", p1: "الفيزياء (3-ب)", p2: "فراغ / تحضير", p3: "العلوم (4-علمي)", p4: "الفيزياء (3-أ)", p5: "مناقشة أسبوعية", p6: "فراغ" },
+        { day: "الخميس", p1: "الفيزياء (3-أ)", p2: "الفيزياء (3-ب)", p3: "العلوم (4-علمي)", p4: "اختبار قصير", p5: "اجتماع قسم العلوم", p6: "فراغ" }
+      ]
+    };
+
+    // --- State Handler (with Safe LocalStorage) ---
+    let appState = (function() {
+      try {
+        const saved = localStorage.getItem('sanad_teacher_state_v1');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {
+        console.warn('LocalStorage unavailable, using memory state:', e);
+      }
+      return DEFAULT_DATA;
+    })();
+
+    function saveState() {
+      try {
+        localStorage.setItem('sanad_teacher_state_v1', JSON.stringify(appState));
+      } catch (e) {
+        console.warn('Could not save to localStorage:', e);
+      }
+    }
+
+    // --- Sound Effects Synthesizer (Web Audio API) ---
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, type, duration, delay = 0) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        setTimeout(() => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        }, delay * 1000);
+      } catch (e) {
+        console.log('Audio error:', e);
+      }
+    }
+
+    function playTick() {
+      playTone(600, 'sine', 0.04);
+    }
+
+    function playCheer() {
+      playTone(523.25, 'triangle', 0.15, 0);     // C5
+      playTone(659.25, 'triangle', 0.15, 0.12);  // E5
+      playTone(783.99, 'triangle', 0.25, 0.24);  // G5
+      playTone(1046.50, 'triangle', 0.45, 0.36); // C6
+    }
+
+    function playAlarm() {
+      playTone(880, 'square', 0.2, 0);
+      playTone(880, 'square', 0.2, 0.3);
+      playTone(880, 'square', 0.35, 0.6);
+    }
+
+    // --- Toast Notifications ---
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg text-sm font-semibold transition-all duration-300 transform translate-y-2 opacity-0 ${
+        type === 'success' ? 'bg-emerald-600 text-white' :
+        type === 'error' ? 'bg-rose-600 text-white' :
+        type === 'info' ? 'bg-brand-600 text-white' : 'bg-slate-800 text-white'
+      }`;
+      
+      const iconSvg = type === 'success' 
+        ? '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+        : '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+
+      toast.innerHTML = `${iconSvg}<span>${message}</span>`;
+      container.appendChild(toast);
+
+      // Trigger entrance animation
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 20);
+
+      // Auto dismiss
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // --- Tab Switching Logic ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(view => {
+        view.classList.add('hidden');
+        view.classList.remove('block');
+      });
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.classList.remove('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-700', 'dark:text-brand-300');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const activeBtn = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-700', 'dark:text-brand-300');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      }
+
+      const viewMap = {
+        dashboard: 'viewDashboard',
+        planner: 'viewPlanner',
+        quiz: 'viewQuiz',
+        attendance: 'viewAttendance',
+        gradebook: 'viewGradebook',
+        tools: 'viewTools',
+        parentMsgs: 'viewParentMsgs',
+        timetable: 'viewTimetable'
+      };
+
+      const targetView = document.getElementById(viewMap[tabId]);
+      if (targetView) {
+        targetView.classList.remove('hidden');
+        targetView.classList.add('block');
+      }
+
+      if (tabId === 'gradebook') {
+        renderGradeDistributionChart();
+      }
+      if (tabId === 'tools') {
+        drawWheel();
+      }
+    }
+
+    // --- Dashboard Renderer ---
+    function renderDashboard() {
+      document.getElementById('dashClassCount').innerText = `${appState.classes.length} فصول`;
+      document.getElementById('dashStudentCount').innerText = `${appState.students.length} طالباً`;
+      document.getElementById('dashPlansCount').innerText = `${appState.plans.length} خطط`;
+
+      // Attendance calc
+      const totalStudents = appState.students.length;
+      const presentStudents = appState.students.filter(s => s.attendance === 'present').length;
+      const attRate = totalStudents > 0 ? ((presentStudents / totalStudents) * 100).toFixed(1) : '100';
+      document.getElementById('dashAttendanceRate').innerText = `${attRate}%`;
+
+      // Current Day Display
+      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      const todayName = days[new Date().getDay()] || 'الأحد';
+      document.getElementById('dashCurrentDay').innerText = `جدول يوم ${todayName}`;
+
+      // Today's classes
+      const todayClassesList = document.getElementById('todayClassesList');
+      const todaySchedule = appState.timetable.find(t => t.day === todayName) || appState.timetable[0];
+      
+      const periods = [
+        { num: 'الحصة الأولى', time: '08:00 - 08:45', name: todaySchedule.p1 },
+        { num: 'الحصة الثانية', time: '08:50 - 09:35', name: todaySchedule.p2 },
+        { num: 'الحصة الثالثة', time: '09:40 - 10:25', name: todaySchedule.p3 },
+        { num: 'الحصة الرابعة', time: '10:50 - 11:35', name: todaySchedule.p4 }
+      ];
+
+      todayClassesList.innerHTML = periods.map(p => `
+        <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-750/50 hover:bg-slate-100 dark:hover:bg-slate-700/60 transition">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 font-bold flex items-center justify-center text-xs">
+              ${p.num.split(' ')[1] || '1'}
+            </span>
+            <div>
+              <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">${p.name}</h4>
+              <p class="text-xs text-slate-400 font-mono">${p.time}</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${p.name.includes('فراغ') ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400' : 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300'}">
+            ${p.name.includes('فراغ') ? 'وقت تحضير' : 'حصة دراسية'}
+          </span>
+        </div>
+      `).join('');
+
+      // Top Stars Leaderboard
+      const sortedStudents = [...appState.students].sort((a, b) => b.stars - a.stars).slice(0, 4);
+      const topStudentsContainer = document.getElementById('topStudentsLeaderboard');
+      topStudentsContainer.innerHTML = sortedStudents.map((s, idx) => `
+        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-750">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+              idx === 0 ? 'bg-amber-400 text-amber-950 shadow-sm' :
+              idx === 1 ? 'bg-slate-300 text-slate-800' :
+              idx === 2 ? 'bg-amber-700 text-amber-100' : 'bg-slate-200 text-slate-600'
+            }">${idx + 1}</span>
+            <span class="text-xs font-bold text-slate-700 dark:text-slate-200">${s.name}</span>
+          </div>
+          <span class="text-xs font-black text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            ⭐ ${s.stars}
+          </span>
+        </div>
+      `).join('');
+    }
+
+    // --- Lesson Planner Renderer ---
+    function renderPlans() {
+      const container = document.getElementById('plansListGrid');
+      if (appState.plans.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">لا توجد خطط دروس مضافة حالياً. أنشئ خطة جديدة.</div>`;
+        return;
+      }
+      container.innerHTML = appState.plans.map(plan => `
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 font-semibold">${plan.subject}</span>
+              <span>${plan.date || 'خطة معتمدة'}</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-800 dark:text-slate-100 mb-1">${plan.title}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 font-semibold">الصف: ${plan.grade} | المدة: ${plan.duration}</p>
+            
+            <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-750 p-3 rounded-xl mb-4">
+              <p class="font-bold text-slate-700 dark:text-slate-200">الأهداف:</p>
+              <p class="line-clamp-2 leading-relaxed whitespace-pre-line">${plan.objectives}</p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2">
+            <button onclick="previewPlanPrint(${plan.id})" class="flex-1 py-1.5 px-3 bg-brand-50 hover:bg-brand-100 dark:bg-brand-900/40 dark:hover:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-bold rounded-lg text-xs transition flex items-center justify-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              معاينة وطباعة
+            </button>
+            <button onclick="deletePlan(${plan.id})" class="p-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition" title="حذف الخطة">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deletePlan(id) {
+      appState.plans = appState.plans.filter(p => p.id !== id);
+      saveState();
+      renderPlans();
+      renderDashboard();
+      showToast('تم حذف خطة الدرس بنجاح', 'info');
+    }
+
+    function previewPlanPrint(planId) {
+      const plan = appState.plans.find(p => p.id === planId);
+      if (!plan) return;
+
+      const printArea = document.getElementById('printArea');
+      printArea.innerHTML = `
+        <div style="direction: rtl; font-family: 'Cairo', sans-serif;">
+          <!-- Official Exam/Plan Header -->
+          <div style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: right;">
+              <h3 style="margin: 0; font-size: 16px; font-weight: bold;">جمهورية العراق - وزارة التربية</h3>
+              <h4 style="margin: 4px 0 0; font-size: 14px;">${appState.teacher.school}</h4>
+              <p style="margin: 2px 0 0; font-size: 12px; color: #555;">العام الدراسي: ${appState.teacher.academicYear}</p>
+            </div>
+            <div style="text-align: center;">
+              <h2 style="margin: 0; font-size: 18px; font-weight: 800; border: 2px solid #333; padding: 4px 15px; border-radius: 6px;">خطة درس نموذجية</h2>
+              <span style="font-size: 12px; font-weight: bold; margin-top: 4px; display: block;">مادة: ${plan.subject}</span>
+            </div>
+            <div style="text-align: left;">
+              <p style="margin: 0; font-size: 13px;"><strong>المدرس:</strong> ${appState.teacher.name}</p>
+              <p style="margin: 2px 0 0; font-size: 13px;"><strong>الصف:</strong> ${plan.grade}</p>
+              <p style="margin: 2px 0 0; font-size: 12px; color: #555;"><strong>التاريخ:</strong> ${plan.date || '2026-11-05'}</p>
+            </div>
+          </div>
+
+          <!-- Main Metadata Grid -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 13px;">
+            <tr style="background: #f8fafc;">
+              <td style="border: 1px solid #cbd5e1; padding: 8px; width: 20%; font-weight: bold;">عنوان الدرس:</td>
+              <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; font-size: 14px;" colspan="3">${plan.title}</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;">استراتيجيات التدريس:</td>
+              <td style="border: 1px solid #cbd5e1; padding: 8px;">${plan.strategy}</td>
+              <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; width: 15%;">زمن الحصة:</td>
+              <td style="border: 1px solid #cbd5e1; padding: 8px;">${plan.duration}</td>
+            </tr>
+            <tr style="background: #f8fafc;">
+              <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold;">الوسائل والمصادر:</td>
+              <td style="border: 1px solid #cbd5e1; padding: 8px;" colspan="3">${plan.tools}</td>
+            </tr>
+          </table>
+
+          <!-- Objectives Section -->
+          <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 14px; font-weight: bold; background: #e2e8f0; padding: 6px 10px; margin: 0 0 8px 0; border-radius: 4px;">الأهداف السلوكية والمعرفية (المخرجات المتوقعة):</h4>
+            <div style="padding: 5px 10px; font-size: 13px; line-height: 1.8; white-space: pre-line;">${plan.objectives}</div>
+          </div>
+
+          <!-- Lesson Execution Steps -->
+          <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 14px; font-weight: bold; background: #e2e8f0; padding: 6px 10px; margin: 0 0 8px 0; border-radius: 4px;">سير الدرس والإجراءات التعليمية:</h4>
+            <div style="padding: 5px 10px; font-size: 13px; line-height: 1.8; white-space: pre-line;">${plan.steps}</div>
+          </div>
+
+          <!-- Homework -->
+          <div style="margin-bottom: 25px;">
+            <h4 style="font-size: 14px; font-weight: bold; background: #e2e8f0; padding: 6px 10px; margin: 0 0 8px 0; border-radius: 4px;">الواجب المنزلي وأنشطة التمايز:</h4>
+            <p style="padding: 5px 10px; font-size: 13px; margin: 0;">${plan.homework}</p>
+          </div>
+
+          <!-- Signatures Footer -->
+          <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; padding: 0 30px;">
+            <div>توقيع مدرس المادة: ________________</div>
+            <div>توقيع المشرف التربوي / مدير المدرسة: ________________</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('printModalTitle').innerText = `معاينة خطة: ${plan.title}`;
+      document.getElementById('printModal').classList.remove('hidden');
+    }
+
+    // --- Quiz & Exam Generator ---
+    function renderQuizQuestions() {
+      const container = document.getElementById('quizQuestionsContainer');
+      const countBadge = document.getElementById('quizQuestionsCountBadge');
+      const totalPointsBadge = document.getElementById('quizTotalPointsBadge');
+
+      countBadge.innerText = `${appState.questions.length} أسئلة`;
+      const totalScore = appState.questions.reduce((acc, q) => acc + Number(q.points || 0), 0);
+      totalPointsBadge.innerText = totalScore;
+
+      if (appState.questions.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">بنك الأسئلة فارغ حالياً. أضف أسئلة جديدة.</div>`;
+        return;
+      }
+
+      container.innerHTML = appState.questions.map((q, idx) => `
+        <div class="p-4 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-750/50 flex items-start justify-between gap-3">
+          <div class="flex items-start gap-3 flex-1">
+            <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">
+              ${idx + 1}
+            </span>
+            <div class="space-y-1.5 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-0.5 rounded font-semibold ${
+                  q.type === 'mcq' ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300' :
+                  q.type === 'truefalse' ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300' :
+                  'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300'
+                }">
+                  ${q.type === 'mcq' ? 'اختيار من متعدد' : q.type === 'truefalse' ? 'صح أو خطأ' : 'سؤال مقالي / مسألة'}
+                </span>
+                <span class="text-xs font-bold text-slate-400">(${q.points} درجات)</span>
+              </div>
+              <p class="text-sm font-bold text-slate-800 dark:text-slate-100 leading-relaxed">${q.text}</p>
+              ${q.options && q.options.length ? `
+                <div class="flex flex-wrap gap-2 text-xs text-slate-500 pt-1">
+                  ${q.options.map(opt => `<span class="px-2 py-1 bg-white dark:bg-slate-700 rounded border border-slate-200 dark:border-slate-600">${opt}</span>`).join('')}
+                </div>
+              ` : ''}
+              <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">الإجابة النموذجية: ${q.answer}</p>
+            </div>
+          </div>
+          <button onclick="deleteQuestion(${q.id})" class="text-slate-400 hover:text-rose-500 p-1 transition" title="حذف السؤال">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function deleteQuestion(id) {
+      appState.questions = appState.questions.filter(q => q.id !== id);
+      saveState();
+      renderQuizQuestions();
+      showToast('تم حذف السؤال من النموذج', 'info');
+    }
+
+    function generatePrintableExam() {
+      const printArea = document.getElementById('printArea');
+      const totalScore = appState.questions.reduce((acc, q) => acc + Number(q.points || 0), 0);
+
+      printArea.innerHTML = `
+        <div style="direction: rtl; font-family: 'Cairo', sans-serif;">
+          <!-- Exam Header -->
+          <div style="border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: right;">
+              <h3 style="margin: 0; font-size: 15px; font-weight: bold;">جمهورية العراق - وزارة التربية</h3>
+              <h4 style="margin: 3px 0 0; font-size: 13px;">${appState.teacher.school}</h4>
+              <p style="margin: 2px 0 0; font-size: 12px;">المادة: ${appState.teacher.subject}</p>
+            </div>
+            <div style="text-align: center;">
+              <h2 style="margin: 0; font-size: 17px; font-weight: 800; border: 2px solid #000; padding: 4px 18px; border-radius: 4px;">اختبار الشهر الأول</h2>
+              <p style="margin: 4px 0 0; font-size: 12px; font-weight: bold;">العام الدراسي: ${appState.teacher.academicYear}</p>
+            </div>
+            <div style="text-align: left;">
+              <p style="margin: 0; font-size: 12px;">الزمن: 45 دقيقة</p>
+              <p style="margin: 2px 0 0; font-size: 12px;">الدرجة الكلية: <strong>${totalScore} درجة</strong></p>
+              <p style="margin: 2px 0 0; font-size: 12px;">مدرس المادة: ${appState.teacher.name}</p>
+            </div>
+          </div>
+
+          <!-- Student Name & Score Strip -->
+          <div style="border: 1px solid #cbd5e1; padding: 8px 12px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; font-size: 13px; font-weight: bold;">
+            <div>اسم الطالب: __________________________________</div>
+            <div>الصف والشعبة: ______________</div>
+            <div style="border: 1px solid #000; padding: 4px 16px; background: #fff;">الدرجة: &nbsp;&nbsp;&nbsp;&nbsp; / ${totalScore}</div>
+          </div>
+
+          <!-- Questions Content -->
+          <div style="space-y: 16px;">
+            ${appState.questions.map((q, idx) => `
+              <div style="margin-bottom: 20px; page-break-inside: avoid;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; margin-bottom: 6px;">
+                  <span>س${idx + 1}: ${q.text}</span>
+                  <span style="font-size: 12px; color: #444;">(${q.points} درجات)</span>
+                </div>
+                ${q.type === 'mcq' ? `
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-right: 15px; font-size: 13px;">
+                    ${q.options.map(opt => `<div>⚪ ${opt}</div>`).join('')}
+                  </div>
+                ` : q.type === 'truefalse' ? `
+                  <div style="margin-right: 15px; font-size: 13px;">
+                    <span>( &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )</span>
+                  </div>
+                ` : `
+                  <div style="height: 50px; border-bottom: 1px dashed #94a3b8; margin: 10px 10px 0 0;"></div>
+                `}
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Exam Footer Note -->
+          <div style="margin-top: 40px; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 10px; font-size: 12px; font-weight: bold; color: #475569;">
+            « مع تمنياتنا لجميع طلبتنا الأعزاء بالنجاح والتفوق الباهر »
+          </div>
+        </div>
+      `;
+
+      document.getElementById('printModalTitle').innerText = 'معاينة ورقة الاختبار المنسقة للطباعة';
+      document.getElementById('printModal').classList.remove('hidden');
+    }
+
+    // --- Attendance Manager ---
+    function renderAttendanceTable() {
+      const selectedClass = document.getElementById('attClassSelect').value;
+      const students = appState.students.filter(s => s.classId === selectedClass);
+      const tbody = document.getElementById('attendanceTableBody');
+
+      // Update counters
+      const presentCount = students.filter(s => s.attendance === 'present').length;
+      const absentCount = students.filter(s => s.attendance === 'absent').length;
+      const lateCount = students.filter(s => s.attendance === 'late').length;
+      const excusedCount = students.filter(s => s.attendance === 'excused').length;
+
+      document.getElementById('attPresentCount').innerText = presentCount;
+      document.getElementById('attAbsentCount').innerText = absentCount;
+      document.getElementById('attLateCount').innerText = lateCount;
+      document.getElementById('attExcusedCount').innerText = excusedCount;
+
+      tbody.innerHTML = students.map((s, idx) => `
+        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
+          <td class="py-3 px-4 text-slate-400 font-mono text-xs">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
+          <td class="py-3 px-4 text-center">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+              s.attendance === 'present' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300' :
+              s.attendance === 'absent' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300' :
+              s.attendance === 'late' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300' :
+              'bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300'
+            }">
+              <span class="w-1.5 h-1.5 rounded-full ${
+                s.attendance === 'present' ? 'bg-emerald-500' :
+                s.attendance === 'absent' ? 'bg-rose-500' :
+                s.attendance === 'late' ? 'bg-amber-500' : 'bg-blue-500'
+              }"></span>
+              ${
+                s.attendance === 'present' ? 'حاضر' :
+                s.attendance === 'absent' ? 'غائب' :
+                s.attendance === 'late' ? 'متأخر' : 'معذور'
+              }
+            </span>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <span class="text-xs font-bold ${s.absentCount > 2 ? 'text-rose-600 font-extrabold' : 'text-slate-600 dark:text-slate-400'}">
+              ${s.absentCount} أيام
+            </span>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <div class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 p-0.5 bg-slate-50 dark:bg-slate-750 text-xs">
+              <button onclick="setStudentAttendance(${s.id}, 'present')" class="px-2 py-1 rounded ${s.attendance === 'present' ? 'bg-emerald-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}">حاضر</button>
+              <button onclick="setStudentAttendance(${s.id}, 'absent')" class="px-2 py-1 rounded ${s.attendance === 'absent' ? 'bg-rose-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}">غائب</button>
+              <button onclick="setStudentAttendance(${s.id}, 'late')" class="px-2 py-1 rounded ${s.attendance === 'late' ? 'bg-amber-500 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}">تأخر</button>
+              <button onclick="setStudentAttendance(${s.id}, 'excused')" class="px-2 py-1 rounded ${s.attendance === 'excused' ? 'bg-blue-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}">إجازة</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function setStudentAttendance(studentId, status) {
+      const student = appState.students.find(s => s.id === studentId);
+      if (student) {
+        if (student.attendance !== status && status === 'absent') {
+          student.absentCount = (student.absentCount || 0) + 1;
+        }
+        student.attendance = status;
+        saveState();
+        renderAttendanceTable();
+        renderDashboard();
+      }
+    }
+
+    // --- Gradebook Manager ---
+    let gradeChartInstance = null;
+
+    function renderGradebookTable() {
+      const selectedClass = document.getElementById('gradeClassSelect').value;
+      const students = appState.students.filter(s => s.classId === selectedClass);
+      const tbody = document.getElementById('gradebookTableBody');
+
+      tbody.innerHTML = students.map(s => {
+        const total = (Number(s.participation) || 0) + (Number(s.homework) || 0) + (Number(s.activity) || 0) + (Number(s.exam) || 0);
+        let gradeLabel = 'ممتاز';
+        let gradeClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+        if (total < 50) {
+          gradeLabel = 'راسب / يحتاج دعم';
+          gradeClass = 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300';
+        } else if (total < 60) {
+          gradeLabel = 'مقبول';
+          gradeClass = 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300';
+        } else if (total < 75) {
+          gradeLabel = 'متوسط';
+          gradeClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+        } else if (total < 85) {
+          gradeLabel = 'جيد جداً';
+          gradeClass = 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300';
+        }
+
+        return `
+          <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
+            <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${s.name}</td>
+            <td class="py-2 px-3 text-center">
+              <input type="number" min="0" max="10" value="${s.participation}" onchange="updateGrade(${s.id}, 'participation', this.value)" class="w-16 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 text-xs font-bold">
+            </td>
+            <td class="py-2 px-3 text-center">
+              <input type="number" min="0" max="20" value="${s.homework}" onchange="updateGrade(${s.id}, 'homework', this.value)" class="w-16 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 text-xs font-bold">
+            </td>
+            <td class="py-2 px-3 text-center">
+              <input type="number" min="0" max="20" value="${s.activity}" onchange="updateGrade(${s.id}, 'activity', this.value)" class="w-16 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 text-xs font-bold">
+            </td>
+            <td class="py-2 px-3 text-center">
+              <input type="number" min="0" max="50" value="${s.exam}" onchange="updateGrade(${s.id}, 'exam', this.value)" class="w-16 text-center bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-1 text-xs font-bold">
+            </td>
+            <td class="py-3 px-3 text-center font-extrabold text-sm ${total >= 50 ? 'text-brand-600 dark:text-brand-400' : 'text-rose-600'}">
+              ${total}
+            </td>
+            <td class="py-3 px-4 text-center">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${gradeClass}">${gradeLabel}</span>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <button onclick="deleteStudent(${s.id})" class="text-slate-400 hover:text-rose-500 p-1" title="حذف الطالب">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Update metrics
+      if (students.length > 0) {
+        const totals = students.map(s => (Number(s.participation) || 0) + (Number(s.homework) || 0) + (Number(s.activity) || 0) + (Number(s.exam) || 0));
+        const avg = (totals.reduce((a, b) => a + b, 0) / totals.length).toFixed(1);
+        const top = Math.max(...totals);
+        const passCount = totals.filter(t => t >= 50).length;
+        const passRate = ((passCount / totals.length) * 100).toFixed(0);
+
+        document.getElementById('gradeAvgScore').innerText = `${avg}%`;
+        document.getElementById('gradeTopScore').innerText = `${top} / 100`;
+        document.getElementById('gradePassRate').innerText = `${passRate}%`;
+      }
+    }
+
+    function updateGrade(studentId, field, value) {
+      const student = appState.students.find(s => s.id === studentId);
+      if (student) {
+        student[field] = Number(value);
+        saveState();
+        renderGradebookTable();
+        renderGradeDistributionChart();
+        showToast('تم تحديث الدرجة تلقائياً', 'success');
+      }
+    }
+
+    function deleteStudent(studentId) {
+      appState.students = appState.students.filter(s => s.id !== studentId);
+      saveState();
+      renderGradebookTable();
+      renderAttendanceTable();
+      renderDashboard();
+      renderStarsGrid();
+      showToast('تم حذف الطالب من السجل', 'info');
+    }
+
+    function renderGradeDistributionChart() {
+      const canvas = document.getElementById('gradeDistributionChart');
+      if (!canvas) return;
+
+      const selectedClass = document.getElementById('gradeClassSelect').value;
+      const students = appState.students.filter(s => s.classId === selectedClass);
+      
+      let excellent = 0, veryGood = 0, good = 0, pass = 0, needSupport = 0;
+      students.forEach(s => {
+        const total = (Number(s.participation) || 0) + (Number(s.homework) || 0) + (Number(s.activity) || 0) + (Number(s.exam) || 0);
+        if (total >= 90) excellent++;
+        else if (total >= 75) veryGood++;
+        else if (total >= 60) good++;
+        else if (total >= 50) pass++;
+        else needSupport++;
+      });
+
+      if (gradeChartInstance) {
+        gradeChartInstance.destroy();
+      }
+
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+
+      gradeChartInstance = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: ['ممتاز (90-100)', 'جيد جداً (75-89)', 'متوسط (60-74)', 'مقبول (50-59)', 'يحتاج دعم (<50)'],
+          datasets: [{
+            label: 'عدد الطلاب',
+            data: [excellent, veryGood, good, pass, needSupport],
+            backgroundColor: [
+              'rgba(16, 185, 129, 0.85)',
+              'rgba(99, 102, 241, 0.85)',
+              'rgba(59, 130, 246, 0.85)',
+              'rgba(245, 158, 11, 0.85)',
+              'rgba(239, 68, 68, 0.85)'
+            ],
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1, color: textColor },
+              grid: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }
+            },
+            x: {
+              ticks: { color: textColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // --- Interactive Classroom Tools: Random Picker Wheel ---
+    let wheelAngle = 0;
+    let isSpinning = false;
+    let currentSelectedStudent = null;
+
+    const WHEEL_COLORS = [
+      '#6366f1', '#10b981', '#f59e0b', '#ec4899',
+      '#3b82f6', '#8b5cf6', '#14b8a6', '#f97316'
+    ];
+
+    function drawWheel() {
+      const canvas = document.getElementById('wheelCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const classId = document.getElementById('wheelClassSelect').value;
+      const students = appState.students.filter(s => s.classId === classId);
+
+      const numSlices = Math.max(students.length, 1);
+      const sliceAngle = (2 * Math.PI) / numSlices;
+      const radius = canvas.width / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(wheelAngle);
+
+      for (let i = 0; i < numSlices; i++) {
+        const start = i * sliceAngle;
+        const end = start + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius - 4, start, end);
+        ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        // Draw Student Name
+        ctx.save();
+        ctx.rotate(start + sliceAngle / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Cairo, sans-serif';
+        const name = students[i] ? students[i].name.split(' ').slice(0, 2).join(' ') : `طالب ${i+1}`;
+        ctx.fillText(name, radius - 18, 4);
+        ctx.restore();
+      }
+
+      // Wheel center hub
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#4f46e5';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = '#4f46e5';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function spinWheel() {
+      if (isSpinning) return;
+      initAudio();
+      isSpinning = true;
+
+      const classId = document.getElementById('wheelClassSelect').value;
+      const students = appState.students.filter(s => s.classId === classId);
+      if (students.length === 0) {
+        showToast('لا يوجد طلاب في هذا الفصل لتدوير القرعة', 'error');
+        isSpinning = false;
+        return;
+      }
+
+      document.getElementById('wheelWinnerName').innerText = 'جارٍ السحب العشوائي...';
+      document.getElementById('winnerActions').classList.add('hidden');
+
+      const targetStudentIdx = Math.floor(Math.random() * students.length);
+      const numSlices = students.length;
+      const sliceAngle = (2 * Math.PI) / numSlices;
+
+      // Calculate final angle pointing to top (3*PI/2)
+      const sliceCenter = targetStudentIdx * sliceAngle + sliceAngle / 2;
+      const randomSpins = 6 + Math.floor(Math.random() * 3);
+      const finalAngle = (randomSpins * 2 * Math.PI) + ((3 * Math.PI / 2) - sliceCenter);
+
+      const startTime = performance.now();
+      const duration = 4000;
+      let lastTickAngle = wheelAngle;
+
+      function animateSpin(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const ease = 1 - Math.pow(1 - progress, 3);
+        wheelAngle = ease * finalAngle;
+
+        // Play subtle tick sounds as slices pass
+        if (Math.abs(wheelAngle - lastTickAngle) > sliceAngle * 0.8) {
+          playTick();
+          lastTickAngle = wheelAngle;
+        }
+
+        drawWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSpin);
+        } else {
+          isSpinning = false;
+          currentSelectedStudent = students[targetStudentIdx];
+          document.getElementById('wheelWinnerName').innerText = `🎉 ${currentSelectedStudent.name}`;
+          document.getElementById('winnerActions').classList.remove('hidden');
+          playCheer();
+          showToast(`تم اختيار الطالب: ${currentSelectedStudent.name}`, 'success');
+        }
+      }
+
+      requestAnimationFrame(animateSpin);
+    }
+
+    // --- Interactive Classroom Tools: Countdown Timer ---
+    let timerDuration = 300; // default 5 mins
+    let timerRemaining = 300;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerRemaining / 60);
+      const secs = timerRemaining % 60;
+      document.getElementById('timerDisplay').innerText = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+      // Update circular SVG progress
+      const circle = document.getElementById('timerProgressCircle');
+      const totalCircumference = 263.89; // 2 * pi * 42
+      const offset = totalCircumference - (timerRemaining / timerDuration) * totalCircumference;
+      circle.style.strokeDashoffset = offset;
+
+      if (timerRemaining <= 10 && timerRemaining > 0 && timerRunning) {
+        circle.setAttribute('stroke', '#ef4444');
+        playTick();
+      } else {
+        circle.setAttribute('stroke', '#6366f1');
+      }
+    }
+
+    function startTimer() {
+      if (timerRunning) return;
+      initAudio();
+      timerRunning = true;
+      document.getElementById('timerStatusBadge').innerText = 'المؤقت نشط';
+      document.getElementById('timerStatusBadge').className = 'text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-semibold animate-pulse';
+
+      timerInterval = setInterval(() => {
+        if (timerRemaining > 0) {
+          timerRemaining--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          playAlarm();
+          document.getElementById('timerStatusBadge').innerText = 'انتهى الوقت!';
+          document.getElementById('timerStatusBadge').className = 'text-xs px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-extrabold';
+          showToast('انتهى وقت النشاط الصفي!', 'info');
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      if (!timerRunning) return;
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timerStatusBadge').innerText = 'متوقف مؤقتاً';
+      document.getElementById('timerStatusBadge').className = 'text-xs px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-semibold';
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timerRemaining = timerDuration;
+      updateTimerDisplay();
+      document.getElementById('timerStatusBadge').innerText = 'جاهز';
+      document.getElementById('timerStatusBadge').className = 'text-xs px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold';
+    }
+
+    // --- Interactive Classroom Tools: Stars & Gamification ---
+    function renderStarsGrid() {
+      const selectedClass = document.getElementById('starsClassSelect').value;
+      const students = appState.students.filter(s => s.classId === selectedClass);
+      const grid = document.getElementById('starsStudentsGrid');
+
+      grid.innerHTML = students.map(s => `
+        <div class="p-4 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-750/50 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-xs">${s.name}</h4>
+            <span class="text-xs font-black text-amber-500 mt-1 flex items-center gap-1">
+              ⭐ ${s.stars || 0} نقطة
+            </span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="changeStudentStars(${s.id}, 1)" class="w-8 h-8 rounded-lg bg-amber-100 hover:bg-amber-200 dark:bg-amber-900/40 dark:hover:bg-amber-900/70 text-amber-800 dark:text-amber-300 font-bold flex items-center justify-center text-sm transition" title="إضافة نجمة">+1</button>
+            <button onclick="changeStudentStars(${s.id}, -1)" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center text-xs transition" title="خصم نقطة">-1</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function changeStudentStars(studentId, delta) {
+      const student = appState.students.find(s => s.id === studentId);
+      if (student) {
+        student.stars = Math.max(0, (student.stars || 0) + delta);
+        if (delta > 0) playTone(784, 'triangle', 0.15);
+        saveState();
+        renderStarsGrid();
+        renderDashboard();
+      }
+    }
+
+    // --- Parent Communication Messages ---
+    function populateParentStudentsSelect() {
+      const select = document.getElementById('parentStudentSelect');
+      select.innerHTML = appState.students.map(s => `
+        <option value="${s.id}">${s.name} - (${s.classId === 'class-3a' ? 'الثالث متوسط - أ' : s.classId === 'class-3b' ? 'الثالث متوسط - ب' : 'الرابع علمي'})</option>
+      `).join('');
+    }
+
+    function generateParentMessage() {
+      const studentId = Number(document.getElementById('parentStudentSelect').value);
+      const student = appState.students.find(s => s.id === studentId);
+      if (!student) return;
+
+      const type = document.getElementById('parentMsgTypeSelect').value;
+      const notes = document.getElementById('parentCustomNotesInput').value.trim();
+      const preview = document.getElementById('parentMsgPreviewBox');
+
+      const totalGrade = (Number(student.participation) || 0) + (Number(student.homework) || 0) + (Number(student.activity) || 0) + (Number(student.exam) || 0);
+
+      let msg = '';
+      if (type === 'praise') {
+        msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب العزيز (${student.name}) المحترم.
+يسعدنا إبلاغكم بالمستوى المتميز والتفاعل الإيجابي الرائع لنجلكم في مادة (${appState.teacher.subject})، حيث حصل على مجموع (${totalGrade} من 100) و(${student.stars} نجمة مشاركة صفية).
+نبارك لكم هذا الجهد الطيب ونتمنى له دوام التفوق والنجاح.
+${notes ? `\nملاحظة: ${notes}` : ''}
+مع تحيات مدرس المادة: ${appState.teacher.name} - ${appState.teacher.school}.`;
+      } else if (type === 'attendance_warning') {
+        msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${student.name}) المحترم.
+نود إشعاركم بأن الطالب قد تغيب عن الدوام الرسمي لمدة (${student.absentCount} أيام)، مما يؤثر سلباً على متابعة الدروس واستيعاب المادة العلمية.
+نرجو التكرم بالحرص على انتظامه والتواصل معنا في حال وجود أي ظرف قهري.
+${notes ? `\nملاحظة: ${notes}` : ''}
+مع وافر التقدير: إدارة المدرسة ومدرس المادة ${appState.teacher.name}.`;
+      } else if (type === 'grade_followup') {
+        msg = `السلام عليكم ورحمة الله وبركاته، تحية طيبة لولي أمر الطالب (${student.name}).
+حرصاً منا على مصلحة نجلكم ومستقبله الدراسي، نود إحاطتكم علماً بأن درجاته الأخيرة في مادة (${appState.teacher.subject}) بلغت (${totalGrade} من 100)، وهو مستوى يحتاج إلى متابعة واهتمام مضاعف في البيت لإتقان المفاهيم وحل التمارين.
+${notes ? `\nملاحظة خاصة: ${notes}` : ''}
+نأمل دعمكم المستمر ودمتم بخير - المدرس: ${appState.teacher.name}.`;
+      } else if (type === 'meeting_invite') {
+        msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${student.name}) المحترم.
+يسر إدارة ${appState.teacher.school} وهيئة التدريس دعوتكم لحضور الاجتماع الدوري لأولياء الأمور، وذلك لمناقشة المستوى الأكاديمي والتربوي للطلاب والارتقاء بأدائهم.
+حضوركم شرف لنا وداعم أساسي لمسيرة تفوق نجلكم.
+${notes ? `\nالموعد والمكان: ${notes}` : ''}
+أهلاً وسهلاً بكم.`;
+      } else {
+        msg = `السلام عليكم ورحمة الله وبركاته، ولي أمر الطالب (${student.name}) المحترم.
+تذكير بموعد تسليم الواجبات والمهام المطلوبة في مادة (${appState.teacher.subject}).
+${notes ? `\nالواجب المطلوب: ${notes}` : 'نرجو التأكيد على الطالب بإنجاز الواجب البيتي المطلوب للغد.'}
+شاكرين لكم حسن التعاون والاهتمام - الأستاذ: ${appState.teacher.name}.`;
+      }
+
+      preview.innerText = msg;
+      showToast('تم توليد نص الرسالة بنجاح', 'success');
+    }
+
+    function copyParentMessage() {
+      const text = document.getElementById('parentMsgPreviewBox').innerText;
+      if (!text || text.includes('اختر نوع الرسالة')) {
+        showToast('يرجى توليد الرسالة أولاً قبل النسخ', 'error');
+        return;
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        }
+        showToast('تم نسخ نص الرسالة إلى الحافظة بنجاح', 'success');
+      } catch (err) {
+        showToast('تعذر النسخ تلقائياً', 'error');
+      }
+    }
+
+    function openWhatsappShare() {
+      const text = document.getElementById('parentMsgPreviewBox').innerText;
+      if (!text || text.includes('اختر نوع الرسالة')) {
+        showToast('يرجى توليد نص الرسالة أولاً', 'error');
+        return;
+      }
+      const studentId = Number(document.getElementById('parentStudentSelect').value);
+      const student = appState.students.find(s => s.id === studentId);
+      const phone = student && student.phone ? student.phone.replace(/[^0-9]/g, '') : '';
+      const encoded = encodeURIComponent(text);
+      const url = phone ? `https://wa.me/${phone}?text=${encoded}` : `https://wa.me/?text=${encoded}`;
+      window.open(url, '_blank');
+    }
+
+    // --- Timetable Renderer ---
+    function renderTimetable() {
+      const tbody = document.getElementById('timetableBody');
+      tbody.innerHTML = appState.timetable.map(row => `
+        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-750/50 transition">
+          <td class="py-3 px-4 text-right font-bold text-slate-800 dark:text-slate-100 bg-slate-50/40 dark:bg-slate-750/40">${row.day}</td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p1.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p1}</span></td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p2.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p2}</span></td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p3.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p3}</span></td>
+          <td class="py-3 px-3 bg-amber-50/30 dark:bg-amber-950/10 text-amber-700 dark:text-amber-400 font-bold">استراحة</td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p4.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p4}</span></td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p5.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p5}</span></td>
+          <td class="py-3 px-3"><span class="p-1 rounded font-semibold ${row.p6.includes('فراغ') ? 'text-slate-400' : 'text-brand-600 dark:text-brand-400'}">${row.p6}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function printTimetableModal() {
+      const printArea = document.getElementById('printArea');
+      printArea.innerHTML = `
+        <div style="direction: rtl; font-family: 'Cairo', sans-serif;">
+          <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 20px;">
+            <h2 style="margin: 0; font-size: 18px; font-weight: bold;">جمهورية العراق - وزارة التربية</h2>
+            <h3 style="margin: 4px 0; font-size: 16px;">${appState.teacher.school}</h3>
+            <h4 style="margin: 2px 0; font-size: 14px; font-weight: bold;">جدول الحصص الأسبوعي للأستاذ: ${appState.teacher.name} (${appState.teacher.subject})</h4>
+            <span style="font-size: 12px; color: #555;">العام الدراسي: ${appState.teacher.academicYear}</span>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 13px;">
+            <thead>
+              <tr style="background: #f1f5f9; font-weight: bold;">
+                <th style="border: 1px solid #94a3b8; padding: 10px;">اليوم</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة الأولى</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة الثانية</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة الثالثة</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px; background: #fef3c7;">الاستراحة</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة الرابعة</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة الخامسة</th>
+                <th style="border: 1px solid #94a3b8; padding: 10px;">الحصة السادسة</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appState.timetable.map(row => `
+                <tr>
+                  <td style="border: 1px solid #94a3b8; padding: 8px; font-weight: bold; background: #f8fafc;">${row.day}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p1}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p2}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p3}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px; background: #fef3c7; font-weight: bold;">استراحة</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p4}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p5}</td>
+                  <td style="border: 1px solid #94a3b8; padding: 8px;">${row.p6}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div style="margin-top: 40px; display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; padding: 0 40px;">
+            <div>توقيع المدرس: ________________</div>
+            <div>مصادقة إدارة المدرسة: ________________</div>
+          </div>
+        </div>
+      `;
+      document.getElementById('printModalTitle').innerText = 'طباعة جدول الحصص الأسبوعي';
+      document.getElementById('printModal').classList.remove('hidden');
+    }
+
+    // --- CSV Export Helper ---
+    function exportGradesCsv() {
+      const selectedClass = document.getElementById('gradeClassSelect').value;
+      const students = appState.students.filter(s => s.classId === selectedClass);
+      if (students.length === 0) {
+        showToast('لا توجد بيانات طلاب لتصديرها', 'error');
+        return;
+      }
+      let csvContent = '\uFEFF' + 'الرقم,اسم الطالب,المشاركة (10),الواجبات (20),النشاط (20),الامتحان (50),المجموع (100),التقدير\n';
+      students.forEach((s, idx) => {
+        const total = (Number(s.participation) || 0) + (Number(s.homework) || 0) + (Number(s.activity) || 0) + (Number(s.exam) || 0);
+        let gradeLabel = total >= 90 ? 'ممتاز' : total >= 75 ? 'جيد جدا' : total >= 60 ? 'متوسط' : total >= 50 ? 'مقبول' : 'يحتاج دعم';
+        csvContent += `${idx + 1},"${s.name}",${s.participation},${s.homework},${s.activity},${s.exam},${total},"${gradeLabel}"\n`;
+      });
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `كشف_درجات_${selectedClass}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      showToast('تم تصدير كشف الدرجات بصيغة CSV بنجاح', 'success');
+    }
+
+    // --- Initialize Everything On Window Load ---
+    window.addEventListener('load', () => {
+      // Set Default Date in Attendance
+      const todayStr = new Date().toISOString().split('T')[0];
+      document.getElementById('attDateInput').value = todayStr;
+
+      // Render all views
+      renderDashboard();
+      renderPlans();
+      renderQuizQuestions();
+      renderAttendanceTable();
+      renderGradebookTable();
+      renderStarsGrid();
+      populateParentStudentsSelect();
+      renderTimetable();
+      drawWheel();
+      updateTimerDisplay();
+
+      // Navigation clicks
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchTab(btn.dataset.tab);
+        });
+      });
+
+      // Quick Hero Actions
+      document.getElementById('heroQuickPlanBtn').addEventListener('click', () => {
+        switchTab('planner');
+        document.getElementById('openNewPlanModalBtn').click();
+      });
+      document.getElementById('heroQuickQuizBtn').addEventListener('click', () => {
+        switchTab('quiz');
+        document.getElementById('generateExamDocBtn').click();
+      });
+      document.getElementById('heroQuickWheelBtn').addEventListener('click', () => {
+        switchTab('tools');
+        document.getElementById('spinWheelBtn').scrollIntoView({ behavior: 'smooth' });
+      });
+      document.getElementById('viewAllPointsBtn').addEventListener('click', () => {
+        switchTab('tools');
+      });
+
+      // Theme toggle
+      document.getElementById('themeToggleBtn').addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        renderGradeDistributionChart();
+        drawWheel();
+      });
+
+      // Sound toggle
+      document.getElementById('soundToggleBtn').addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        document.getElementById('soundIconOn').classList.toggle('hidden', !soundEnabled);
+        document.getElementById('soundIconOff').classList.toggle('hidden', soundEnabled);
+        showToast(soundEnabled ? 'تم تفعيل المؤثرات الصوتية' : 'تم كتم الصوت', 'info');
+      });
+
+      // Attendance controls
+      document.getElementById('attClassSelect').addEventListener('change', renderAttendanceTable);
+      document.getElementById('markAllPresentBtn').addEventListener('click', () => {
+        const selectedClass = document.getElementById('attClassSelect').value;
+        appState.students.forEach(s => {
+          if (s.classId === selectedClass) s.attendance = 'present';
+        });
+        saveState();
+        renderAttendanceTable();
+        renderDashboard();
+        showToast('تم تسجيل جميع الطلاب حاضرين', 'success');
+      });
+
+      // Gradebook controls
+      document.getElementById('gradeClassSelect').addEventListener('change', () => {
+        renderGradebookTable();
+        renderGradeDistributionChart();
+      });
+      document.getElementById('exportGradesCsvBtn').addEventListener('click', exportGradesCsv);
+
+      // Wheel controls
+      document.getElementById('wheelClassSelect').addEventListener('change', drawWheel);
+      document.getElementById('spinWheelBtn').addEventListener('click', spinWheel);
+      document.getElementById('awardWinnerStarBtn').addEventListener('click', () => {
+        if (currentSelectedStudent) {
+          changeStudentStars(currentSelectedStudent.id, 1);
+          showToast(`تمت إضافة نجمة للطالب ${currentSelectedStudent.name}`, 'success');
+        }
+      });
+
+      // Stars controls
+      document.getElementById('starsClassSelect').addEventListener('change', renderStarsGrid);
+
+      // Timer controls
+      document.getElementById('timerStartBtn').addEventListener('click', startTimer);
+      document.getElementById('timerPauseBtn').addEventListener('click', pauseTimer);
+      document.getElementById('timerResetBtn').addEventListener('click', resetTimer);
+
+      document.querySelectorAll('.timer-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.timer-preset-btn').forEach(b => {
+            b.classList.remove('active', 'border-brand-500', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
+            b.classList.add('border-slate-200', 'dark:border-slate-700');
+          });
+          btn.classList.add('active', 'border-brand-500', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
+          btn.classList.remove('border-slate-200', 'dark:border-slate-700');
+
+          pauseTimer();
+          timerDuration = Number(btn.dataset.seconds);
+          timerRemaining = timerDuration;
+          document.getElementById('timerPresetLabel').innerText = btn.dataset.label;
+          updateTimerDisplay();
+        });
+      });
+
+      // Parent communication controls
+      document.getElementById('generateParentMsgBtn').addEventListener('click', generateParentMessage);
+      document.getElementById('copyParentMsgBtn').addEventListener('click', copyParentMessage);
+      document.getElementById('openWhatsappBtn').addEventListener('click', openWhatsappShare);
+
+      // Timetable controls
+      document.getElementById('printTimetableBtn').addEventListener('click', printTimetableModal);
+
+      // Quiz controls
+      document.getElementById('generateExamDocBtn').addEventListener('click', generatePrintableExam);
+      document.getElementById('selectAllQuestionsBtn').addEventListener('click', () => {
+        showToast('جميع أسئلة النموذج محددة للطباعة', 'info');
+      });
+      document.getElementById('resetQuestionsSampleBtn').addEventListener('click', () => {
+        appState.questions = JSON.parse(JSON.stringify(DEFAULT_DATA.questions));
+        saveState();
+        renderQuizQuestions();
+        showToast('تمت استعادة الأسئلة النموذجية', 'success');
+      });
+
+      // Question Modal
+      const questionModal = document.getElementById('questionModal');
+      document.getElementById('openNewQuestionBtn').addEventListener('click', () => {
+        questionModal.classList.remove('hidden');
+      });
+      document.getElementById('closeQuestionModalBtn').addEventListener('click', () => {
+        questionModal.classList.add('hidden');
+      });
+      document.getElementById('cancelQuestionModalBtn').addEventListener('click', () => {
+        questionModal.classList.add('hidden');
+      });
+      document.getElementById('qTypeSelect').addEventListener('change', (e) => {
+        const isMcq = e.target.value === 'mcq';
+        document.getElementById('qOptionsWrapper').style.display = isMcq ? 'block' : 'none';
+      });
+      document.getElementById('saveQuestionBtn').addEventListener('click', () => {
+        const text = document.getElementById('qTextInput').value.trim();
+        if (!text) {
+          showToast('يرجى كتابة نص السؤال', 'error');
+          return;
+        }
+        const type = document.getElementById('qTypeSelect').value;
+        const points = Number(document.getElementById('qPointsInput').value) || 4;
+        const optionsRaw = document.getElementById('qOptionsInput').value.trim();
+        const options = type === 'mcq' ? optionsRaw.split(/[,،]/).map(o => o.trim()).filter(Boolean) : (type === 'truefalse' ? ['صح', 'خطأ'] : []);
+        const answer = document.getElementById('qAnswerInput').value.trim() || 'إجابة نموذجية';
+
+        appState.questions.push({
+          id: Date.now(),
+          text,
+          type,
+          points,
+          options,
+          answer
+        });
+        saveState();
+        renderQuizQuestions();
+        questionModal.classList.add('hidden');
+        document.getElementById('qTextInput').value = '';
+        showToast('تمت إضافة السؤال لبنك الاختبار بنجاح', 'success');
+      });
+
+      // Plan Modal
+      const planModal = document.getElementById('planModal');
+      document.getElementById('openNewPlanModalBtn').addEventListener('click', () => {
+        planModal.classList.remove('hidden');
+      });
+      document.getElementById('closePlanModalBtn').addEventListener('click', () => {
+        planModal.classList.add('hidden');
+      });
+      document.getElementById('cancelPlanModalBtn').addEventListener('click', () => {
+        planModal.classList.add('hidden');
+      });
+      document.getElementById('savePlanBtn').addEventListener('click', () => {
+        const title = document.getElementById('planTitleInput').value.trim();
+        if (!title) {
+          showToast('يرجى إدخال عنوان الدرس', 'error');
+          return;
+        }
+        const newPlan = {
+          id: Date.now(),
+          title,
+          subject: document.getElementById('planSubjectInput').value.trim() || 'العلوم',
+          grade: document.getElementById('planGradeSelect').value,
+          duration: document.getElementById('planDurationInput').value.trim() || '45 دقيقة',
+          date: todayStr,
+          objectives: document.getElementById('planObjectivesInput').value.trim() || 'أهداف تعليمية محددة',
+          strategy: document.getElementById('planStrategyInput').value.trim() || 'التعلم النشط',
+          tools: document.getElementById('planToolsInput').value.trim() || 'الكتاب المدرسي',
+          steps: document.getElementById('planStepsInput').value.trim() || 'سير الدرس المنظم',
+          homework: document.getElementById('planHomeworkInput').value.trim() || 'متابعة التمارين'
+        };
+
+        appState.plans.unshift(newPlan);
+        saveState();
+        renderPlans();
+        renderDashboard();
+        planModal.classList.add('hidden');
+        document.getElementById('planTitleInput').value = '';
+        showToast('تم حفظ خطة الدرس بنجاح', 'success');
+      });
+
+      // Student Modal
+      const studentModal = document.getElementById('studentModal');
+      document.getElementById('openNewStudentModalBtn').addEventListener('click', () => {
+        studentModal.classList.remove('hidden');
+      });
+      document.getElementById('closeStudentModalBtn').addEventListener('click', () => {
+        studentModal.classList.add('hidden');
+      });
+      document.getElementById('cancelStudentModalBtn').addEventListener('click', () => {
+        studentModal.classList.add('hidden');
+      });
+      document.getElementById('saveStudentBtn').addEventListener('click', () => {
+        const name = document.getElementById('newStudentNameInput').value.trim();
+        if (!name) {
+          showToast('يرجى إدخال اسم الطالب', 'error');
+          return;
+        }
+        const classId = document.getElementById('newStudentClassSelect').value;
+        const phone = document.getElementById('newStudentPhoneInput').value.trim() || '07700000000';
+
+        const newStudent = {
+          id: Date.now(),
+          name,
+          classId,
+          phone,
+          attendance: 'present',
+          absentCount: 0,
+          participation: 10,
+          homework: 18,
+          activity: 18,
+          exam: 45,
+          stars: 5
+        };
+
+        appState.students.push(newStudent);
+        saveState();
+        renderGradebookTable();
+        renderAttendanceTable();
+        renderDashboard();
+        renderStarsGrid();
+        populateParentStudentsSelect();
+        studentModal.classList.add('hidden');
+        document.getElementById('newStudentNameInput').value = '';
+        showToast('تمت إضافة الطالب للسجل بنجاح', 'success');
+      });
+
+      // Print Preview Modal
+      const printModal = document.getElementById('printModal');
+      document.getElementById('closePrintModalBtn').addEventListener('click', () => {
+        printModal.classList.add('hidden');
+      });
+      document.getElementById('executePrintBtn').addEventListener('click', () => {
+        window.print();
+      });
+          // --- PWA Installation & Service Worker Logic ---
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('pwaInstallBtn');
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Sanad ServiceWorker registered successfully:', reg.scope))
+          .catch(err => console.log('Sanad ServiceWorker registration failed:', err));
+      });
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent automatic browser mini-infobar
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) {
+        installBtn.classList.remove('hidden');
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+          showToast('لتثبيت التطبيق على جهازك: افتح خيارات المتصفح واضغط "إضافة إلى الشاشة الرئيسية"', 'info');
+          return;
+        }
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('شكراً لتثبيت تطبيق سَنَد على جهازك!', 'success');
+        }
+        deferredPrompt = null;
+        installBtn.classList.add('hidden');
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      if (installBtn) installBtn.classList.add('hidden');
+      showToast('تم تثبيت منصة سَنَد بنجاح كتطبيق على هاتفك', 'success');
+    });
+
+    });
+  </script>
+</body>
+</html>
