@@ -7,7 +7,7 @@
   
   <!-- PWA & Mobile Meta -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b1120">
+  <meta name="theme-color" content="#080b16">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -81,115 +81,162 @@
       .no-print { display: none !important; }
     }
   
-    /* SANAD PREMIUM UI LAYER — presentation only; application logic and storage remain untouched */
-    :root {
-      color-scheme: dark;
-      --sanad-bg: #070b16;
-      --sanad-surface: #101a2d;
-      --sanad-surface-2: #142139;
-      --sanad-border: rgba(148,163,184,.14);
-      --sanad-teal: #2dd4bf;
-      --sanad-text: #edf4ff;
-      --sanad-muted: #91a1b8;
-      --sanad-shadow: 0 18px 50px rgba(0,0,0,.22);
+    /* SANAD COMPLETE VISUAL REDESIGN — presentation only */
+    :root{
+      color-scheme:dark;
+      --s-bg:#080b16;--s-panel:#11172a;--s-panel-2:#171f36;
+      --s-border:rgba(211,183,116,.18);--s-gold:#d6b66f;--s-gold-2:#f0d99c;
+      --s-purple:#8b78d8;--s-purple-soft:rgba(139,120,216,.16);
+      --s-text:#f4f1e9;--s-muted:#a6adbf;--s-shadow:0 18px 55px rgba(0,0,0,.28);
     }
-    html, body { min-height:100%; scroll-behavior:smooth; }
-    body {
+    *{box-sizing:border-box}
+    html,body{min-height:100%;scroll-behavior:smooth}
+    body{
+      font-family:'Cairo',sans-serif!important;color:var(--s-text)!important;
       background:
-        radial-gradient(ellipse at 8% 0%, rgba(20,184,166,.09), transparent 32rem),
-        radial-gradient(ellipse at 100% 18%, rgba(99,102,241,.08), transparent 28rem),
-        var(--sanad-bg);
-      color:var(--sanad-text);
-      letter-spacing:-.012em;
+       radial-gradient(ellipse at 85% -10%,rgba(139,120,216,.16),transparent 34rem),
+       radial-gradient(ellipse at 4% 12%,rgba(214,182,111,.09),transparent 30rem),
+       var(--s-bg)!important;letter-spacing:-.012em
     }
-    ::selection { background:rgba(45,212,191,.28); color:#fff; }
-    :focus-visible { outline:2px solid var(--sanad-teal)!important; outline-offset:3px; }
-    .app-card {
-      position:relative;
-      background:linear-gradient(145deg,rgba(19,31,53,.97),rgba(13,22,39,.98))!important;
-      border:1px solid var(--sanad-border)!important;
-      border-radius:22px!important;
-      box-shadow:var(--sanad-shadow),inset 0 1px 0 rgba(255,255,255,.035)!important;
-      transition:border-color .22s ease,transform .22s ease,box-shadow .22s ease;
+    ::selection{background:rgba(214,182,111,.3);color:#fff}
+    :focus-visible{outline:2px solid var(--s-gold)!important;outline-offset:3px}
+    ::-webkit-scrollbar{width:7px;height:7px}
+    ::-webkit-scrollbar-thumb{background:rgba(214,182,111,.32);border-radius:99px}
+    ::-webkit-scrollbar-track{background:rgba(255,255,255,.025)}
+    main{max-width:1440px!important}
+    main>.tab-view{animation:sanadReveal .32s ease both}
+    @keyframes sanadReveal{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+    .app-card{
+      position:relative;background:linear-gradient(145deg,rgba(24,31,52,.96),rgba(14,20,37,.98))!important;
+      border:1px solid var(--s-border)!important;border-radius:22px!important;
+      box-shadow:var(--s-shadow),inset 0 1px 0 rgba(255,255,255,.035)!important;
+      overflow:hidden;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease
     }
-    .app-card:hover { border-color:rgba(45,212,191,.22)!important; }
-    header.sticky {
-      background:rgba(8,14,27,.86)!important;
-      border-color:rgba(148,163,184,.13)!important;
-      box-shadow:0 8px 30px rgba(0,0,0,.14);
-      backdrop-filter:blur(18px) saturate(150%);
+    .app-card:hover{border-color:rgba(214,182,111,.34)!important;box-shadow:0 22px 60px rgba(0,0,0,.34),0 0 0 1px rgba(214,182,111,.035)!important}
+    .app-card h1,.app-card h2,.app-card h3,.app-card h4{letter-spacing:-.025em}
+    .app-card h1,.app-card h2{color:#fff}
+    .app-card [class*=text-smartTeal]{color:var(--s-gold)!important}
+    header.sticky{
+      background:rgba(8,11,22,.88)!important;border-color:rgba(214,182,111,.16)!important;
+      box-shadow:0 10px 35px rgba(0,0,0,.24);backdrop-filter:blur(20px) saturate(145%)
     }
-    #menuDrawer {
-      background:rgba(10,17,31,.98)!important;
-      border-color:var(--sanad-border)!important;
-      box-shadow:-24px 0 70px rgba(0,0,0,.42)!important;
-      scrollbar-width:thin;
+    header.sticky>div{max-width:1440px}
+    header.sticky .bg-gradient-to-tr{background:linear-gradient(135deg,#d6b66f,#8b78d8)!important}
+    header.sticky button{border-color:rgba(214,182,111,.22)!important}
+    #menuDrawer{
+      width:min(340px,88vw)!important;background:linear-gradient(180deg,#151b30,#0c1120)!important;
+      border-color:rgba(214,182,111,.2)!important;box-shadow:-25px 0 80px rgba(0,0,0,.55)!important;
+      backdrop-filter:blur(18px)
     }
-    #menuDrawer .drawer-nav-item {
-      min-height:46px;
-      border:1px solid transparent;
-      border-radius:13px;
-      transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease;
+    #menuDrawer>div:first-child>div:first-child{background:rgba(214,182,111,.045)!important;border-color:var(--s-border)!important}
+    #menuDrawer .drawer-nav-item{
+      min-height:48px;border:1px solid transparent;border-radius:14px!important;
+      color:#c8cede!important;margin:3px 0;transition:all .18s ease
     }
-    #menuDrawer .drawer-nav-item:hover { transform:translateX(-2px); background:rgba(148,163,184,.08); }
-    #menuDrawer .drawer-nav-item.active {
-      background:linear-gradient(100deg,rgba(13,148,136,.2),rgba(45,212,191,.07))!important;
-      border-color:rgba(45,212,191,.25)!important;
-      box-shadow:inset -3px 0 0 var(--sanad-teal);
+    #menuDrawer .drawer-nav-item:hover{background:rgba(139,120,216,.12)!important;border-color:rgba(139,120,216,.22)!important;transform:translateX(-2px)}
+    #menuDrawer .drawer-nav-item.active{
+      color:#f4d99c!important;background:linear-gradient(100deg,rgba(214,182,111,.18),rgba(139,120,216,.12))!important;
+      border-color:rgba(214,182,111,.28)!important;box-shadow:inset -3px 0 0 var(--s-gold)
     }
-    button {
-      -webkit-tap-highlight-color:transparent;
-      transition:transform .16s ease,filter .16s ease,background-color .16s ease,border-color .16s ease;
+    #menuDrawer [class*=text-smartTeal]{color:var(--s-gold)!important}
+    #drawerBackdrop{backdrop-filter:blur(3px)}
+    button{
+      font-family:inherit!important;-webkit-tap-highlight-color:transparent;
+      border-radius:12px;transition:transform .16s ease,filter .16s ease,background-color .16s ease,border-color .16s ease
     }
-    button:active { transform:scale(.975); }
-    button:not(:disabled):hover { filter:brightness(1.09); }
-    input,select,textarea {
-      border-radius:12px!important;
-      border-color:rgba(148,163,184,.2)!important;
-      background-color:rgba(7,13,25,.72)!important;
-      min-height:42px;
+    button:not(:disabled):hover{filter:brightness(1.1)}
+    button:active{transform:scale(.975)}
+    button:focus-visible{outline:2px solid var(--s-gold)!important;outline-offset:2px}
+    button[class*=bg-smartTeal],button[class*=bg-emerald-600]{
+      background:linear-gradient(120deg,#b99752,#e0c783)!important;color:#171321!important;
+      border:1px solid rgba(255,231,174,.35)!important;box-shadow:0 7px 20px rgba(177,143,75,.16)
     }
-    input:focus,select:focus,textarea:focus {
-      border-color:rgba(45,212,191,.7)!important;
-      box-shadow:0 0 0 3px rgba(45,212,191,.1)!important;
-      outline:none!important;
+    button[class*=bg-indigo],button[class*=bg-purple]{background:linear-gradient(120deg,#6555a8,#927fda)!important;color:white!important}
+    button[class*=bg-midnight],button[class*=bg-slate-800]{
+      border:1px solid rgba(214,182,111,.16)!important
     }
-    table { border-collapse:separate!important; border-spacing:0; }
-    thead th { background:rgba(20,33,57,.96)!important; color:#b9c7da!important; font-weight:800; }
-    tbody tr { transition:background .16s ease; }
-    tbody tr:hover { background:rgba(45,212,191,.045); }
-    td,th { border-color:rgba(148,163,184,.11)!important; }
-    .tab-view { animation:sanadEnter .28s ease both; }
-    @keyframes sanadEnter { from {opacity:0;transform:translateY(7px)} to {opacity:1;transform:translateY(0)} }
-    #loginGateScreen {
+    input,select,textarea{
+      font-family:inherit!important;color:#f5f1e8!important;background:rgba(7,11,23,.78)!important;
+      border:1px solid rgba(173,183,205,.2)!important;border-radius:13px!important;min-height:44px;
+      box-shadow:inset 0 1px 2px rgba(0,0,0,.16)
+    }
+    input::placeholder,textarea::placeholder{color:#788198!important}
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(214,182,111,.72)!important;box-shadow:0 0 0 3px rgba(214,182,111,.12)!important;outline:none!important
+    }
+    label{color:#d7d9e1}
+    table{border-collapse:separate!important;border-spacing:0;width:100%}
+    thead th{background:#1c2540!important;color:#e6d5a9!important;font-weight:800!important;white-space:nowrap}
+    thead th:first-child{border-top-right-radius:10px}
+    thead th:last-child{border-top-left-radius:10px}
+    tbody tr{transition:background .15s ease}
+    tbody tr:hover{background:rgba(139,120,216,.075)!important}
+    td,th{border-color:rgba(214,182,111,.11)!important}
+    .tab-view{min-width:0}
+    .tab-view>.flex:first-child{gap:14px}
+    .tab-view h2{line-height:1.55}
+    #viewDashboard>.app-card:first-child{
+      min-height:230px;display:flex;align-items:center;
+      background:linear-gradient(112deg,rgba(29,35,57,.98),rgba(18,23,43,.96))!important;
+      border-color:rgba(214,182,111,.27)!important
+    }
+    #viewDashboard>.app-card:first-child:after{
+      content:"سَنَد";position:absolute;left:3%;bottom:-35px;font-size:clamp(90px,16vw,190px);
+      line-height:1;font-weight:900;color:rgba(214,182,111,.045);pointer-events:none
+    }
+    #viewDashboard .grid>.app-card{min-height:116px}
+    #viewDashboard .grid>.app-card h3{color:var(--s-gold)!important}
+    #loginGateScreen{
       background:
-        radial-gradient(circle at 50% 15%,rgba(20,184,166,.13),transparent 22rem),
-        radial-gradient(circle at 80% 90%,rgba(99,102,241,.1),transparent 20rem),
-        #070b16!important;
+       radial-gradient(ellipse at 50% 8%,rgba(139,120,216,.2),transparent 26rem),
+       radial-gradient(ellipse at 10% 90%,rgba(214,182,111,.12),transparent 28rem),#080b16!important
     }
-    #loginGateScreen .app-card {
-      border-color:rgba(45,212,191,.2)!important;
-      box-shadow:0 28px 90px rgba(0,0,0,.48),0 0 0 1px rgba(255,255,255,.025)!important;
+    #loginGateScreen .app-card{
+      max-width:470px!important;border-color:rgba(214,182,111,.34)!important;
+      border-radius:28px!important;padding:clamp(22px,5vw,34px)!important;
+      box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 55px rgba(139,120,216,.08)!important
     }
-    #toastPortal > * { backdrop-filter:blur(14px); border:1px solid var(--sanad-border); box-shadow:var(--sanad-shadow); }
-    @media (min-width:1024px) {
-      main { padding-top:28px!important; padding-bottom:48px!important; }
-      .app-card.rounded-2xl { border-radius:24px!important; }
+    #loginGateScreen .app-card>div:first-child>div:first-child{
+      background:linear-gradient(135deg,#d6b66f,#8b78d8)!important;box-shadow:0 12px 32px rgba(139,120,216,.2)
     }
-    @media (max-width:640px) {
-      body { font-size:14px; }
-      header.sticky > div { min-height:60px; height:auto!important; padding-top:9px; padding-bottom:9px; }
-      main { padding:13px!important; }
-      .app-card { border-radius:19px!important; }
-      .app-card.p-6 { padding:17px!important; }
-      .app-card.p-5 { padding:15px!important; }
-      .app-card.p-4 { padding:13px!important; }
-      #menuDrawer { width:min(86vw,350px)!important; }
-      table { min-width:620px; }
-      button { touch-action:manipulation; }
+    #loginGateScreen h2{font-size:clamp(21px,5vw,27px)!important}
+    #loginGateScreen [class*=text-smartTeal]{color:var(--s-gold)!important}
+    #toastPortal>*{backdrop-filter:blur(16px);border:1px solid var(--s-border);box-shadow:var(--s-shadow)}
+    [id^=modal]>.app-card{border-color:rgba(214,182,111,.25)!important;box-shadow:0 28px 90px rgba(0,0,0,.62)!important}
+    .tab-view .overflow-x-auto{border-radius:15px}
+    .tab-view .grid{align-items:stretch}
+    .tab-view .grid>.app-card,.tab-view .grid>div.app-card{height:100%}
+    @media(min-width:1024px){
+      main{padding:30px 30px 56px!important}
+      .app-card.rounded-2xl{border-radius:24px!important}
+      #menuDrawer{width:350px!important}
     }
-    @media (prefers-reduced-motion:reduce) {
-      *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+    @media(max-width:760px){
+      body{font-size:14px}
+      header.sticky>div{height:auto!important;min-height:62px;padding:9px 12px!important;gap:8px}
+      header.sticky #headerTeacherLabel{max-width:42vw}
+      header.sticky>div>div:last-child{gap:5px}
+      header.sticky button{min-width:34px}
+      main{padding:12px!important}
+      .app-card{border-radius:18px!important}
+      .app-card.p-6{padding:17px!important}.app-card.p-5{padding:15px!important}.app-card.p-4{padding:13px!important}
+      #viewDashboard>.app-card:first-child{min-height:unset}
+      .tab-view .flex.items-center.justify-between{flex-wrap:wrap}
+      .tab-view .overflow-x-auto{max-width:100%;overscroll-behavior-x:contain}
+      table{min-width:640px}
+      input,select,textarea{font-size:14px!important}
+      button{min-height:40px;touch-action:manipulation}
+      #menuDrawer{width:min(88vw,350px)!important}
+    }
+    @media(max-width:390px){
+      main{padding:9px!important}
+      header.sticky>div{padding-inline:9px!important}
+      header.sticky #headerTeacherLabel{max-width:34vw}
+      .app-card.p-6{padding:14px!important}
+      #viewDashboard .grid{gap:9px!important}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     }
 
   </style>
