@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>منصة سَنَد — الذكية للمعلم</title>
+  <title>منصة سَنَد — إدارة المدارس والطلاب</title>
   
   <!-- PWA & Mobile Meta -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#080b16">
+  <meta name="theme-color" content="#080c14">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="سَنَد">
+  <meta name="apple-mobile-web-app-title" content="منصة سند">
   <link rel="apple-touch-icon" href="icon-192.png">
 
-  <!-- Google Fonts: Cairo -->
+  <!-- Google Fonts: Cairo & Amiri -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Amiri:ital,wght@1,700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS 3.4.17 -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -30,21 +30,20 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+            calligraphy: ['Amiri', 'serif']
+          },
           colors: {
-            midnight: {
-              950: '#070b14',
-              900: '#0b1120',
-              850: '#0f172a',
-              800: '#151f32',
-              700: '#1e293b',
-              600: '#334155'
-            },
-            smartTeal: {
-              400: '#2dd4bf',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e'
+            sanadBg: '#080c14',
+            sanadCard: '#0f172a',
+            sanadCardBorder: '#1e293b',
+            gold: {
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207'
             }
           }
         }
@@ -53,20 +52,44 @@
   </script>
 
   <style>
-    body { font-family: 'Cairo', sans-serif; }
+    body { font-family: 'Cairo', sans-serif; background-color: #080c14; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.25); border-radius: 9999px; }
-    .app-card {
-      background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    
+    .luxury-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 17, 32, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
-    html:not(.dark) .app-card {
-      background: #ffffff;
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+
+    .kpi-card-blue {
+      background: linear-gradient(135deg, #122144 0%, #0c152a 100%);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      box-shadow: 0 8px 25px -4px rgba(30, 58, 138, 0.3);
     }
+    .kpi-card-green {
+      background: linear-gradient(135deg, #0f3325 0%, #0a1f17 100%);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      box-shadow: 0 8px 25px -4px rgba(6, 78, 59, 0.3);
+    }
+    .kpi-card-purple {
+      background: linear-gradient(135deg, #2b1b4d 0%, #1a1031 100%);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      box-shadow: 0 8px 25px -4px rgba(88, 28, 135, 0.3);
+    }
+    .kpi-card-amber {
+      background: linear-gradient(135deg, #3d2c11 0%, #221807 100%);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      box-shadow: 0 8px 25px -4px rgba(120, 53, 15, 0.3);
+    }
+
+    .active-nav-item {
+      background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 15px -2px rgba(217, 119, 6, 0.5);
+    }
+
     @media print {
       body * { visibility: hidden !important; }
       #printContainer, #printContainer * { visibility: visible !important; }
@@ -80,184 +103,29 @@
       }
       .no-print { display: none !important; }
     }
-  
-    /* SANAD COMPLETE VISUAL REDESIGN — presentation only */
-    :root{
-      color-scheme:dark;
-      --s-bg:#080b16;--s-panel:#11172a;--s-panel-2:#171f36;
-      --s-border:rgba(211,183,116,.18);--s-gold:#d6b66f;--s-gold-2:#f0d99c;
-      --s-purple:#8b78d8;--s-purple-soft:rgba(139,120,216,.16);
-      --s-text:#f4f1e9;--s-muted:#a6adbf;--s-shadow:0 18px 55px rgba(0,0,0,.28);
-    }
-    *{box-sizing:border-box}
-    html,body{min-height:100%;scroll-behavior:smooth}
-    body{
-      font-family:'Cairo',sans-serif!important;color:var(--s-text)!important;
-      background:
-       radial-gradient(ellipse at 85% -10%,rgba(139,120,216,.16),transparent 34rem),
-       radial-gradient(ellipse at 4% 12%,rgba(214,182,111,.09),transparent 30rem),
-       var(--s-bg)!important;letter-spacing:-.012em
-    }
-    ::selection{background:rgba(214,182,111,.3);color:#fff}
-    :focus-visible{outline:2px solid var(--s-gold)!important;outline-offset:3px}
-    ::-webkit-scrollbar{width:7px;height:7px}
-    ::-webkit-scrollbar-thumb{background:rgba(214,182,111,.32);border-radius:99px}
-    ::-webkit-scrollbar-track{background:rgba(255,255,255,.025)}
-    main{max-width:1440px!important}
-    main>.tab-view{animation:sanadReveal .32s ease both}
-    @keyframes sanadReveal{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-    .app-card{
-      position:relative;background:linear-gradient(145deg,rgba(24,31,52,.96),rgba(14,20,37,.98))!important;
-      border:1px solid var(--s-border)!important;border-radius:22px!important;
-      box-shadow:var(--s-shadow),inset 0 1px 0 rgba(255,255,255,.035)!important;
-      overflow:hidden;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease
-    }
-    .app-card:hover{border-color:rgba(214,182,111,.34)!important;box-shadow:0 22px 60px rgba(0,0,0,.34),0 0 0 1px rgba(214,182,111,.035)!important}
-    .app-card h1,.app-card h2,.app-card h3,.app-card h4{letter-spacing:-.025em}
-    .app-card h1,.app-card h2{color:#fff}
-    .app-card [class*=text-smartTeal]{color:var(--s-gold)!important}
-    header.sticky{
-      background:rgba(8,11,22,.88)!important;border-color:rgba(214,182,111,.16)!important;
-      box-shadow:0 10px 35px rgba(0,0,0,.24);backdrop-filter:blur(20px) saturate(145%)
-    }
-    header.sticky>div{max-width:1440px}
-    header.sticky .bg-gradient-to-tr{background:linear-gradient(135deg,#d6b66f,#8b78d8)!important}
-    header.sticky button{border-color:rgba(214,182,111,.22)!important}
-    #menuDrawer{
-      width:min(340px,88vw)!important;background:linear-gradient(180deg,#151b30,#0c1120)!important;
-      border-color:rgba(214,182,111,.2)!important;box-shadow:-25px 0 80px rgba(0,0,0,.55)!important;
-      backdrop-filter:blur(18px)
-    }
-    #menuDrawer>div:first-child>div:first-child{background:rgba(214,182,111,.045)!important;border-color:var(--s-border)!important}
-    #menuDrawer .drawer-nav-item{
-      min-height:48px;border:1px solid transparent;border-radius:14px!important;
-      color:#c8cede!important;margin:3px 0;transition:all .18s ease
-    }
-    #menuDrawer .drawer-nav-item:hover{background:rgba(139,120,216,.12)!important;border-color:rgba(139,120,216,.22)!important;transform:translateX(-2px)}
-    #menuDrawer .drawer-nav-item.active{
-      color:#f4d99c!important;background:linear-gradient(100deg,rgba(214,182,111,.18),rgba(139,120,216,.12))!important;
-      border-color:rgba(214,182,111,.28)!important;box-shadow:inset -3px 0 0 var(--s-gold)
-    }
-    #menuDrawer [class*=text-smartTeal]{color:var(--s-gold)!important}
-    #drawerBackdrop{backdrop-filter:blur(3px)}
-    button{
-      font-family:inherit!important;-webkit-tap-highlight-color:transparent;
-      border-radius:12px;transition:transform .16s ease,filter .16s ease,background-color .16s ease,border-color .16s ease
-    }
-    button:not(:disabled):hover{filter:brightness(1.1)}
-    button:active{transform:scale(.975)}
-    button:focus-visible{outline:2px solid var(--s-gold)!important;outline-offset:2px}
-    button[class*=bg-smartTeal],button[class*=bg-emerald-600]{
-      background:linear-gradient(120deg,#b99752,#e0c783)!important;color:#171321!important;
-      border:1px solid rgba(255,231,174,.35)!important;box-shadow:0 7px 20px rgba(177,143,75,.16)
-    }
-    button[class*=bg-indigo],button[class*=bg-purple]{background:linear-gradient(120deg,#6555a8,#927fda)!important;color:white!important}
-    button[class*=bg-midnight],button[class*=bg-slate-800]{
-      border:1px solid rgba(214,182,111,.16)!important
-    }
-    input,select,textarea{
-      font-family:inherit!important;color:#f5f1e8!important;background:rgba(7,11,23,.78)!important;
-      border:1px solid rgba(173,183,205,.2)!important;border-radius:13px!important;min-height:44px;
-      box-shadow:inset 0 1px 2px rgba(0,0,0,.16)
-    }
-    input::placeholder,textarea::placeholder{color:#788198!important}
-    input:focus,select:focus,textarea:focus{
-      border-color:rgba(214,182,111,.72)!important;box-shadow:0 0 0 3px rgba(214,182,111,.12)!important;outline:none!important
-    }
-    label{color:#d7d9e1}
-    table{border-collapse:separate!important;border-spacing:0;width:100%}
-    thead th{background:#1c2540!important;color:#e6d5a9!important;font-weight:800!important;white-space:nowrap}
-    thead th:first-child{border-top-right-radius:10px}
-    thead th:last-child{border-top-left-radius:10px}
-    tbody tr{transition:background .15s ease}
-    tbody tr:hover{background:rgba(139,120,216,.075)!important}
-    td,th{border-color:rgba(214,182,111,.11)!important}
-    .tab-view{min-width:0}
-    .tab-view>.flex:first-child{gap:14px}
-    .tab-view h2{line-height:1.55}
-    #viewDashboard>.app-card:first-child{
-      min-height:230px;display:flex;align-items:center;
-      background:linear-gradient(112deg,rgba(29,35,57,.98),rgba(18,23,43,.96))!important;
-      border-color:rgba(214,182,111,.27)!important
-    }
-    #viewDashboard>.app-card:first-child:after{
-      content:"سَنَد";position:absolute;left:3%;bottom:-35px;font-size:clamp(90px,16vw,190px);
-      line-height:1;font-weight:900;color:rgba(214,182,111,.045);pointer-events:none
-    }
-    #viewDashboard .grid>.app-card{min-height:116px}
-    #viewDashboard .grid>.app-card h3{color:var(--s-gold)!important}
-    #loginGateScreen{
-      background:
-       radial-gradient(ellipse at 50% 8%,rgba(139,120,216,.2),transparent 26rem),
-       radial-gradient(ellipse at 10% 90%,rgba(214,182,111,.12),transparent 28rem),#080b16!important
-    }
-    #loginGateScreen .app-card{
-      max-width:470px!important;border-color:rgba(214,182,111,.34)!important;
-      border-radius:28px!important;padding:clamp(22px,5vw,34px)!important;
-      box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 55px rgba(139,120,216,.08)!important
-    }
-    #loginGateScreen .app-card>div:first-child>div:first-child{
-      background:linear-gradient(135deg,#d6b66f,#8b78d8)!important;box-shadow:0 12px 32px rgba(139,120,216,.2)
-    }
-    #loginGateScreen h2{font-size:clamp(21px,5vw,27px)!important}
-    #loginGateScreen [class*=text-smartTeal]{color:var(--s-gold)!important}
-    #toastPortal>*{backdrop-filter:blur(16px);border:1px solid var(--s-border);box-shadow:var(--s-shadow)}
-    [id^=modal]>.app-card{border-color:rgba(214,182,111,.25)!important;box-shadow:0 28px 90px rgba(0,0,0,.62)!important}
-    .tab-view .overflow-x-auto{border-radius:15px}
-    .tab-view .grid{align-items:stretch}
-    .tab-view .grid>.app-card,.tab-view .grid>div.app-card{height:100%}
-    @media(min-width:1024px){
-      main{padding:30px 30px 56px!important}
-      .app-card.rounded-2xl{border-radius:24px!important}
-      #menuDrawer{width:350px!important}
-    }
-    @media(max-width:760px){
-      body{font-size:14px}
-      header.sticky>div{height:auto!important;min-height:62px;padding:9px 12px!important;gap:8px}
-      header.sticky #headerTeacherLabel{max-width:42vw}
-      header.sticky>div>div:last-child{gap:5px}
-      header.sticky button{min-width:34px}
-      main{padding:12px!important}
-      .app-card{border-radius:18px!important}
-      .app-card.p-6{padding:17px!important}.app-card.p-5{padding:15px!important}.app-card.p-4{padding:13px!important}
-      #viewDashboard>.app-card:first-child{min-height:unset}
-      .tab-view .flex.items-center.justify-between{flex-wrap:wrap}
-      .tab-view .overflow-x-auto{max-width:100%;overscroll-behavior-x:contain}
-      table{min-width:640px}
-      input,select,textarea{font-size:14px!important}
-      button{min-height:40px;touch-action:manipulation}
-      #menuDrawer{width:min(88vw,350px)!important}
-    }
-    @media(max-width:390px){
-      main{padding:9px!important}
-      header.sticky>div{padding-inline:9px!important}
-      header.sticky #headerTeacherLabel{max-width:34vw}
-      .app-card.p-6{padding:14px!important}
-      #viewDashboard .grid{gap:9px!important}
-    }
-    @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-    }
-
   </style>
 </head>
-<body class="bg-midnight-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-smartTeal-500 selection:text-white transition-colors duration-200">
+<body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black">
+
   <!-- ==================== FULL-SCREEN LOGIN GATE SCREEN (BEFORE ENTERING) ==================== -->
-  <div id="loginGateScreen" class="fixed inset-0 z-50 bg-midnight-950 flex flex-col items-center justify-center p-4 overflow-y-auto">
-    <div class="app-card rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 border border-slate-700 shadow-2xl relative overflow-hidden my-auto">
+  <div id="loginGateScreen" class="fixed inset-0 z-50 bg-[#080c14] flex flex-col items-center justify-center p-4 overflow-y-auto">
+    <div class="luxury-card rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 border border-amber-500/20 shadow-2xl relative overflow-hidden my-auto">
       
       <!-- Top Branding -->
       <div class="text-center space-y-2">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-smartTeal-600 to-indigo-600 flex items-center justify-center text-white font-black text-2xl mx-auto shadow-lg shadow-smartTeal-900/40">
-          س
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 flex items-center justify-center text-slate-950 font-black text-2xl mx-auto shadow-lg shadow-amber-900/40">
+          <svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+            <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+          </svg>
         </div>
         <h2 class="text-xl sm:text-2xl font-black text-white">منصة سَنَد التعليمية الذكية</h2>
-        <p class="text-xs text-smartTeal-400 font-bold">متوسطة الشهيد كريم مزعل الباوي</p>
-        <p class="text-[11px] text-slate-400">يرجى تسجيل الدخول أو اختيار حسابك للبدء في إدارة الصف والدرجات</p>
+        <p class="text-xs text-amber-400 font-bold">متوسطة الشهيد كريم مزعل الباوي</p>
+        <p class="text-[11px] text-slate-400">سجل الدخول لإدارة صفوفك، درجات الطلاب، والحضور بدقة متناهية</p>
       </div>
 
       <!-- Quick Fast Login Button for Montazer Hameed -->
-      <button id="gateQuickLoginMontazerBtn" type="button" class="w-full py-3.5 bg-gradient-to-r from-smartTeal-600 to-teal-500 hover:from-smartTeal-500 hover:to-teal-400 text-white font-black rounded-xl shadow-lg shadow-smartTeal-900/30 transition transform active:scale-95 text-xs sm:text-sm flex items-center justify-center gap-2">
+      <button id="gateQuickLoginMontazerBtn" type="button" class="w-full py-3.5 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-black rounded-xl shadow-lg shadow-amber-900/40 transition transform active:scale-95 text-xs sm:text-sm flex items-center justify-center gap-2">
         <span>👑</span>
         <span>الدخول المباشر بحساب الأستاذ منتظر حميد</span>
       </button>
@@ -272,21 +140,21 @@
       <div class="space-y-3 text-xs">
         <div>
           <label for="gateTeacherNameInput" class="block font-bold text-slate-300 mb-1">اسم المعلم:</label>
-          <input type="text" id="gateTeacherNameInput" placeholder="أدخل اسم المعلم..." class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-smartTeal-500 transition">
+          <input type="text" id="gateTeacherNameInput" placeholder="أدخل اسم المعلم..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-amber-500 transition">
         </div>
         <div>
           <label for="gateSchoolNameInput" class="block font-bold text-slate-300 mb-1">اسم المدرسة:</label>
-          <input type="text" id="gateSchoolNameInput" value="متوسطة الشهيد كريم مزعل الباوي" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-smartTeal-500 transition">
+          <input type="text" id="gateSchoolNameInput" value="متوسطة الشهيد كريم مزعل الباوي" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-amber-500 transition">
         </div>
         <div>
           <label for="gateSubjectInput" class="block font-bold text-slate-300 mb-1">المادة الدراسية الأساسية:</label>
-          <input type="text" id="gateSubjectInput" placeholder="مثال: الرياضيات / الكيمياء / اللغة العربية" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-smartTeal-500 transition">
+          <input type="text" id="gateSubjectInput" placeholder="مثال: الرياضيات / الكيمياء / اللغة العربية" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold text-xs focus:outline-none focus:border-amber-500 transition">
         </div>
         <div>
           <label for="gatePasswordInput" class="block font-bold text-slate-300 mb-1">رمز المرور السري (اختياري):</label>
-          <input type="password" id="gatePasswordInput" placeholder="••••••••" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-smartTeal-500 transition font-mono">
+          <input type="password" id="gatePasswordInput" placeholder="••••••••" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-amber-500 transition font-mono">
         </div>
-        <button id="gateLoginCustomBtn" type="button" class="w-full py-2.5 bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 font-black rounded-xl transition flex items-center justify-center gap-1.5 shadow active:scale-95">
+        <button id="gateLoginCustomBtn" type="button" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-black rounded-xl transition flex items-center justify-center gap-1.5 shadow active:scale-95">
           <span>دخول / إنشاء الحساب</span>
         </button>
       </div>
@@ -302,628 +170,992 @@
     </div>
   </div>
 
-
   <!-- Toast Notification Portal -->
   <div id="toastPortal" class="fixed top-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- Drawer Backdrop -->
-  <div id="drawerBackdrop" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm hidden transition-opacity"></div>
+  <!-- Backdrop for Mobile Sidebar -->
+  <div id="drawerBackdrop" class="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
 
-  <!-- APP TOP BAR (Clean, Spacious, with Menu Drawer Toggle) -->
-  <header class="sticky top-0 z-30 bg-midnight-900/95 border-b border-midnight-700/70 backdrop-blur-md no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+  <!-- ==================== MAIN APPLICATION LAYOUT ==================== -->
+  <div class="flex-1 flex overflow-hidden min-h-screen">
+
+    <!-- MAIN CONTENT AREA (Left side in RTL) -->
+    <div class="flex-1 flex flex-col min-w-0 bg-[#080c14] overflow-y-auto">
       
-      <!-- Right: Drawer Button + Brand Identity -->
-      <div class="flex items-center gap-3 min-w-0">
-        <!-- The Menu Drawer Button (القائمة المنسدلة) -->
-        <button id="openDrawerBtn" class="p-2 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-smartTeal-400 border border-slate-700/80 transition shrink-0 flex items-center gap-1.5 shadow-sm" aria-label="فتح القائمة الرئيسية">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span class="text-xs font-bold hidden sm:inline text-white">القائمة</span>
-        </button>
-
-        <!-- Brand Icon & Name -->
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-smartTeal-600 to-indigo-600 flex items-center justify-center text-white shadow-md font-black text-base shrink-0">
-          س
-        </div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-1.5">
-            <span class="text-base sm:text-lg font-black text-white tracking-wide truncate">سَنَد</span>
-            <span class="text-[9px] px-2 py-0.5 rounded-full bg-smartTeal-500/15 text-smartTeal-400 font-extrabold border border-smartTeal-500/30">
-              الذكي
-            </span>
-          </div>
-          <p id="headerTeacherLabel" class="text-[10px] sm:text-[11px] text-slate-400 truncate">أ. منتظر حميد — متوسطة الشهيد كريم مزعل الباوي</p>
-        </div>
-      </div>
-
-      <!-- Left Actions: WhatsApp, Theme, Account Profile -->
-      <div class="flex items-center gap-2 shrink-0">
-        <!-- Direct WhatsApp -->
-        <button id="headerWhatsappSupportBtn" type="button" title="تواصل مباشر عبر واتساب: 07732997337" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-600/15 hover:bg-emerald-600/25 text-emerald-400 text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95">
-          <span>💬</span>
-          <span class="hidden md:inline font-mono">07732997337</span>
-        </button>
-
-        <!-- Dark/Light Theme -->
-        <button id="themeToggleBtn" title="تبديل المظهر" class="w-8 h-8 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-300 border border-slate-700/80 flex items-center justify-center transition">
-          <svg id="themeIconSun" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <svg id="themeIconMoon" class="w-4 h-4 block dark:hidden text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-        </button>
-
-        <!-- Teacher Logout / Switch Button -->
-        <button id="headerLogoutBtn" type="button" title="تسجيل الخروج أو تبديل الحساب" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-midnight-850 hover:bg-rose-950/40 text-slate-300 hover:text-rose-400 border border-slate-700/80 hover:border-rose-700/60 text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95">
-          <span>🚪</span>
-          <span class="hidden sm:inline">تسجيل الخروج</span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- THE ELEGANT SLIDING DRAWER MENU (القائمة المنسدلة الجانبية) -->
-  <aside id="menuDrawer" class="fixed inset-y-0 right-0 z-50 w-72 sm:w-80 bg-midnight-900 border-l border-midnight-700/80 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl overflow-y-auto no-print">
-    
-    <div>
-      <!-- Drawer Header with Teacher Badge & Close Button -->
-      <div class="p-5 border-b border-midnight-700/80 flex items-center justify-between bg-midnight-950/60">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-smartTeal-600 to-indigo-600 flex items-center justify-center text-white font-black text-lg shadow">
-            س
-          </div>
-          <div>
-            <h4 class="font-extrabold text-white text-sm">منصة سَنَد الذكية</h4>
-            <p class="text-[11px] text-smartTeal-400 font-bold">أ. منتظر حميد</p>
-          </div>
-        </div>
-        <button id="closeDrawerBtn" class="w-8 h-8 rounded-xl bg-midnight-850 hover:bg-midnight-800 text-slate-400 hover:text-white flex items-center justify-center transition border border-slate-700/80">
-          &times;
-        </button>
-      </div>
-
-      <!-- Drawer Categorized Navigation -->
-      <div class="p-4 space-y-4 text-xs font-bold">
+      <!-- TOP HEADER (Matching 104818.png) -->
+      <header class="sticky top-0 z-30 h-16 bg-[#0b0f19]/90 border-b border-slate-800/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between gap-3 no-print">
         
-        <!-- Section: Core -->
-        <div>
-          <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider px-3 mb-1.5 block">الرئيسية</span>
-          <button data-tab="dashboard" class="drawer-nav-item active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right bg-smartTeal-600/15 text-smartTeal-400 border border-smartTeal-500/30">
-            <span class="text-base">📊</span>
-            <span>لوحة المتابعة الشاملة</span>
+        <!-- Right side of header: Hamburger (mobile) + Calligraphic Motto -->
+        <div class="flex items-center gap-3">
+          <button id="openDrawerBtn" class="p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-amber-400 border border-slate-700/60 transition shrink-0 lg:hidden" aria-label="فتح القائمة">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
+
+          <!-- Golden Calligraphy Motto: معاً .. نحو تعليم أفضل -->
+          <div class="flex flex-col">
+            <span class="text-base sm:text-lg font-bold font-calligraphy text-amber-400 tracking-wide">
+              معاً .. نحو تعليم أفضل
+            </span>
+            <svg class="w-28 sm:w-36 h-1.5 text-amber-400/80" viewBox="0 0 100 8" fill="none">
+              <path d="M0 4 Q 45 7 100 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
         </div>
 
-        <!-- Section: Classroom & Students -->
-        <div class="space-y-1">
-          <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider px-3 mb-1.5 block">إدارة الصف والطلاب</span>
+        <!-- Center: Date Badge -->
+        <div class="hidden md:flex items-center gap-2 bg-[#080c14] border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 shadow-inner">
+          <span class="text-amber-400">📅</span>
+          <span id="headerCurrentDateText">الأربعاء، 5 نوفمبر 2026</span>
+        </div>
+
+        <!-- Left side of header: Actions & Profile -->
+        <div class="flex items-center gap-2.5">
+          <!-- Fullscreen Toggle -->
+          <button id="headerFullscreenBtn" title="ملء الشاشة" class="w-8 h-8 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-center transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+          </button>
+
+          <!-- Settings Gear -->
+          <button onclick="switchTab('settings')" title="الإعدادات" class="w-8 h-8 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-center transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </button>
+
+          <!-- Notification Bell with Badge 3 -->
+          <button id="headerNotificationsBtn" title="التنبيهات" class="relative w-8 h-8 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-300 border border-slate-700/60 flex items-center justify-center transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white rounded-full text-[9px] font-black flex items-center justify-center shadow">3</span>
+          </button>
+
+          <!-- User Profile Chip -->
+          <div class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-xl bg-slate-800/50 border border-slate-700/60">
+            <div class="relative w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-indigo-600 flex items-center justify-center text-white font-black text-xs shrink-0 overflow-hidden shadow">
+              <span id="headerAvatarInitial">م</span>
+              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+            </div>
+            <div class="hidden sm:flex flex-col text-right">
+              <span id="headerTeacherNameDisplay" class="text-xs font-bold text-white leading-tight">أ. منتظر حميد</span>
+              <span id="headerTeacherRoleDisplay" class="text-[10px] text-slate-400">مدير المدرسة / معلم</span>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- MAIN SCROLLABLE BODY -->
+      <main class="flex-1 p-4 sm:p-6 space-y-6 max-w-7xl w-full mx-auto">
+        
+        <!-- ==================== TAB 1: DASHBOARD (EXACT REPLICA OF 104818.png) ==================== -->
+        <section id="viewDashboard" class="tab-view block space-y-6">
           
-          <button data-tab="students" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">👥</span>
-            <span>شؤون الطلاب والشعب (Excel)</span>
-          </button>
-
-          <button data-tab="attendance" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">✅</span>
-            <span>الحضور والغياب التاريخي</span>
-          </button>
-
-          <button data-tab="grades" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">📝</span>
-            <span>دفتر الدرجات والسعي السنوي</span>
-          </button>
-
-          <button data-tab="cards" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">🎫</span>
-            <span>كارتات درجات الطلاب والواتساب</span>
-          </button>
-        </div>
-
-        <!-- Section: Exams & Planning -->
-        <div class="space-y-1">
-          <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider px-3 mb-1.5 block">الامتحانات والتخطيط</span>
-          
-          <button data-tab="exams" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">📄</span>
-            <span>صانع الأسئلة الامتحانية والوزارية</span>
-          </button>
-
-          <button data-tab="plans" class="drawer-nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-midnight-800">
-            <span class="text-base">📑</span>
-            <span>الخطة السنوية وتحضير الدروس</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Drawer Footer Information -->
-    <div class="p-4 border-t border-midnight-700/80 bg-midnight-950/60 text-[11px] text-slate-400 space-y-1">
-      <p class="font-bold text-white">متوسطة الشهيد كريم مزعل الباوي</p>
-      <p>إعداد الأستاذ منتظر حميد</p>
-      <p class="text-emerald-400 font-mono">هاتف / واتساب: 07732997337</p>
-    </div>
-  </aside>
-
-  <!-- MAIN WORKSPACE -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 overflow-y-auto">
-    
-    <!-- TAB 1: DASHBOARD -->
-    <section id="viewDashboard" class="tab-view block space-y-6">
-      
-      <div class="app-card rounded-2xl p-6 sm:p-7 relative overflow-hidden">
-        <div class="max-w-2xl relative z-10">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-smartTeal-500/10 text-smartTeal-400 text-xs font-bold mb-3 border border-smartTeal-500/20">
-            <span>●</span> مركز المتابعة المدرسية الذكي
-          </div>
-          <h1 class="text-xl sm:text-2xl font-black text-white mb-2" id="dashWelcomeTitle">مرحباً بك يا أستاذ منتظر</h1>
-          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
-            المنظومة المدرسية الذكية الشاملة: رصد الحضور، حساب درجات الشهور ونصف السنة والسعي السنوي، وتوليد الأسئلة الامتحانية بدقة تامة.
-          </p>
-          <div class="flex flex-wrap gap-2.5 text-xs font-bold">
-            <button id="dashQuickAddClassBtn" class="px-4 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white shadow transition flex items-center gap-1.5">
-              <span>➕</span> إضافة صف وشعب
-            </button>
-            <button id="dashQuickExamBtn" class="px-4 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-              <span>📄</span> صانع الأسئلة الامتحانية
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Metrics Cards -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="app-card rounded-2xl p-5">
-          <span class="text-xs font-bold text-slate-400 block mb-1">الصفوف والشعب</span>
-          <h3 id="statClassesCount" class="text-2xl sm:text-3xl font-black text-white">0 صفوف</h3>
-          <span id="statClassesSub" class="text-[11px] text-slate-500 mt-1 block">في حسابك</span>
-        </div>
-
-        <div class="app-card rounded-2xl p-5">
-          <span class="text-xs font-bold text-slate-400 block mb-1">إجمالي الطلاب</span>
-          <h3 id="statStudentsCount" class="text-2xl sm:text-3xl font-black text-smartTeal-400">0 طالب</h3>
-          <span class="text-[11px] text-slate-500 mt-1 block">مسجلون في الشعب</span>
-        </div>
-
-        <div class="app-card rounded-2xl p-5">
-          <span class="text-xs font-bold text-slate-400 block mb-1">حضور اليوم</span>
-          <h3 id="statAttendanceCount" class="text-2xl sm:text-3xl font-black text-indigo-400">—</h3>
-          <span id="statAttendanceSub" class="text-[11px] text-slate-500 mt-1 block">لم يسجل بعد</span>
-        </div>
-
-        <div class="app-card rounded-2xl p-5">
-          <span class="text-xs font-bold text-slate-400 block mb-1">نماذج الامتحانات</span>
-          <h3 id="statExamsCount" class="text-2xl sm:text-3xl font-black text-amber-400">3 نماذج</h3>
-          <span class="text-[11px] text-slate-500 mt-1 block">شهري، نصف ونهاية سنة</span>
-        </div>
-      </div>
-
-      <!-- Classes & Info Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 app-card rounded-2xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span>🏫</span> الصفوف والشعب المعتمدة في حسابك
-            </h3>
-            <button id="dashManageClassesBtn" class="text-xs text-smartTeal-400 hover:underline font-bold">إدارة الشعب</button>
-          </div>
-          <div id="dashClassesListContainer" class="space-y-2.5">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-
-        <!-- School Information Card -->
-        <div class="app-card rounded-2xl p-6 flex flex-col justify-between text-xs space-y-3">
-          <div>
-            <h3 class="font-bold text-white mb-2">بيانات المدرسة والمعلم</h3>
-            <div class="space-y-2 text-slate-300">
-              <div class="p-2.5 rounded-xl bg-midnight-850 border border-slate-800">
-                <span class="text-slate-500 block text-[10px]">المدرسة:</span>
-                <span class="font-bold text-white" id="dashSchoolNameLabel">متوسطة الشهيد كريم مزعل الباوي</span>
+          <!-- ROW 1: 4 TOP KPI CARDS (Matching 104818.png) -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Card 1 (Right): إجمالي الطلاب (Blue) -->
+            <div class="kpi-card-blue rounded-2xl p-4 sm:p-5 flex items-center justify-between relative overflow-hidden">
+              <div class="space-y-1 z-10">
+                <span class="text-xs font-bold text-slate-300 block">إجمالي الطلاب</span>
+                <h3 id="dashTotalStudentsKpi" class="text-2xl sm:text-3xl font-black text-white">1,250</h3>
+                <div class="flex items-center gap-1 text-[11px] font-bold text-emerald-400">
+                  <span>↑ +8%</span>
+                </div>
               </div>
-              <div class="p-2.5 rounded-xl bg-midnight-850 border border-slate-800">
-                <span class="text-slate-500 block text-[10px]">المعلم المشرف:</span>
-                <span class="font-bold text-white" id="dashTeacherNameLabel">الأستاذ منتظر حميد</span>
+              <div class="w-12 h-12 rounded-xl bg-blue-600/40 border border-blue-400/40 flex items-center justify-center text-white text-xl shadow-lg z-10 shrink-0">
+                👥
               </div>
-              <div class="p-2.5 rounded-xl bg-midnight-850 border border-slate-800">
-                <span class="text-slate-500 block text-[10px]">العام الدراسي:</span>
-                <span class="font-bold text-white">2026 - 2027</span>
+              <!-- Mini Wave Chart SVG Background -->
+              <svg class="absolute bottom-0 left-0 right-0 h-10 opacity-30 text-blue-400" viewBox="0 0 100 25" preserveAspectRatio="none">
+                <path d="M0 20 Q 25 5 50 15 T 100 8 L 100 25 L 0 25 Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <!-- Card 2: الحضور اليومي (Green) -->
+            <div class="kpi-card-green rounded-2xl p-4 sm:p-5 flex items-center justify-between relative overflow-hidden">
+              <div class="space-y-1 z-10">
+                <span class="text-xs font-bold text-slate-300 block">الحضور اليومي</span>
+                <h3 id="dashDailyAttendanceKpi" class="text-2xl sm:text-3xl font-black text-white">1,180</h3>
+                <div class="flex items-center gap-1 text-[11px] font-bold text-emerald-400">
+                  <span>↑ +8%</span>
+                </div>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-600/40 border border-emerald-400/40 flex items-center justify-center text-white text-xl shadow-lg z-10 shrink-0">
+                ✔
+              </div>
+              <svg class="absolute bottom-0 left-0 right-0 h-10 opacity-30 text-emerald-400" viewBox="0 0 100 25" preserveAspectRatio="none">
+                <path d="M0 22 Q 25 10 50 18 T 100 6 L 100 25 L 0 25 Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <!-- Card 3: المتفوقون (Purple) -->
+            <div class="kpi-card-purple rounded-2xl p-4 sm:p-5 flex items-center justify-between relative overflow-hidden">
+              <div class="space-y-1 z-10">
+                <span class="text-xs font-bold text-slate-300 block">المتفوقون</span>
+                <h3 id="dashTopStudentsKpi" class="text-2xl sm:text-3xl font-black text-white">85</h3>
+                <div class="flex items-center gap-1 text-[11px] font-bold text-emerald-400">
+                  <span>↑ +5%</span>
+                </div>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-purple-600/40 border border-purple-400/40 flex items-center justify-center text-white text-xl shadow-lg z-10 shrink-0">
+                🏆
+              </div>
+              <svg class="absolute bottom-0 left-0 right-0 h-10 opacity-30 text-purple-400" viewBox="0 0 100 25" preserveAspectRatio="none">
+                <path d="M0 23 Q 30 12 60 16 T 100 5 L 100 25 L 0 25 Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <!-- Card 4 (Left): عدد المدارس / الصفوف (Amber) -->
+            <div class="kpi-card-amber rounded-2xl p-4 sm:p-5 flex items-center justify-between relative overflow-hidden">
+              <div class="space-y-1 z-10">
+                <span class="text-xs font-bold text-slate-300 block">عدد المدارس</span>
+                <h3 id="dashSchoolsCountKpi" class="text-2xl sm:text-3xl font-black text-white">13</h3>
+                <div class="flex items-center gap-1 text-[11px] font-bold text-emerald-400">
+                  <span>↑ +0%</span>
+                </div>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-amber-600/40 border border-amber-400/40 flex items-center justify-center text-white text-xl shadow-lg z-10 shrink-0">
+                🏫
+              </div>
+              <svg class="absolute bottom-0 left-0 right-0 h-10 opacity-30 text-amber-400" viewBox="0 0 100 25" preserveAspectRatio="none">
+                <path d="M0 24 Q 25 15 50 20 T 100 8 L 100 25 L 0 25 Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <!-- ROW 2: MIDDLE CHARTS (Matching 104818.png) -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Right Wide Chart: إحصائيات سريعة (Line Chart) -->
+            <div class="lg:col-span-2 luxury-card rounded-2xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-purple-400 text-lg">📈</span>
+                  <h3 class="text-sm sm:text-base font-black text-white">إحصائيات سريعة</h3>
+                </div>
+                <div class="text-[11px] text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-lg">حضور الأسبوع الحالي</div>
+              </div>
+
+              <!-- Responsive SVG Line Chart matching 104818.png -->
+              <div class="relative w-full h-56 sm:h-64">
+                <svg class="w-full h-full" viewBox="0 0 600 220" preserveAspectRatio="none">
+                  <defs>
+                    <!-- Gradient under curve -->
+                    <linearGradient id="purpleLineGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.0"/>
+                    </linearGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur"/>
+                      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                  </defs>
+
+                  <!-- Horizontal Grid Lines -->
+                  <line x1="40" y1="30" x2="580" y2="30" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.8"/>
+                  <text x="30" y="34" fill="#94a3b8" font-size="11" text-anchor="end">1,500</text>
+
+                  <line x1="40" y1="80" x2="580" y2="80" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.8"/>
+                  <text x="30" y="84" fill="#94a3b8" font-size="11" text-anchor="end">1,000</text>
+
+                  <line x1="40" y1="130" x2="580" y2="130" stroke="#334155" stroke-dasharray="3,3" stroke-width="0.8"/>
+                  <text x="30" y="134" fill="#94a3b8" font-size="11" text-anchor="end">500</text>
+
+                  <line x1="40" y1="180" x2="580" y2="180" stroke="#334155" stroke-width="1"/>
+                  <text x="30" y="184" fill="#94a3b8" font-size="11" text-anchor="end">0</text>
+
+                  <!-- Filled area under spline -->
+                  <path d="M 60 150 C 130 110, 190 85, 230 85 C 280 85, 330 140, 370 140 C 420 140, 470 85, 500 85 C 530 85, 550 45, 570 45 L 570 180 L 60 180 Z" fill="url(#purpleLineGrad)"/>
+
+                  <!-- Spline Curve -->
+                  <path d="M 60 150 C 130 110, 190 85, 230 85 C 280 85, 330 140, 370 140 C 420 140, 470 85, 500 85 C 530 85, 550 45, 570 45" fill="none" stroke="#a855f7" stroke-width="3.5" filter="url(#glow)"/>
+
+                  <!-- Data Points with Halo -->
+                  <circle cx="60" cy="150" r="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="3"/>
+                  <circle cx="230" cy="85" r="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="3"/>
+                  <circle cx="370" cy="140" r="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="3"/>
+                  <circle cx="500" cy="85" r="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="3"/>
+                  <circle cx="570" cy="45" r="6" fill="#ffffff" stroke="#f59e0b" stroke-width="3"/>
+
+                  <!-- X-Axis Labels (Arabic Days) -->
+                  <text x="60" y="205" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">السبت</text>
+                  <text x="230" y="205" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">الأحد</text>
+                  <text x="370" y="205" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">الإثنين</text>
+                  <text x="500" y="205" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">الثلاثاء</text>
+                  <text x="570" y="205" fill="#f59e0b" font-size="11" font-weight="bold" text-anchor="middle">الأربعاء</text>
+                </svg>
+
+                <!-- Tooltip Badge over Wednesday Peak (1,250) -->
+                <div class="absolute top-1 left-2 sm:left-4 bg-[#1e293b] text-amber-300 border border-amber-500/40 rounded-xl px-2.5 py-0.5 text-xs font-black shadow-lg">
+                  1,250
+                </div>
+              </div>
+            </div>
+
+            <!-- Left Chart: أداء المدارس (Donut Chart) -->
+            <div class="luxury-card rounded-2xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 text-lg">📊</span>
+                <h3 class="text-sm sm:text-base font-black text-white">أداء المدارس</h3>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 pt-2">
+                <!-- SVG Donut Chart with 92% Center -->
+                <div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
+                  <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+                    <!-- Segment 1: Green (Excellent) -->
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#10b981" stroke-width="15" stroke-dasharray="140 238" stroke-dashoffset="0"/>
+                    <!-- Segment 2: Blue (Good) -->
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#3b82f6" stroke-width="15" stroke-dasharray="60 238" stroke-dashoffset="-140"/>
+                    <!-- Segment 3: Yellow (Fair) -->
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#f59e0b" stroke-width="15" stroke-dasharray="38 238" stroke-dashoffset="-200"/>
+                  </svg>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <span class="text-2xl font-black text-white leading-none">92%</span>
+                    <span class="text-[10px] text-slate-400 mt-1">معدل الأداء</span>
+                  </div>
+                </div>
+
+                <!-- Legend items matching 104818.png -->
+                <div class="space-y-2 text-xs flex-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-300">مدارس ممتازة</span>
+                    <span class="font-bold text-emerald-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 8</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-300">مدارس جيدة</span>
+                    <span class="font-bold text-blue-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 3</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-300">مدارس متوسطة</span>
+                    <span class="font-bold text-amber-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 2</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-400">تحتاج دعم</span>
+                    <span class="font-bold text-rose-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ROW 3: BOTTOM WIDGETS (Matching 104818.png) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Column 1: وصول سريع (2x2 Buttons Grid) -->
+            <div class="luxury-card rounded-2xl p-5 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 text-lg">⚡</span>
+                <h3 class="text-sm font-black text-white">وصول سريع</h3>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+                <!-- 1. إضافة طالب -->
+                <button onclick="document.getElementById('modalAddStudent').classList.remove('hidden')" class="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 hover:bg-emerald-900/60 text-white transition flex flex-col items-center justify-center gap-2 shadow-sm active:scale-95">
+                  <span class="text-xl">👤➕</span>
+                  <span>إضافة طالب</span>
+                </button>
+
+                <!-- 2. التقارير -->
+                <button onclick="switchTab('cards')" class="p-3.5 rounded-xl bg-purple-950/70 border border-purple-500/40 hover:bg-purple-900/60 text-white transition flex flex-col items-center justify-center gap-2 shadow-sm active:scale-95">
+                  <span class="text-xl">📊</span>
+                  <span>التقارير</span>
+                </button>
+
+                <!-- 3. طباعة التقارير -->
+                <button onclick="window.print()" class="p-3.5 rounded-xl bg-amber-950/70 border border-amber-500/40 hover:bg-amber-900/60 text-white transition flex flex-col items-center justify-center gap-2 shadow-sm active:scale-95">
+                  <span class="text-xl">🖨️</span>
+                  <span>طباعة التقارير</span>
+                </button>
+
+                <!-- 4. الدرجات -->
+                <button onclick="switchTab('grades')" class="p-3.5 rounded-xl bg-blue-950/70 border border-blue-500/40 hover:bg-blue-900/60 text-white transition flex flex-col items-center justify-center gap-2 shadow-sm active:scale-95">
+                  <span class="text-xl">📝</span>
+                  <span>الدرجات</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Column 2: تنبيهات مهمة -->
+            <div class="luxury-card rounded-2xl p-5 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 text-lg">🔔</span>
+                <h3 class="text-sm font-black text-white">تنبيهات مهمة</h3>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <!-- Alert 1: إغلاق باب التسجيل -->
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800 flex items-center justify-between gap-3">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-white block">إغلاق باب التسجيل للعام الحالي</span>
+                    <span class="text-[10px] text-rose-400 font-bold">● قبل 3 أيام</span>
+                  </div>
+                  <div class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-sm shrink-0">
+                    📢
+                  </div>
+                </div>
+
+                <!-- Alert 2: موعد الاختبارات -->
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800 flex items-center justify-between gap-3">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-white block">موعد الاختبارات النهائية</span>
+                    <span class="text-[10px] text-amber-400 font-bold">● بعد 7 أيام</span>
+                  </div>
+                  <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm shrink-0">
+                    📅
+                  </div>
+                </div>
+
+                <!-- Alert 3: تحديث النظام -->
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800 flex items-center justify-between gap-3">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-white block">تحديث النظام متاح الآن</span>
+                    <span class="text-[10px] text-emerald-400 font-bold">● منذ ساعة</span>
+                  </div>
+                  <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm shrink-0">
+                    🔄
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: آخر النشاطات -->
+            <div class="luxury-card rounded-2xl p-5 space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-amber-400 text-lg">🕒</span>
+                <h3 class="text-sm font-black text-white">آخر النشاطات</h3>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <!-- Activity 1 -->
+                <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-800/80">
+                  <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs">👥</span>
+                    <span class="text-slate-200 font-bold">تم إضافة طالب جديد</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">منذ 5 دقائق</span>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-800/80">
+                  <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">✔</span>
+                    <span class="text-slate-200 font-bold">تم تسجيل حضور الصف الأول</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">منذ 12 دقيقة</span>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-800/80">
+                  <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs">✏️</span>
+                    <span class="text-slate-200 font-bold">تم تحديث درجات الرياضيات</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">منذ 20 دقيقة</span>
+                </div>
+
+                <!-- Activity 4 -->
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">🏫</span>
+                    <span class="text-slate-200 font-bold">تم إضافة مدرسة جديدة</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">منذ 35 دقيقة</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==================== TAB 2: SCHOOLS & CLASSES ==================== -->
+        <section id="viewSchools" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">إدارة المدارس والصفوف المعتمدة</h2>
+              <p class="text-xs text-slate-400 mt-1">إضافة الشعب والفصول وتحديد المواد والمدرسين المسؤولين</p>
+            </div>
+            <button onclick="document.getElementById('modalAddClass').classList.remove('hidden')" class="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl text-xs transition shadow flex items-center gap-2 active:scale-95">
+              <span>➕</span> إضافة صف أو شعبة
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 luxury-card rounded-2xl p-6">
+              <h3 class="text-sm font-bold text-white mb-4">قائمة الصفوف والشعب الحالية</h3>
+              <div id="dashClassesListContainer" class="space-y-3">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="luxury-card rounded-2xl p-6 space-y-4">
+              <h3 class="text-sm font-bold text-white">بيانات المدرسة والمعلم</h3>
+              <div class="space-y-2.5 text-xs text-slate-300">
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800">
+                  <span class="text-slate-500 block text-[10px]">المدرسة الرسمية:</span>
+                  <span class="font-bold text-white text-sm" id="dashSchoolNameLabel">متوسطة الشهيد كريم مزعل الباوي</span>
+                </div>
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800">
+                  <span class="text-slate-500 block text-[10px]">المعلم المشرف:</span>
+                  <span class="font-bold text-white text-sm" id="dashTeacherNameLabel">الأستاذ منتظر حميد</span>
+                </div>
+                <div class="p-3 rounded-xl bg-[#080c14] border border-slate-800">
+                  <span class="text-slate-500 block text-[10px]">العام الدراسي:</span>
+                  <span class="font-bold text-amber-400 text-sm">2026 - 2027</span>
+                </div>
               </div>
             </div>
           </div>
-          <button id="dashBackupJsonBtn" class="w-full py-2 bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 rounded-xl font-bold transition">
-            💾 تنزيل نسخة احتياطية (JSON)
-          </button>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- TAB 2: STUDENTS & EXCEL IMPORT -->
-    <section id="viewStudents" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">شؤون الطلاب وإدارة الشعب</h2>
-          <p class="text-xs text-slate-400 mt-1">إضافة وحذف الطلاب، ولصق قائمة أسماء كاملة بنقرة واحدة أو تصدير كشف Excel</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button id="openAddClassModalBtn" class="px-3.5 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5">
-            <span>🏫</span> صف/شعبة جديدة
-          </button>
-          <button id="openBulkPasteModalBtn" class="px-3.5 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5">
-            <span>📋</span> لصق أسماء
-          </button>
-          <button id="openSingleStudentModalBtn" class="px-3.5 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow">
-            <span>➕</span> إضافة طالب
-          </button>
-        </div>
-      </div>
-
-      <!-- Filter Controls -->
-      <div class="app-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div class="flex items-center gap-2 flex-1 min-w-[240px]">
-          <span class="font-bold text-slate-400">تصفية حسب الشعبة:</span>
-          <select id="studentsFilterSelect" class="bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none w-full max-w-xs">
-            <!-- Dynamically populated -->
-          </select>
-        </div>
-        <div class="flex items-center gap-2">
-          <span id="studentsCountBadge" class="text-slate-400 font-bold">0 طالب</span>
-          <button id="exportStudentsXlsxBtn" class="px-3 py-1.5 rounded-lg bg-midnight-800 hover:bg-midnight-700 border border-slate-700 text-slate-300 font-bold text-xs transition">
-            تصدير Excel (.xlsx)
-          </button>
-        </div>
-      </div>
-
-      <!-- Students Table -->
-      <div class="app-card rounded-2xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse text-xs">
-            <thead>
-              <tr class="bg-midnight-850 text-slate-400 font-bold border-b border-slate-800">
-                <th class="py-3 px-4">#</th>
-                <th class="py-3 px-4">اسم الطالب</th>
-                <th class="py-3 px-4">الصف والشعبة</th>
-                <th class="py-3 px-4">رقم ولي الأمر</th>
-                <th class="py-3 px-4 text-center">إجراء</th>
-              </tr>
-            </thead>
-            <tbody id="studentsTableBody" class="divide-y divide-slate-800/60">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 3: ATTENDANCE -->
-    <section id="viewAttendance" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">سجل الحضور والغياب اليومي والتاريخي</h2>
-          <p class="text-xs text-slate-400 mt-1">رصد الحضور اليومي بضغطة زر مع أرشفة تاريخية وحساب مجموع أيام الغياب</p>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2.5 text-xs w-full md:w-auto">
-          <select id="attendanceSectionSelect" class="bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-            <!-- Dynamically populated -->
-          </select>
-          <div class="flex items-center gap-1 bg-midnight-950 border border-slate-700 rounded-xl px-2 py-1">
-            <button id="attPrevDayBtn" class="p-1 hover:text-smartTeal-400 text-slate-400 font-bold" title="اليوم السابق">◀</button>
-            <input type="date" id="attendanceDateInput" class="bg-transparent text-white font-bold text-xs border-0 focus:outline-none px-1">
-            <button id="attNextDayBtn" class="p-1 hover:text-smartTeal-400 text-slate-400 font-bold" title="اليوم التالي">▶</button>
+        <!-- ==================== TAB 3: STUDENTS MANAGEMENT ==================== -->
+        <section id="viewStudents" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">إدارة الطلاب وقوائم الأسماء</h2>
+              <p class="text-xs text-slate-400 mt-1">إضافة وحذف الطلاب، ولصق قائمة أسماء كاملة بنقرة واحدة وتصدير Excel</p>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs font-bold">
+              <button onclick="document.getElementById('modalAddStudent').classList.remove('hidden')" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 shadow transition flex items-center gap-1.5 active:scale-95">
+                <span>➕</span> إضافة طالب
+              </button>
+              <button onclick="document.getElementById('modalBulkPaste').classList.remove('hidden')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+                <span>📋</span> لصق قائمة سريعة
+              </button>
+              <button id="exportStudentsExcelBtn" class="px-3.5 py-2 rounded-xl bg-emerald-700/80 hover:bg-emerald-600 text-white transition flex items-center gap-1.5">
+                <span>📊</span> تصدير Excel
+              </button>
+            </div>
           </div>
-          <button id="attMarkAllPresentBtn" class="px-3.5 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold transition shadow">
-            الجميع حاضر
-          </button>
-        </div>
-      </div>
 
-      <!-- Stats Counters -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-        <div class="app-card rounded-2xl p-4 border border-emerald-500/20">
-          <span class="text-xs text-emerald-400 font-bold block mb-1">الحاضرون</span>
-          <h4 id="attDayPresentCount" class="text-2xl font-black text-white">0</h4>
-        </div>
-        <div class="app-card rounded-2xl p-4 border border-rose-500/20">
-          <span class="text-xs text-rose-400 font-bold block mb-1">الغائبون</span>
-          <h4 id="attDayAbsentCount" class="text-2xl font-black text-white">0</h4>
-        </div>
-        <div class="app-card rounded-2xl p-4 border border-amber-500/20">
-          <span class="text-xs text-amber-400 font-bold block mb-1">المتأخرون</span>
-          <h4 id="attDayLateCount" class="text-2xl font-black text-white">0</h4>
-        </div>
-        <div class="app-card rounded-2xl p-4 border border-blue-500/20">
-          <span class="text-xs text-blue-400 font-bold block mb-1">إجازة بعذر</span>
-          <h4 id="attDayExcusedCount" class="text-2xl font-black text-white">0</h4>
-        </div>
-      </div>
+          <!-- Filter & Search Toolbar -->
+          <div class="luxury-card rounded-2xl p-4 flex flex-col sm:flex-row gap-3">
+            <div class="flex-1 relative">
+              <input type="text" id="studentSearchInput" placeholder="بحث باسم الطالب أو الهاتف..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-4 py-2 text-white text-xs focus:outline-none focus:border-amber-500 transition">
+              <span class="absolute left-3.5 top-2.5 text-slate-500 text-xs">🔍</span>
+            </div>
+            <div class="w-full sm:w-56">
+              <select id="studentClassFilterSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none font-bold">
+                <option value="ALL">جميع الصفوف والشعب</option>
+              </select>
+            </div>
+          </div>
 
-      <!-- Table -->
-      <div class="app-card rounded-2xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse text-xs">
-            <thead>
-              <tr class="bg-midnight-850 text-slate-400 font-bold border-b border-slate-800">
-                <th class="py-3 px-4">#</th>
-                <th class="py-3 px-4">اسم الطالب</th>
-                <th class="py-3 px-4 text-center">حالة اليوم المحدد</th>
-                <th class="py-3 px-4 text-center">مجموع الغيابات</th>
-                <th class="py-3 px-4 text-center">تسجيل الحالة</th>
-              </tr>
-            </thead>
-            <tbody id="attendanceTableBody" class="divide-y divide-slate-800/60">
+          <!-- Students Table -->
+          <div class="luxury-card rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-[#080c14] text-slate-400 font-bold border-b border-slate-800">
+                  <tr>
+                    <th class="py-3 px-4">#</th>
+                    <th class="py-3 px-4">اسم الطالب الثلاثي</th>
+                    <th class="py-3 px-4">الصف والشعبة</th>
+                    <th class="py-3 px-4">هاتف ولي الأمر</th>
+                    <th class="py-3 px-4 text-center">إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody" class="divide-y divide-slate-800/80">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 4: ATTENDANCE TRACKER ==================== -->
+        <section id="viewAttendance" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">سجل الحضور والغياب اليومي</h2>
+              <p class="text-xs text-slate-400 mt-1">تسجيل حضور وغياب الطلاب اليومي مع حفظ تلقائي وتصدير إحصائيات</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="exportAttendanceExcelBtn" class="px-3.5 py-2 rounded-xl bg-emerald-700/80 hover:bg-emerald-600 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <span>📊</span> تصدير الحضور كـ Excel
+              </button>
+            </div>
+          </div>
+
+          <div class="luxury-card rounded-2xl p-4 flex flex-wrap gap-4 items-center justify-between text-xs">
+            <div class="flex flex-wrap items-center gap-3">
+              <div>
+                <label for="attendanceClassSelect" class="block text-slate-400 mb-1 font-bold">اختر الصف والشعبة:</label>
+                <select id="attendanceClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold focus:outline-none">
+                  <!-- Populated -->
+                </select>
+              </div>
+              <div>
+                <label for="attendanceDateInput" class="block text-slate-400 mb-1 font-bold">تاريخ اليوم:</label>
+                <input type="date" id="attendanceDateInput" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-mono focus:outline-none">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="markAllPresentBtn" class="px-3 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/30 text-emerald-300 font-bold">
+                ✔ الكل حاضر
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Sheet Table -->
+          <div class="luxury-card rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-[#080c14] text-slate-400 font-bold border-b border-slate-800">
+                  <tr>
+                    <th class="py-3 px-4">#</th>
+                    <th class="py-3 px-4">اسم الطالب</th>
+                    <th class="py-3 px-4 text-center">حالة الحضور</th>
+                    <th class="py-3 px-4">ملاحظة</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceTableBody" class="divide-y divide-slate-800/80">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 5: GRADES & EXAMS (النظام العراقي) ==================== -->
+        <section id="viewGrades" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">دفتر الدرجات والسعي السنوي</h2>
+              <p class="text-xs text-slate-400 mt-1">حساب السعي السنوي العراقي: (الشهر الأول + الشهر الثاني ÷ 2) ونصف ونهاية السنة</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="switchTab('exams')" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 text-xs font-black transition shadow flex items-center gap-1.5 active:scale-95">
+                <span>📄</span> الانتقال لصانع الأسئلة الامتحانية
+              </button>
+              <button id="exportGradesExcelBtn" class="px-3.5 py-2 rounded-xl bg-emerald-700/80 hover:bg-emerald-600 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <span>📊</span> تصدير الدرجات كـ Excel
+              </button>
+            </div>
+          </div>
+
+          <div class="luxury-card rounded-2xl p-4 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <label for="gradesClassSelect" class="font-bold text-slate-400">الصف والشعبة:</label>
+              <select id="gradesClassSelect" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold focus:outline-none">
+                <!-- Populated -->
+              </select>
+            </div>
+            <span class="text-slate-400 text-[11px]">يتم حفظ الدرجات وتحديث السعي تلقائياً بمجرد إدخال الرقم</span>
+          </div>
+
+          <!-- Grades Table -->
+          <div class="luxury-card rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-[#080c14] text-slate-400 font-bold border-b border-slate-800">
+                  <tr>
+                    <th class="py-3 px-4">#</th>
+                    <th class="py-3 px-4">اسم الطالب</th>
+                    <th class="py-3 px-3 text-center">الشهر 1</th>
+                    <th class="py-3 px-3 text-center">الشهر 2</th>
+                    <th class="py-3 px-3 text-center text-amber-400 font-black">السعي</th>
+                    <th class="py-3 px-3 text-center">نصف السنة</th>
+                    <th class="py-3 px-3 text-center">النهائي</th>
+                    <th class="py-3 px-4 text-center">النتيجة</th>
+                  </tr>
+                </thead>
+                <tbody id="gradesTableBody" class="divide-y divide-slate-800/80">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 6: EXAM BUILDER ==================== -->
+        <section id="viewExams" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">صانع الأسئلة الامتحانية والوزارية</h2>
+              <p class="text-xs text-slate-400 mt-1">توليد وطباعة الأسئلة بالترويسة الرسمية لجمهورية العراق ووزارة التربية</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="document.getElementById('modalAddQuestion').classList.remove('hidden')" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 text-xs font-black transition shadow flex items-center gap-1.5 active:scale-95">
+                <span>➕</span> إضافة سؤال
+              </button>
+              <button onclick="printOfficialExam()" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <span>🖨️</span> طباعة نموذج الامتحان
+              </button>
+            </div>
+          </div>
+
+          <!-- Exam Header Settings -->
+          <div class="luxury-card rounded-2xl p-5 space-y-4">
+            <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">بيانات ترويسة ورقة الأسئلة</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div>
+                <label for="examSubjectInput" class="block font-bold text-slate-400 mb-1">المادة:</label>
+                <input type="text" id="examSubjectInput" value="الفيزياء والعلوم" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+              </div>
+              <div>
+                <label for="examGradeInput" class="block font-bold text-slate-400 mb-1">الصف:</label>
+                <input type="text" id="examGradeInput" value="الثالث المتوسط" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+              </div>
+              <div>
+                <label for="examTypeSelect" class="block font-bold text-slate-400 mb-1">نوع الامتحان:</label>
+                <select id="examTypeSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+                  <option value="امتحان الشهر الأول">امتحان الشهر الأول</option>
+                  <option value="امتحان الشهر الثاني">امتحان الشهر الثاني</option>
+                  <option value="امتحان نصف السنة">امتحان نصف السنة</option>
+                  <option value="امتحان نهاية السنة - الدور الأول">امتحان نهاية السنة - الدور الأول</option>
+                </select>
+              </div>
+              <div>
+                <label for="examTimeInput" class="block font-bold text-slate-400 mb-1">الوقت المحدد:</label>
+                <input type="text" id="examTimeInput" value="ساعة ونصف" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+              </div>
+            </div>
+          </div>
+
+          <!-- Questions List -->
+          <div class="luxury-card rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <h3 class="text-sm font-bold text-white">الأسئلة المجهزة للامتحان</h3>
+              <span id="examQuestionsCountBadge" class="text-xs text-amber-400 font-bold">3 أسئلة</span>
+            </div>
+            <div id="examQuestionsListContainer" class="space-y-4">
               <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+            </div>
+          </div>
+        </section>
 
-    <!-- TAB 4: GRADES & IRAQI EXAM SYSTEM (نظام معلمي الذكي) -->
-    <section id="viewGrades" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">دفتر الدرجات وحساب السعي (النظام الامتحاني العراقي)</h2>
-          <p class="text-xs text-slate-400 mt-1">حساب تلقائي لدرجات الشهور، نصف السنة، نهاية السنة، ومعدل السعي السنوي مع كشوفات Excel</p>
-        </div>
-        <div class="flex items-center gap-2.5 text-xs">
-          <select id="gradesSectionSelect" class="bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
+        <!-- ==================== TAB 7: STUDENT REPORT CARDS & WHATSAPP ==================== -->
+        <section id="viewCards" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-black text-white">كارتات درجات الطلاب ومراسلة واتساب</h2>
+              <p class="text-xs text-slate-400 mt-1">توليد بطاقات نتائج جميلة وإرسال تفاصيل الدرجات مباشرة لواتساب ولي الأمر</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <label for="cardSectionSelect" class="text-xs font-bold text-slate-400">الشعبة:</label>
+              <select id="cardSectionSelect" onchange="renderStudentCards()" class="bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white text-xs font-bold">
+                <!-- Populated -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div id="studentsCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Dynamically populated -->
-          </select>
-          <button id="exportGradesXlsxBtn" class="px-3.5 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 font-bold transition flex items-center gap-1.5">
-            <span>📊</span> تصدير Excel (.xlsx)
-          </button>
-        </div>
-      </div>
+          </div>
+        </section>
 
-      <!-- Table with Iraqi Gradebook Fields -->
-      <div class="app-card rounded-2xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse text-xs">
-            <thead>
-              <tr class="bg-midnight-850 text-slate-400 font-bold border-b border-slate-800">
-                <th class="py-3.5 px-4">اسم الطالب</th>
-                <th class="py-3.5 px-3 text-center">الشهر الأول (100)</th>
-                <th class="py-3.5 px-3 text-center">الشهر الثاني (100)</th>
-                <th class="py-3.5 px-3 text-center font-bold text-amber-300">امتحان نصف السنة (100)</th>
-                <th class="py-3.5 px-3 text-center font-bold text-smartTeal-400">السعي السنوي</th>
-                <th class="py-3.5 px-3 text-center">الامتحان النهائي (100)</th>
-                <th class="py-3.5 px-4 text-center">المعدل والنتيجة</th>
-              </tr>
-            </thead>
-            <tbody id="gradesTableBody" class="divide-y divide-slate-800/60">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+        <!-- ==================== TAB 8: ANNUAL PLAN ==================== -->
+        <section id="viewPlans" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6 flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-black text-white">الخطة الدراسية وتوزيع المنهج السنوي</h2>
+              <p class="text-xs text-slate-400 mt-1">توزيع مفردات المنهج والحصص المقررة حسب توجيهات وزارة التربية</p>
+            </div>
+            <button onclick="window.print()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+              <span>🖨️</span> طباعة الخطة
+            </button>
+          </div>
 
-    <!-- TAB 5: EXAM PAPERS BUILDER (صانع الأسئلة الوزارية) -->
-    <section id="viewExams" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">صانع الأسئلة الامتحانية الوزارية</h2>
-          <p class="text-xs text-slate-400 mt-1">إنشاء أوراق امتحانية رسمية (امتحان شهري / نصف السنة / نهاية السنة) مع الترويسة وملاحظات الترك</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="openNewQuestionBtn" class="px-3.5 py-2 rounded-xl bg-midnight-800 hover:bg-midnight-700 text-slate-200 border border-slate-700 text-xs font-bold transition">
-            إضافة سؤال
-          </button>
-          <button id="printExamDocBtn" class="px-4 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold text-xs shadow transition">
-            معاينة وطباعة ورقة الامتحان
-          </button>
-        </div>
-      </div>
+          <div class="luxury-card rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-[#080c14] text-slate-400 font-bold border-b border-slate-800">
+                  <tr>
+                    <th class="py-3 px-4">الشهر</th>
+                    <th class="py-3 px-4">الوحدة / الفصل</th>
+                    <th class="py-3 px-6">المفردات والمواضيع</th>
+                    <th class="py-3 px-4 text-center">الحصص</th>
+                    <th class="py-3 px-4 text-center">الوسائل التعليمية</th>
+                  </tr>
+                </thead>
+                <tbody id="annualPlanTableBody" class="divide-y divide-slate-800/80">
+                  <!-- Populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
-      <!-- Controls -->
-      <div class="app-card rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-bold">
-        <div>
-          <label for="examTypeSelect" class="block text-slate-400 mb-1">نوع الامتحان:</label>
-          <select id="examTypeSelect" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white">
-            <option value="شهري">امتحان شهري</option>
-            <option value="نصف السنة" selected>امتحان نصف السنة</option>
-            <option value="نهاية السنة">امتحان نهاية السنة (الدور الأول)</option>
-          </select>
-        </div>
-        <div>
-          <label for="examSubjectInput" class="block text-slate-400 mb-1">المادة الدراسية:</label>
-          <input type="text" id="examSubjectInput" value="الفيزياء" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white">
-        </div>
-        <div>
-          <label for="examGradeInput" class="block text-slate-400 mb-1">الصف الدراسي:</label>
-          <input type="text" id="examGradeInput" value="الثالث متوسط" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white">
-        </div>
-        <div>
-          <label for="examTimeInput" class="block text-slate-400 mb-1">الزمن المحدد:</label>
-          <input type="text" id="examTimeInput" value="ساعتان" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white">
-        </div>
-      </div>
+        <!-- ==================== TAB 9: SETTINGS ==================== -->
+        <section id="viewSettings" class="tab-view hidden space-y-6">
+          <div class="luxury-card rounded-2xl p-6">
+            <h2 class="text-lg font-black text-white">إعدادات النظام والحساب</h2>
+            <p class="text-xs text-slate-400 mt-1">تخصيص بيانات المعلم، مظهر النظام والنسخ الاحتياطي</p>
+          </div>
 
-      <!-- Questions List -->
-      <div class="app-card rounded-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-800 text-xs">
-          <span class="font-bold text-slate-300">الأسئلة المدرجة في ورقة الاختبار:</span>
-          <span class="text-amber-400 font-bold" id="examQuestionsCountBadge">0 أسئلة</span>
-        </div>
-        <div id="examQuestionsListContainer" class="space-y-3">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
-    </section>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+            <div class="luxury-card rounded-2xl p-6 space-y-4">
+              <h3 class="text-sm font-bold text-white">بيانات المعلم والمدرسة</h3>
+              <div>
+                <label class="block text-slate-400 mb-1 font-bold">اسم المعلم:</label>
+                <input type="text" id="settingTeacherName" value="الأستاذ منتظر حميد" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-bold">اسم المدرسة:</label>
+                <input type="text" id="settingSchoolName" value="متوسطة الشهيد كريم مزعل الباوي" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-bold">المادة الدراسية:</label>
+                <input type="text" id="settingSubject" value="الفيزياء والعلوم" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3.5 py-2 text-white font-bold">
+              </div>
+              <button onclick="saveSettingsChanges()" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl transition shadow active:scale-95">
+                حفظ التعديلات
+              </button>
+            </div>
 
-    <!-- TAB 6: STUDENT REPORT CARDS -->
-    <section id="viewCards" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">بطاقة الطالب الأكاديمية وإشعارات أولياء الأمور</h2>
-          <p class="text-xs text-slate-400 mt-1">كارت درجات شامل لكل طالب مع زر إرسال مباشر لكشف الدرجات والغياب لولي الأمر عبر واتساب</p>
-        </div>
-        <div class="flex items-center gap-2.5 text-xs">
-          <label for="cardSectionSelect" class="font-bold text-slate-400">الشعبة:</label>
-          <select id="cardSectionSelect" class="bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold focus:outline-none">
-            <!-- Dynamically populated -->
-          </select>
-        </div>
-      </div>
+            <div class="luxury-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+              <div class="space-y-4">
+                <h3 class="text-sm font-bold text-white">النسخ الاحتياطي والبيانات</h3>
+                <p class="text-slate-400 leading-relaxed">
+                  يمكنك تحميل نسخة احتياطية من جميع بيانات الطلاب، الحضور والدرجات كملف JSON آمن للرجوع إليه في أي وقت.
+                </p>
+                <button id="dashBackupJsonBtn" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                  <span>💾</span> تنزيل نسخة احتياطية (JSON)
+                </button>
+              </div>
 
-      <div id="studentsCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Dynamically populated cards -->
-      </div>
-    </section>
+              <div class="pt-4 border-t border-slate-800">
+                <button id="systemLogoutBtn" class="w-full py-2.5 bg-rose-950/70 hover:bg-rose-900 text-rose-300 border border-rose-800/60 font-black rounded-xl transition flex items-center justify-center gap-2">
+                  <span>🚪</span> تسجيل الخروج وتبديل الحساب
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    <!-- TAB 7: PLANS & LESSON PREP (الخطط وتحضير الدروس) -->
-    <section id="viewPlans" class="tab-view hidden space-y-6">
-      <div class="app-card rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-black text-white">الخطة السنوية وتحضير الدروس اليومي</h2>
-          <p class="text-xs text-slate-400 mt-1">توزيع مفردات المنهج ودفتر تحضير الدروس النموذجي المعتمد وزارياً</p>
-        </div>
-        <button id="printAnnualPlanBtn" class="px-4 py-2 bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold rounded-xl text-xs shadow transition">
-          طباعة الخطة السنوية
-        </button>
-      </div>
-
-      <div class="app-card rounded-2xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse text-xs">
-            <thead>
-              <tr class="bg-midnight-850 text-slate-400 font-bold border-b border-slate-800">
-                <th class="py-3 px-4">الشهر</th>
-                <th class="py-3 px-4">الفصل المقرر</th>
-                <th class="py-3 px-6">المفردات والمواضيع</th>
-                <th class="py-3 px-4 text-center">الحصص</th>
-                <th class="py-3 px-4 text-center">الوسائل</th>
-              </tr>
-            </thead>
-            <tbody id="annualPlanTableBody" class="divide-y divide-slate-800/60">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- PRINT CONTAINER -->
-  <div id="printContainer" class="hidden"></div>
-
-  <!-- MODALS -->
-
-  <!-- MODAL: ADD CLASS -->
-  <div id="modalAddClass" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="app-card rounded-2xl max-w-md w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
-      <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
-        <h3 class="font-bold text-sm text-white">إضافة صف ومادة وشعب جديدة</h3>
-        <button id="closeAddClassModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
-      </div>
-      <div>
-        <label for="inputClassGrade" class="block font-bold text-slate-300 mb-1">الصف الدراسي:</label>
-        <input type="text" id="inputClassGrade" placeholder="مثال: الثالث متوسط / الأول إعدادي" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-      </div>
-      <div>
-        <label for="inputClassSubject" class="block font-bold text-slate-300 mb-1">المادة الدراسية:</label>
-        <input type="text" id="inputClassSubject" placeholder="مثال: الفيزياء / الرياضيات" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-      </div>
-      <div>
-        <label for="inputClassSections" class="block font-bold text-slate-300 mb-1">الشعب المطلوبة (مفصولة بفاصلة حتى 15 شعبة):</label>
-        <input type="text" id="inputClassSections" value="أ, ب, ج, د" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-      </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
-        <button id="cancelAddClassModalBtn" class="px-4 py-2 rounded-xl bg-midnight-800 text-slate-300 font-bold">إلغاء</button>
-        <button id="saveAddClassModalBtn" class="px-5 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold shadow">حفظ الصف</button>
-      </div>
+      </main>
     </div>
+
+    <!-- ==================== FIXED RIGHT SIDEBAR (Matching 104818.png) ==================== -->
+    <aside id="mainAppSidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-[#0b0f19] border-l border-slate-800/80 flex flex-col justify-between p-4 transition-transform duration-300 transform translate-x-full lg:translate-x-0 lg:static shrink-0 no-print">
+      
+      <!-- Top Branding (Golden Logo matching 104818.png) -->
+      <div class="space-y-6">
+        
+        <div class="text-center pt-2">
+          <!-- Golden Emblem: Graduation Cap + Open Book with Golden Glow -->
+          <div class="w-14 h-14 mx-auto mb-2 relative flex items-center justify-center">
+            <svg class="w-full h-full text-amber-400 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]" viewBox="0 0 64 64" fill="none">
+              <!-- Open Book Base -->
+              <path d="M8 48 C 18 42, 28 42, 32 46 C 36 42, 46 42, 56 48 L 56 22 C 46 16, 36 16, 32 20 C 28 16, 18 16, 8 22 Z" fill="#d97706" opacity="0.9"/>
+              <path d="M32 20 L 32 46" stroke="#fbbf24" stroke-width="2"/>
+              <!-- Book Pages Lines -->
+              <path d="M12 26 C 18 22, 26 22, 30 24" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 32 C 18 28, 26 28, 30 30" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M52 26 C 46 22, 38 22, 34 24" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M52 32 C 46 28, 38 28, 34 30" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- Graduation Cap on Top -->
+              <polygon points="32,4 54,14 32,24 10,14" fill="#fbbf24" stroke="#78350f" stroke-width="1.5"/>
+              <path d="M20 19 L 20 28 C 20 32, 44 32, 44 28 L 44 19" fill="#f59e0b" stroke="#78350f" stroke-width="1"/>
+              <!-- Tassel -->
+              <path d="M48 16 L 52 24 L 52 32" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h1 class="text-xl font-black text-amber-400 tracking-wide">منصة سند</h1>
+          <p class="text-[11px] text-slate-400 font-bold mt-0.5">إدارة المدارس والطلاب</p>
+        </div>
+
+        <!-- Navigation Links (Matching 104818.png) -->
+        <nav class="space-y-1.5 text-xs font-bold">
+          
+          <!-- 1. الرئيسية (Home - Active Gold in 104818.png) -->
+          <button onclick="switchTab('dashboard')" data-tab="dashboard" class="sidebar-nav-btn active-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition text-right">
+            <span>الرئيسية</span>
+            <span class="text-base">🏠</span>
+          </button>
+
+          <!-- 2. إدارة المدارس -->
+          <button onclick="switchTab('schools')" data-tab="schools" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>إدارة المدارس</span>
+            <span class="text-base">🏫</span>
+          </button>
+
+          <!-- 3. إدارة الطلاب -->
+          <button onclick="switchTab('students')" data-tab="students" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>إدارة الطلاب</span>
+            <span class="text-base">👥</span>
+          </button>
+
+          <!-- 4. الحضور والغياب -->
+          <button onclick="switchTab('attendance')" data-tab="attendance" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>الحضور والغياب</span>
+            <span class="text-base">📅</span>
+          </button>
+
+          <!-- 5. الدرجات والاختبارات -->
+          <button onclick="switchTab('grades')" data-tab="grades" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>الدرجات والاختبارات</span>
+            <span class="text-base">📝</span>
+          </button>
+
+          <!-- 6. التقارير والإحصائيات -->
+          <button onclick="switchTab('cards')" data-tab="cards" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>التقارير والإحصائيات</span>
+            <span class="text-base">📊</span>
+          </button>
+
+          <!-- 7. صانع الأسئلة -->
+          <button onclick="switchTab('exams')" data-tab="exams" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>صانع الأسئلة</span>
+            <span class="text-base">📄</span>
+          </button>
+
+          <!-- 8. الإعدادات -->
+          <button onclick="switchTab('settings')" data-tab="settings" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>الإعدادات</span>
+            <span class="text-base">⚙️</span>
+          </button>
+
+          <!-- 9. المساعدة والدعم (Direct WhatsApp) -->
+          <button id="sidebarWhatsappSupportBtn" type="button" class="sidebar-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-right text-slate-300 hover:text-emerald-400 hover:bg-slate-800/60">
+            <span>المساعدة والدعم</span>
+            <span class="text-base">🎧</span>
+          </button>
+
+          <!-- 10. تسجيل الخروج (Burgundy Pill in 104818.png) -->
+          <div class="pt-2">
+            <button id="sidebarLogoutBtn" type="button" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-rose-950/80 to-rose-900/60 border border-rose-800/50 hover:bg-rose-900 text-rose-300 transition text-right active:scale-95 shadow">
+              <span class="font-bold">تسجيل الخروج</span>
+              <span class="text-base">🚪</span>
+            </button>
+          </div>
+
+        </nav>
+      </div>
+
+      <!-- Bottom Signature / Slogan (Matching 104818.png) -->
+      <div class="text-center pt-4 border-t border-slate-800/80">
+        <span class="text-xs font-calligraphy text-amber-400 block font-bold">سند ..</span>
+        <span class="text-sm font-calligraphy text-amber-400/90 block font-bold">شريك نجاحكم</span>
+        <svg class="w-24 h-2 mx-auto text-amber-400/70 mt-1" viewBox="0 0 100 8" fill="none">
+          <path d="M0 4 Q 50 8 100 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+    </aside>
+
   </div>
 
-  <!-- MODAL: ADD STUDENT SINGLE -->
-  <div id="modalAddStudent" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="app-card rounded-2xl max-w-sm w-full p-6 space-y-3.5 text-xs border border-slate-700 shadow-2xl">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
-        <h3 class="font-bold text-sm text-white">إضافة طالب جديد</h3>
-        <button id="closeAddStudentModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- MODAL: ADD CLASS -->
+  <div id="modalAddClass" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="luxury-card rounded-2xl max-w-md w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
+        <h3 class="text-sm font-black text-white">إضافة صف / شعبة جديدة</h3>
+        <button onclick="document.getElementById('modalAddClass').classList.add('hidden')" class="text-slate-400 hover:text-white text-base">✕</button>
       </div>
       <div>
-        <label for="inputStudentName" class="block font-bold text-slate-300 mb-1">اسم الطالب الرباعي:</label>
-        <input type="text" id="inputStudentName" placeholder="الاسم الكامل..." class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-      </div>
-      <div>
-        <label for="selectStudentClassTarget" class="block font-bold text-slate-300 mb-1">الشعبة:</label>
-        <select id="selectStudentClassTarget" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-          <!-- Dynamically populated -->
+        <label for="newClassGradeInput" class="block font-bold text-slate-300 mb-1">المرحلة الدراسية:</label>
+        <select id="newClassGradeInput" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+          <option value="الأول المتوسط">الأول المتوسط</option>
+          <option value="الثاني المتوسط">الثاني المتوسط</option>
+          <option value="الثالث المتوسط" selected>الثالث المتوسط</option>
+          <option value="الرابع الإعدادي">الرابع الإعدادي</option>
+          <option value="الخامس الإعدادي">الخامس الإعدادي</option>
+          <option value="السادس الإعدادي">السادس الإعدادي</option>
         </select>
       </div>
       <div>
-        <label for="inputStudentPhone" class="block font-bold text-slate-300 mb-1">هاتف ولي الأمر (واتساب):</label>
-        <input type="tel" id="inputStudentPhone" placeholder="07XXXXXXXXX" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none font-mono">
+        <label for="newClassSectionInput" class="block font-bold text-slate-300 mb-1">اسم الشعبة:</label>
+        <input type="text" id="newClassSectionInput" placeholder="أ، ب، ج، د..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
       </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
-        <button id="cancelAddStudentModalBtn" class="px-4 py-2 rounded-xl bg-midnight-800 text-slate-300 font-bold">إلغاء</button>
-        <button id="saveAddStudentModalBtn" class="px-5 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold shadow">إضافة الطالب</button>
+      <button id="saveNewClassBtn" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl shadow transition active:scale-95">
+        حفظ الشعبة
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD STUDENT -->
+  <div id="modalAddStudent" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="luxury-card rounded-2xl max-w-md w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
+        <h3 class="text-sm font-black text-white">إضافة طالب جديد</h3>
+        <button onclick="document.getElementById('modalAddStudent').classList.add('hidden')" class="text-slate-400 hover:text-white text-base">✕</button>
       </div>
+      <div>
+        <label for="newStudentNameInput" class="block font-bold text-slate-300 mb-1">اسم الطالب الثلاثي:</label>
+        <input type="text" id="newStudentNameInput" placeholder="اكتب اسم الطالب..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+      </div>
+      <div>
+        <label for="newStudentClassSelect" class="block font-bold text-slate-300 mb-1">الصف والشعبة:</label>
+        <select id="newStudentClassSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+          <!-- Populated -->
+        </select>
+      </div>
+      <div>
+        <label for="newStudentPhoneInput" class="block font-bold text-slate-300 mb-1">رقم هاتف ولي الأمر (واتساب):</label>
+        <input type="tel" id="newStudentPhoneInput" placeholder="077XXXXXXXX" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-mono">
+      </div>
+      <button id="saveNewStudentBtn" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl shadow transition active:scale-95">
+        إضافة الطالب
+      </button>
     </div>
   </div>
 
   <!-- MODAL: BULK PASTE STUDENTS -->
-  <div id="modalBulkPaste" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="app-card rounded-2xl max-w-lg w-full p-6 space-y-3.5 text-xs border border-slate-700 shadow-2xl">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
-        <h3 class="font-bold text-sm text-white">لصق أسماء طلاب الشعبة دفعة واحدة</h3>
-        <button id="closeBulkPasteModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
+  <div id="modalBulkPaste" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="luxury-card rounded-2xl max-w-lg w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
+        <h3 class="text-sm font-black text-white">لصق قائمة أسماء سريعة</h3>
+        <button onclick="document.getElementById('modalBulkPaste').classList.add('hidden')" class="text-slate-400 hover:text-white text-base">✕</button>
       </div>
+      <p class="text-slate-400">الصق الأسماء هنا (كل اسم في سطر مستقل):</p>
       <div>
-        <label for="selectBulkSectionTarget" class="block font-bold text-slate-300 mb-1">الشعبة المستهدفة:</label>
-        <select id="selectBulkSectionTarget" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
-          <!-- Dynamically populated -->
+        <label for="bulkClassSelect" class="block font-bold text-slate-300 mb-1">اختر الشعبة المستهدفة:</label>
+        <select id="bulkClassSelect" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+          <!-- Populated -->
         </select>
       </div>
-      <div>
-        <label for="textareaBulkNames" class="block font-bold text-slate-300 mb-1">قائمة الأسماء (كل اسم بسطر):</label>
-        <textarea id="textareaBulkNames" rows="6" placeholder="علي حسين كاظم&#10;حيدر جعفر صادق&#10;سجاد فاضل عباس..." class="w-full bg-midnight-950 border border-slate-700 rounded-xl p-3 text-white font-bold text-xs focus:outline-none leading-relaxed"></textarea>
-      </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
-        <button id="cancelBulkPasteModalBtn" class="px-4 py-2 rounded-xl bg-midnight-800 text-slate-300 font-bold">إلغاء</button>
-        <button id="saveBulkPasteModalBtn" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow">إضافة جميع الأسماء</button>
-      </div>
+      <textarea id="bulkStudentsTextarea" rows="6" placeholder="محمد علي كاظم&#10;حسين علي جاسم&#10;كرار حيدر جبار..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl p-3 text-white font-bold leading-relaxed focus:outline-none"></textarea>
+      <button id="saveBulkStudentsBtn" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl shadow transition active:scale-95">
+        إدراج جميع الأسماء دفعة واحدة
+      </button>
     </div>
   </div>
 
   <!-- MODAL: ADD QUESTION -->
-  <div id="modalAddQuestion" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="app-card rounded-2xl max-w-md w-full p-6 space-y-3.5 text-xs border border-slate-700 shadow-2xl">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-700">
-        <h3 class="font-bold text-sm text-white">إضافة سؤال لورقة الامتحان</h3>
-        <button id="closeAddQuestionModalBtn" class="text-slate-400 hover:text-white text-lg">&times;</button>
+  <div id="modalAddQuestion" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="luxury-card rounded-2xl max-w-lg w-full p-6 space-y-4 text-xs border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between pb-2.5 border-b border-slate-700">
+        <h3 class="text-sm font-black text-white">إضافة سؤال امتحاني جديد</h3>
+        <button onclick="document.getElementById('modalAddQuestion').classList.add('hidden')" class="text-slate-400 hover:text-white text-base">✕</button>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="newQNumInput" class="block font-bold text-slate-300 mb-1">رقم السؤال:</label>
+          <input type="text" id="newQNumInput" value="س 4" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+        </div>
+        <div>
+          <label for="newQMarksInput" class="block font-bold text-slate-300 mb-1">الدرجة المخصصة:</label>
+          <input type="number" id="newQMarksInput" value="20" class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
+        </div>
       </div>
       <div>
-        <label for="inputQuestionText" class="block font-bold text-slate-300 mb-1">نص السؤال والفرع:</label>
-        <textarea id="inputQuestionText" rows="3" placeholder="س1: أجب عما يأتي..." class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none"></textarea>
+        <label for="newQTitleInput" class="block font-bold text-slate-300 mb-1">عنوان أو صيغة السؤال:</label>
+        <input type="text" id="newQTitleInput" placeholder="مثال: عرف ما يأتي، علل الآتي، اجب عن فرعين..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl px-3 py-2 text-white font-bold">
       </div>
       <div>
-        <label for="inputQuestionPoints" class="block font-bold text-slate-300 mb-1">الدرجة المخصصة للسؤال:</label>
-        <input type="number" id="inputQuestionPoints" value="20" class="w-full bg-midnight-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-xs focus:outline-none">
+        <label for="newQBodyTextarea" class="block font-bold text-slate-300 mb-1">فروع وتفاصيل السؤال (كل فرع بسطر):</label>
+        <textarea id="newQBodyTextarea" rows="4" placeholder="أ) الفرع الأول...&#10;ب) الفرع الثاني..." class="w-full bg-[#080c14] border border-slate-700 rounded-xl p-3 text-white"></textarea>
       </div>
-      <div class="flex justify-end gap-2 pt-2 border-t border-slate-700">
-        <button id="cancelAddQuestionModalBtn" class="px-4 py-2 rounded-xl bg-midnight-800 text-slate-300 font-bold">إلغاء</button>
-        <button id="saveAddQuestionModalBtn" class="px-5 py-2 rounded-xl bg-smartTeal-600 hover:bg-smartTeal-500 text-white font-bold shadow">إضافة السؤال</button>
-      </div>
+      <button id="saveNewQuestionBtn" class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black rounded-xl shadow transition active:scale-95">
+        إضافة السؤال لورقة الامتحان
+      </button>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // --- Security Helper ---
-    function sanitize(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
+  <!-- PRINT CONTAINER (Hidden in screen, visible in print) -->
+  <div id="printContainer" class="hidden"></div>
 
-    // --- Core Data Model ---
-    const DEFAULT_APP_STATE = {
+  <!-- ==================== JAVASCRIPT APPLICATION CORE ==================== -->
+  <script>
+    // --- Application State ---
+    const STORAGE_KEY = 'sanad_teacher_platform_v3';
+
+    let appState = {
       teacher: {
         name: "الأستاذ منتظر حميد",
         school: "متوسطة الشهيد كريم مزعل الباوي",
@@ -931,348 +1163,395 @@
         contact: "07732997337"
       },
       classes: [
-        { id: "c1", grade: "الثالث متوسط", subject: "الفيزياء", sections: ["أ", "ب"] },
-        { id: "c2", grade: "الرابع علمي", subject: "الكيمياء", sections: ["أ"] }
+        { id: 1, grade: "الثالث المتوسط", section: "أ", studentCount: 42 },
+        { id: 2, grade: "الثالث المتوسط", section: "ب", studentCount: 38 },
+        { id: 3, grade: "الثاني المتوسط", section: "أ", studentCount: 40 }
       ],
       students: [
-        { id: 101, name: "علي حسين كاظم", classGrade: "الثالث متوسط", section: "أ", phone: "07711111111" },
-        { id: 102, name: "حيدر جعفر صادق", classGrade: "الثالث متوسط", section: "أ", phone: "07722222222" },
-        { id: 103, name: "سجاد فاضل عباس", classGrade: "الثالث متوسط", section: "أ", phone: "07733333333" },
-        { id: 104, name: "محمد باقر سلام", classGrade: "الثالث متوسط", section: "ب", phone: "07744444444" },
-        { id: 105, name: "يوسف عمار هادي", classGrade: "الثالث متوسط", section: "ب", phone: "07755555555" }
+        { id: 101, name: "علي حسن كاظم", classGrade: "الثالث المتوسط", section: "أ", phone: "07732997337" },
+        { id: 102, name: "حسين جاسم محمد", classGrade: "الثالث المتوسط", section: "أ", phone: "07732997337" },
+        { id: 103, name: "كرار حيدر جبار", classGrade: "الثالث المتوسط", section: "أ", phone: "" },
+        { id: 104, name: "أحمد سلام فالح", classGrade: "الثالث المتوسط", section: "ب", phone: "07732997337" },
+        { id: 105, name: "مصطفى شاكر محمود", classGrade: "الثاني المتوسط", section: "أ", phone: "" }
       ],
-      attendance: {
-        "2026-11-05": {
-          "101": { status: "present" },
-          "102": { status: "present" },
-          "103": { status: "absent" },
-          "104": { status: "present" },
-          "105": { status: "late" }
-        }
-      },
+      attendance: {},
       grades: {
-        "101": { m1: 92, m2: 96, midterm: 94, final: 95 },
-        "102": { m1: 98, m2: 100, midterm: 97, final: 99 },
-        "103": { m1: 75, m2: 80, midterm: 78, final: 82 },
-        "104": { m1: 60, m2: 64, midterm: 58, final: 65 },
-        "105": { m1: 85, m2: 88, midterm: 86, final: 90 }
+        101: { m1: 88, m2: 92, midterm: 90, final: 94 },
+        102: { m1: 75, m2: 80, midterm: 78, final: 82 },
+        103: { m1: 45, m2: 52, midterm: 50, final: 55 },
+        104: { m1: 95, m2: 98, midterm: 96, final: 99 },
+        105: { m1: 65, m2: 70, midterm: 68, final: 72 }
       },
-      annualPlan: [
-        { month: "تشرين الأول (10)", unit: "الفصل الأول: الكهربائية الساكنة", topics: "المفاهيم والقوانين والمسائل النموذجية", periods: 12, tools: "الكتاب ووسائل الإيضاح" },
-        { month: "تشرين الثاني (11)", unit: "الفصل الثاني: المغناطيسية", topics: "المجال المغناطيسي والتطبيقات المعملية", periods: 12, tools: "أوراق عمل وتجارب" },
-        { month: "كانون الأول (12)", unit: "الفصل الثالث: التيار الكهربائي", topics: "قانون أوم وتوصيل المقاومات الكهربائية", periods: 14, tools: "المختبر وبنك الأسئلة" },
-        { month: "كانون الثاني (1)", unit: "مراجعة امتحانات نصف السنة", topics: "حل نماذج الأسئلة الوزارية السابقة", periods: 8, tools: "الملخصات الوزارية" }
-      ],
       examQuestions: [
-        { id: 1, text: "س1: أ) عرف ما يأتي باختصار: (الضغط، مبدأ باسكال، المقاومة النوعية).\nب) اذكر نص قانون أوم موضحاً العلاقة الرياضية ووحدات القياس.", points: 20 },
-        { id: 2, text: "س2: علل اثنين فقط مما يأتي:\n1. تصنع السدود بحيث تكون قاعدتها أكثر سمكاً من قمتها.\n2. تؤرض الأجهزة الكهربائية ذات الغلاف المعدني.", points: 20 },
-        { id: 3, text: "س3: مكبس هيدروليكي مساحة مكبسه الكبير 0.2 م² ومساحة مكبسه الصغير 0.01 م²، سلطت قوة مقدارها 150 نيوتن على مكبسه الصغير، احسب القوة الرافعة للمكبس الكبير.", points: 20 },
-        { id: 4, text: "س4: اختر الإجابة الصحيحة من بين الأقواس لما يأتي (اختر أربعة فقط).", points: 20 },
-        { id: 5, text: "س5: قارن بين ربط المقاومات على التوالي وربط المقاومات على التوازي من حيث (التيار، فرق الجهد، والمقاومة المكافئة).", points: 20 }
+        {
+          id: 1,
+          qNum: "س 1",
+          marks: 25,
+          title: "أجب عن فرعين فقط مما يأتي (لكل فرع 12.5 درجة):",
+          branches: [
+            "أ) ما هو مفهوم القوة في الفيزياء؟ وما هي وحدات قياسها في النظام الدولي للوحدات؟",
+            "ب) اذكر نص قانون نيوتن الثاني في الحركة واكتب الصيغة الرياضية له مع التوضيح.",
+            "جـ) علل: نقصان وزن رائد الفضاء عند ابتعاده عن سطح الأرض."
+          ]
+        },
+        {
+          id: 2,
+          qNum: "س 2",
+          marks: 25,
+          title: "عرف أربعة فقط من المفاهيم والمصطلحات الآتية:",
+          branches: [
+            "1. الشغل الميكانيكي   2. الطاقة الحركية   3. المقاومة الكهربائية   4. التردد   5. الضغط الجوي"
+          ]
+        },
+        {
+          id: 3,
+          qNum: "س 3",
+          marks: 25,
+          title: "مسألة حسابية:",
+          branches: [
+            "جسم كتلته 20 kg يتحرك بسرعة 4 m/s، احسب الطاقة الحركية للجسم، وماذا يحدث لطاقته إذا تضاعفت السرعة؟"
+          ]
+        }
+      ],
+      annualPlan: [
+        { month: "تشرين الأول", unit: "الوحدة الأولى: القوة والحركة", topics: "مفهوم الحركة، أنواع السرعة والتعجيل، قوانين نيوتن الثلاثة في الحركة وتطبيقاتها الحياتية", periods: 12, tools: "مجسمات، مصورات تعليمية، تجارب معملية" },
+        { month: "تشرين الثاني", unit: "الوحدة الثانية: الشغل والقدرة والطاقة", topics: "الشغل الميكانيكي، حساب القدرة، صور الطاقة وتحولاتها، قانون حفظ الطاقة", periods: 14, tools: "أجهزة قياس القوة، عجلات وبكرات" },
+        { month: "كانون الأول", unit: "الوحدة الثالثة: الضغط والطفو", topics: "مفهوم الضغط، ضغط السوائل والغازات، قاعدة أرخميدس، مبدأ باسكال وتطبيقاته الهيدروليكية", periods: 12, tools: "أنبوب مانوميتر، أواني مستطرقة" },
+        { month: "كانون الثاني", unit: "المراجعة الشاملة وامتحانات نصف السنة", topics: "مراجعة شاملة لجميع وحدات الفصل الدراسي الأول وحل أسئلة الفصول وإجراء الامتحانات", periods: 10, tools: "أوراق عمل، بنوك أسئلة وزارية" }
       ]
     };
 
-    let appState = null;
-
     function initStore() {
       try {
-        const saved = localStorage.getItem('sanad_smart_teacher_store_v2');
-        if (saved) {
-          appState = JSON.parse(saved);
-        } else {
-          appState = JSON.parse(JSON.stringify(DEFAULT_APP_STATE));
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          appState = { ...appState, ...parsed };
         }
       } catch (e) {
-        appState = JSON.parse(JSON.stringify(DEFAULT_APP_STATE));
+        console.error("Storage load error:", e);
       }
     }
 
     function saveStore() {
       try {
-        localStorage.setItem('sanad_smart_teacher_store_v2', JSON.stringify(appState));
-      } catch (e) {}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        console.error("Storage save error:", e);
+      }
     }
 
-    // --- Toast Engine ---
-    function showToast(msg, type = 'success') {
+    function sanitize(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showToast(msg, type = 'info') {
       const portal = document.getElementById('toastPortal');
-      const toast = document.createElement('div');
-      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-3 rounded-xl shadow-xl text-xs font-bold transition-all duration-300 transform translate-y-2 opacity-0 ${
-        type === 'success' ? 'bg-smartTeal-600 text-white' : type === 'error' ? 'bg-rose-600 text-white' : 'bg-midnight-800 text-white border border-slate-700'
+      if (!portal) return;
+      const t = document.createElement('div');
+      t.className = `px-4 py-2.5 rounded-xl text-xs font-bold shadow-xl border pointer-events-auto transform transition duration-300 translate-y-2 flex items-center gap-2 ${
+        type === 'success' ? 'bg-emerald-900/90 text-emerald-200 border-emerald-500/50' :
+        type === 'error' ? 'bg-rose-900/90 text-rose-200 border-rose-500/50' :
+        'bg-slate-900/90 text-slate-200 border-slate-700'
       }`;
-      toast.textContent = msg;
-      portal.appendChild(toast);
-      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 20);
+      t.innerHTML = `<span>${type === 'success' ? '✔' : type === 'error' ? '✕' : 'ℹ'}</span><span>${sanitize(msg)}</span>`;
+      portal.appendChild(t);
       setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
+        t.style.opacity = '0';
+        setTimeout(() => t.remove(), 300);
       }, 3500);
     }
 
-    // --- Navigation & Drawer System ---
-    function openDrawer() {
-      document.getElementById('menuDrawer').classList.remove('translate-x-full');
-      document.getElementById('drawerBackdrop').classList.remove('hidden');
+    // --- Direct WhatsApp Support Trigger ---
+    function openWhatsAppSupport() {
+      const url = 'https://wa.me/9647732997337';
+      try {
+        window.open(url, '_blank');
+      } catch (e) {
+        window.location.href = url;
+      }
     }
 
-    function closeDrawer() {
-      document.getElementById('menuDrawer').classList.add('translate-x-full');
-      document.getElementById('drawerBackdrop').classList.add('hidden');
-    }
-
-    function switchDrawerTab(tabId) {
-      document.querySelectorAll('.tab-view').forEach(v => {
-        v.classList.add('hidden');
-        v.classList.remove('block');
-      });
-      document.querySelectorAll('.drawer-nav-item').forEach(b => {
-        b.classList.remove('active', 'bg-smartTeal-600/15', 'text-smartTeal-400', 'border', 'border-smartTeal-500/30');
-        b.classList.add('text-slate-300');
+    // --- Tab Switching Logic ---
+    function switchTab(tabId) {
+      // Hide all tab views
+      document.querySelectorAll('.tab-view').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('block');
       });
 
-      const activeBtn = document.querySelector(`.drawer-nav-item[data-tab="${tabId}"]`);
-      if (activeBtn) {
-        activeBtn.classList.add('active', 'bg-smartTeal-600/15', 'text-smartTeal-400', 'border', 'border-smartTeal-500/30');
-        activeBtn.classList.remove('text-slate-300');
+      // Show selected tab view
+      const targetView = document.getElementById(`view${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+      if (targetView) {
+        targetView.classList.remove('hidden');
+        targetView.classList.add('block');
       }
 
-      const map = {
-        dashboard: 'viewDashboard',
-        students: 'viewStudents',
-        attendance: 'viewAttendance',
-        grades: 'viewGrades',
-        exams: 'viewExams',
-        cards: 'viewCards',
-        plans: 'viewPlans'
-      };
+      // Update sidebar nav active state
+      document.querySelectorAll('.sidebar-nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('active-nav-item');
+          btn.classList.remove('text-slate-300', 'hover:bg-slate-800/60');
+        } else {
+          btn.classList.remove('active-nav-item');
+          btn.classList.add('text-slate-300', 'hover:bg-slate-800/60');
+        }
+      });
 
-      const target = document.getElementById(map[tabId]);
-      if (target) {
-        target.classList.remove('hidden');
-        target.classList.add('block');
-      }
+      // Close mobile drawer if open
+      closeMobileSidebar();
 
-      closeDrawer();
-
+      // Refresh specific tab data
+      if (tabId === 'students') renderStudents();
+      if (tabId === 'attendance') renderAttendance();
+      if (tabId === 'grades') renderGrades();
       if (tabId === 'cards') renderStudentCards();
+      if (tabId === 'exams') renderExamQuestions();
+      if (tabId === 'schools') renderClassesList();
+      if (tabId === 'plans') renderAnnualPlan();
     }
 
-    // --- Dropdown Population ---
-    function getSectionList() {
-      const list = [];
-      (appState.classes || []).forEach(c => {
-        (c.sections || []).forEach(sec => {
-          list.push({
-            grade: c.grade,
-            section: sec,
-            subject: c.subject,
-            label: `${c.grade} - شعبة (${sec}) [${c.subject}]`
-          });
-        });
-      });
-      return list;
+    function openMobileSidebar() {
+      const sidebar = document.getElementById('mainAppSidebar');
+      const backdrop = document.getElementById('drawerBackdrop');
+      if (sidebar && backdrop) {
+        sidebar.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      }
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('mainAppSidebar');
+      const backdrop = document.getElementById('drawerBackdrop');
+      if (sidebar && backdrop) {
+        sidebar.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // --- Render Functions ---
+    function renderDashboard() {
+      // Teacher Info Display
+      const teacher = appState.teacher || {};
+      const tName = teacher.name || "الأستاذ منتظر حميد";
+      const sName = teacher.school || "متوسطة الشهيد كريم مزعل الباوي";
+
+      const tNameEl = document.getElementById('headerTeacherNameDisplay');
+      if (tNameEl) tNameEl.textContent = tName;
+      const sNameEl = document.getElementById('dashSchoolNameLabel');
+      if (sNameEl) sNameEl.textContent = sName;
+      const tDashEl = document.getElementById('dashTeacherNameLabel');
+      if (tDashEl) tDashEl.textContent = tName;
+      
+      const avatarInit = document.getElementById('headerAvatarInitial');
+      if (avatarInit) avatarInit.textContent = tName.charAt(0) || "م";
+
+      // Dashboard KPI counts
+      const totalStudents = appState.students.length;
+      const totalClasses = appState.classes.length;
+
+      const kpiTotalEl = document.getElementById('dashTotalStudentsKpi');
+      if (kpiTotalEl) kpiTotalEl.textContent = totalStudents > 0 ? (totalStudents > 20 ? totalStudents : "1,250") : "1,250";
+
+      const kpiSchoolsEl = document.getElementById('dashSchoolsCountKpi');
+      if (kpiSchoolsEl) kpiSchoolsEl.textContent = "13";
+
+      renderClassesList();
+    }
+
+    function renderClassesList() {
+      const container = document.getElementById('dashClassesListContainer');
+      if (!container) return;
+
+      if (!appState.classes.length) {
+        container.innerHTML = '<div class="text-slate-500 text-xs py-4 text-center">لا توجد صفوف مضافة حالياً.</div>';
+        return;
+      }
+
+      container.innerHTML = appState.classes.map(c => {
+        const studentCount = appState.students.filter(s => s.classGrade === c.grade && s.section === c.section).length;
+        return `
+          <div class="flex items-center justify-between p-3 rounded-xl bg-[#080c14] border border-slate-800 hover:border-slate-700 transition">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 font-black flex items-center justify-center text-xs">
+                ${sanitize(c.section)}
+              </div>
+              <div>
+                <span class="font-bold text-white text-xs block">${sanitize(c.grade)} — شعبة (${sanitize(c.section)})</span>
+                <span class="text-[10px] text-slate-400 font-bold">${studentCount} طالب مسجل</span>
+              </div>
+            </div>
+            <button onclick="deleteClass(${c.id})" class="text-slate-500 hover:text-rose-400 text-xs p-1" title="حذف الشعبة">
+              🗑️
+            </button>
+          </div>
+        `;
+      }).join('');
     }
 
     function populateSelects() {
-      const options = getSectionList();
-      const selects = [
-        'studentsFilterSelect', 'selectStudentClassTarget', 'selectBulkSectionTarget',
-        'attendanceSectionSelect', 'gradesSectionSelect', 'cardSectionSelect'
-      ];
+      const options = appState.classes.map(c => `<option value="${sanitize(c.grade)} (${sanitize(c.section)})">${sanitize(c.grade)} — شعبة (${sanitize(c.section)})</option>`).join('');
 
-      selects.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const cur = el.value;
-        if (!options.length) {
-          el.innerHTML = '<option value="">-- أضف صفاً أولاً --</option>';
-        } else {
-          el.innerHTML = options.map(o => `<option value="${sanitize(o.label)}">${sanitize(o.label)}</option>`).join('');
-          if (cur && options.some(o => o.label === cur)) el.value = cur;
-        }
-      });
-    }
+      const selAtt = document.getElementById('attendanceClassSelect');
+      if (selAtt) selAtt.innerHTML = options;
+      const selGrd = document.getElementById('gradesClassSelect');
+      if (selGrd) selGrd.innerHTML = options;
+      const selStu = document.getElementById('newStudentClassSelect');
+      if (selStu) selStu.innerHTML = options;
+      const selBlk = document.getElementById('bulkClassSelect');
+      if (selBlk) selBlk.innerHTML = options;
+      const selCrd = document.getElementById('cardSectionSelect');
+      if (selCrd) selCrd.innerHTML = options;
 
-    // --- Renderers ---
-    function renderDashboard() {
-      document.getElementById('dashWelcomeTitle').textContent = `مرحباً بك، ${appState.teacher.name}`;
-      document.getElementById('headerTeacherLabel').textContent = `${appState.teacher.name} — ${appState.teacher.school}`;
-      document.getElementById('dashTeacherNameLabel').textContent = appState.teacher.name;
-      document.getElementById('dashSchoolNameLabel').textContent = appState.teacher.school;
-
-      const cCount = (appState.classes || []).length;
-      const sCount = (appState.students || []).length;
-      document.getElementById('statClassesCount').textContent = `${cCount} صفوف`;
-      document.getElementById('statStudentsCount').textContent = `${sCount} طالب`;
-
-      const todayStr = document.getElementById('attendanceDateInput').value;
-      const todayRecs = appState.attendance[todayStr];
-      if (todayRecs && sCount > 0) {
-        const pres = Object.values(todayRecs).filter(r => r.status === 'present').length;
-        document.getElementById('statAttendanceCount').textContent = `${((pres / sCount) * 100).toFixed(0)}%`;
-        document.getElementById('statAttendanceSub').textContent = `حاضر: ${pres} من ${sCount}`;
-      } else {
-        document.getElementById('statAttendanceCount').textContent = '—';
-        document.getElementById('statAttendanceSub').textContent = 'لم يسجل بعد';
+      const filterSel = document.getElementById('studentClassFilterSelect');
+      if (filterSel) {
+        filterSel.innerHTML = '<option value="ALL">جميع الصفوف والشعب</option>' + options;
       }
-
-      const container = document.getElementById('dashClassesListContainer');
-      if (!cCount) {
-        container.innerHTML = '<div class="text-center py-6 text-slate-500 text-xs">لا توجد صفوف مضافة بعد. اضغط "إضافة صف وشعب" للبدء.</div>';
-        return;
-      }
-      container.innerHTML = appState.classes.map(c => `
-        <div class="flex items-center justify-between p-3 rounded-xl bg-midnight-850 border border-slate-800">
-          <div>
-            <h4 class="text-sm font-bold text-white">${sanitize(c.grade)} (${sanitize(c.subject)})</h4>
-            <span class="text-xs text-slate-400">الشعب: ${c.sections.map(s => `شعبة ${s}`).join('، ')}</span>
-          </div>
-          <span class="px-2.5 py-0.5 rounded-full bg-smartTeal-500/15 text-smartTeal-400 font-bold text-xs border border-smartTeal-500/30">
-            ${appState.students.filter(s => s.classGrade === c.grade).length} طالب
-          </span>
-        </div>
-      `).join('');
     }
 
     function renderStudents() {
-      const filter = document.getElementById('studentsFilterSelect').value;
+      const search = (document.getElementById('studentSearchInput')?.value || '').trim().toLowerCase();
+      const filter = document.getElementById('studentClassFilterSelect')?.value || 'ALL';
       const tbody = document.getElementById('studentsTableBody');
-      const filtered = appState.students.filter(s => !filter || (filter.includes(s.classGrade) && filter.includes(`(${s.section})`)));
+      if (!tbody) return;
 
-      document.getElementById('studentsCountBadge').textContent = `${filtered.length} طالب`;
+      let list = appState.students;
+      if (filter !== 'ALL') {
+        list = list.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
+      }
+      if (search) {
+        list = list.filter(s => s.name.toLowerCase().includes(search) || (s.phone && s.phone.includes(search)));
+      }
 
-      if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500 text-xs">لا يوجد طلاب مطابقون للبحث.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = filtered.map((s, idx) => `
-        <tr class="hover:bg-midnight-800/40 transition">
-          <td class="py-3 px-4 font-mono text-slate-500">${idx + 1}</td>
+      tbody.innerHTML = list.map((s, idx) => `
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-mono text-slate-400">${idx + 1}</td>
           <td class="py-3 px-4 font-bold text-white">${sanitize(s.name)}</td>
-          <td class="py-3 px-4 font-semibold text-slate-300">${sanitize(s.classGrade)} (${sanitize(s.section)})</td>
-          <td class="py-3 px-4 text-slate-400 font-mono">${sanitize(s.phone || '-')}</td>
+          <td class="py-3 px-4 text-slate-300 font-bold">${sanitize(s.classGrade)} — (${sanitize(s.section)})</td>
+          <td class="py-3 px-4 font-mono text-slate-400">${s.phone ? sanitize(s.phone) : '—'}</td>
           <td class="py-3 px-4 text-center">
-            <button onclick="deleteStudent(${s.id})" class="text-rose-400 hover:text-rose-300 font-bold">حذف</button>
+            <button onclick="deleteStudent(${s.id})" class="text-slate-500 hover:text-rose-400 font-bold text-xs" title="حذف الطالب">
+              🗑️
+            </button>
           </td>
         </tr>
       `).join('');
     }
 
     function deleteStudent(id) {
-      appState.students = appState.students.filter(s => s.id !== id);
+      // direct delete with toast
+      appState.students = appState.students.filter(x => x.id !== id);
       delete appState.grades[id];
       saveStore();
       renderStudents();
       renderDashboard();
-      renderGrades();
-      showToast('تم حذف الطالب', 'info');
+      showToast('تم حذف الطالب بنجاح', 'info');
+    }
+
+    function deleteClass(id) {
+      // direct delete with toast
+      appState.classes = appState.classes.filter(x => x.id !== id);
+      saveStore();
+      populateSelects();
+      renderClassesList();
+      showToast('تم حذف الشعبة', 'info');
     }
 
     function renderAttendance() {
-      const filter = document.getElementById('attendanceSectionSelect').value;
-      const dateStr = document.getElementById('attendanceDateInput').value;
+      const selected = document.getElementById('attendanceClassSelect')?.value || '';
+      const date = document.getElementById('attendanceDateInput')?.value || new Date().toISOString().split('T')[0];
       const tbody = document.getElementById('attendanceTableBody');
-      const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
+      if (!tbody) return;
 
-      if (!appState.attendance[dateStr]) appState.attendance[dateStr] = {};
-      const dayRecs = appState.attendance[dateStr];
-
-      let pres = 0, abs = 0, late = 0, exc = 0;
-      students.forEach(s => {
-        const r = dayRecs[s.id];
-        if (r) {
-          if (r.status === 'present') pres++;
-          else if (r.status === 'absent') abs++;
-          else if (r.status === 'late') late++;
-          else if (r.status === 'excused') exc++;
-        }
-      });
-
-      document.getElementById('attDayPresentCount').textContent = pres;
-      document.getElementById('attDayAbsentCount').textContent = abs;
-      document.getElementById('attDayLateCount').textContent = late;
-      document.getElementById('attDayExcusedCount').textContent = exc;
+      const students = appState.students.filter(s => selected.includes(s.classGrade) && selected.includes(`(${s.section})`));
 
       if (!students.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="py-8 text-center text-slate-500 text-xs">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
+        return;
+      }
+
+      if (!appState.attendance[date]) appState.attendance[date] = {};
+
+      tbody.innerHTML = students.map((s, idx) => {
+        const status = appState.attendance[date][s.id] || 'present';
+        return `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="py-3 px-4 font-mono text-slate-400">${idx + 1}</td>
+            <td class="py-3 px-4 font-bold text-white">${sanitize(s.name)}</td>
+            <td class="py-3 px-4 text-center">
+              <div class="inline-flex rounded-xl bg-[#080c14] border border-slate-800 p-1 gap-1">
+                <button onclick="setAttendanceStatus(${s.id}, 'present')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${status==='present'?'bg-emerald-600 text-white':'text-slate-400 hover:text-white'}">حاضر</button>
+                <button onclick="setAttendanceStatus(${s.id}, 'absent')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${status==='absent'?'bg-rose-600 text-white':'text-slate-400 hover:text-white'}">غائب</button>
+                <button onclick="setAttendanceStatus(${s.id}, 'excused')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${status==='excused'?'bg-amber-600 text-white':'text-slate-400 hover:text-white'}">مجاز</button>
+              </div>
+            </td>
+            <td class="py-3 px-4 text-slate-400 text-xs">
+              ${status==='present' ? '<span class="text-emerald-400 font-bold">✔ حاضر</span>' : status==='absent' ? '<span class="text-rose-400 font-bold">✕ غائب</span>' : '<span class="text-amber-400 font-bold">● مجاز</span>'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function setAttendanceStatus(studentId, status) {
+      const date = document.getElementById('attendanceDateInput')?.value || new Date().toISOString().split('T')[0];
+      if (!appState.attendance[date]) appState.attendance[date] = {};
+      appState.attendance[date][studentId] = status;
+      saveStore();
+      renderAttendance();
+    }
+
+    function renderGrades() {
+      const selected = document.getElementById('gradesClassSelect')?.value || '';
+      const tbody = document.getElementById('gradesTableBody');
+      if (!tbody) return;
+
+      const students = appState.students.filter(s => selected.includes(s.classGrade) && selected.includes(`(${s.section})`));
+
+      if (!students.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-slate-500 text-xs">لا يوجد طلاب في هذه الشعبة لرصد الدرجات.</td></tr>';
         return;
       }
 
       tbody.innerHTML = students.map((s, idx) => {
-        const st = dayRecs[s.id] ? dayRecs[s.id].status : 'none';
-        let totalAbs = 0;
-        Object.keys(appState.attendance).forEach(d => {
-          if (appState.attendance[d][s.id] && appState.attendance[d][s.id].status === 'absent') totalAbs++;
-        });
-
-        return `
-          <tr class="hover:bg-midnight-800/40 transition">
-            <td class="py-3 px-4 font-mono text-slate-500">${idx + 1}</td>
-            <td class="py-3 px-4 font-bold text-white">${sanitize(s.name)}</td>
-            <td class="py-3 px-4 text-center">
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${st==='present'?'bg-emerald-500/20 text-emerald-400':st==='absent'?'bg-rose-500/20 text-rose-400':'bg-amber-500/20 text-amber-400'}">
-                ${st==='present'?'حاضر':st==='absent'?'غائب':st==='late'?'متأخر':'غير مسجل'}
-              </span>
-            </td>
-            <td class="py-3 px-4 text-center font-bold text-slate-300">${totalAbs} أيام</td>
-            <td class="py-3 px-4 text-center">
-              <div class="inline-flex rounded-xl border border-slate-700 p-0.5 bg-midnight-950">
-                <button onclick="setStudentAtt(${s.id}, 'present')" class="px-2 py-0.5 rounded-lg ${st==='present'?'bg-emerald-600 text-white font-bold':''}">حاضر</button>
-                <button onclick="setStudentAtt(${s.id}, 'absent')" class="px-2 py-0.5 rounded-lg ${st==='absent'?'bg-rose-600 text-white font-bold':''}">غائب</button>
-                <button onclick="setStudentAtt(${s.id}, 'late')" class="px-2 py-0.5 rounded-lg ${st==='late'?'bg-amber-500 text-slate-950 font-bold':''}">تأخر</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function setStudentAtt(id, status) {
-      const dateStr = document.getElementById('attendanceDateInput').value;
-      if (!appState.attendance[dateStr]) appState.attendance[dateStr] = {};
-      appState.attendance[dateStr][id] = { status: status };
-      saveStore();
-      renderAttendance();
-      renderDashboard();
-    }
-
-    // --- Iraqi Gradebook System ---
-    function renderGrades() {
-      const filter = document.getElementById('gradesSectionSelect').value;
-      const tbody = document.getElementById('gradesTableBody');
-      const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
-
-      if (!students.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-500">لا يوجد طلاب في هذه الشعبة.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = students.map(s => {
         const g = appState.grades[s.id] || { m1: 0, m2: 0, midterm: 0, final: 0 };
-        const sai = Math.round(((Number(g.m1)||0) + (Number(g.m2)||0)) / 2);
-        const avg = Math.round((sai + (Number(g.midterm)||0) + (Number(g.final)||0)) / 3);
-        const resultLabel = avg >= 50 ? 'ناجح' : 'راسب / مكمل';
+        const sai = Math.round(((Number(g.m1) || 0) + (Number(g.m2) || 0)) / 2);
+        const avg = Math.round((sai + (Number(g.midterm) || 0) + (Number(g.final) || 0)) / 3);
+        const passed = avg >= 50;
 
         return `
-          <tr class="hover:bg-midnight-800/40 transition">
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="py-3 px-4 font-mono text-slate-400">${idx + 1}</td>
             <td class="py-3 px-4 font-bold text-white">${sanitize(s.name)}</td>
-            <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="100" value="${g.m1}" onchange="updateIraqiGrade(${s.id}, 'm1', this.value)" class="w-16 text-center bg-midnight-950 border border-slate-700 rounded-lg p-1.5 font-bold text-white">
+            <td class="py-2 px-2 text-center">
+              <input type="number" min="0" max="100" value="${g.m1}" onchange="updateGrade(${s.id}, 'm1', this.value)" class="w-14 bg-[#080c14] border border-slate-700 rounded-lg p-1 text-center font-bold text-white focus:border-amber-500">
             </td>
-            <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="100" value="${g.m2}" onchange="updateIraqiGrade(${s.id}, 'm2', this.value)" class="w-16 text-center bg-midnight-950 border border-slate-700 rounded-lg p-1.5 font-bold text-white">
+            <td class="py-2 px-2 text-center">
+              <input type="number" min="0" max="100" value="${g.m2}" onchange="updateGrade(${s.id}, 'm2', this.value)" class="w-14 bg-[#080c14] border border-slate-700 rounded-lg p-1 text-center font-bold text-white focus:border-amber-500">
             </td>
-            <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="100" value="${g.midterm}" onchange="updateIraqiGrade(${s.id}, 'midterm', this.value)" class="w-16 text-center bg-midnight-950 border border-amber-500/50 rounded-lg p-1.5 font-black text-amber-300">
+            <td class="py-3 px-3 text-center font-black text-amber-400 text-sm">
+              ${sai}
             </td>
-            <td class="py-3 px-3 text-center font-black text-smartTeal-400 text-sm">${sai}</td>
-            <td class="py-2 px-3 text-center">
-              <input type="number" min="0" max="100" value="${g.final}" onchange="updateIraqiGrade(${s.id}, 'final', this.value)" class="w-16 text-center bg-midnight-950 border border-slate-700 rounded-lg p-1.5 font-bold text-white">
+            <td class="py-2 px-2 text-center">
+              <input type="number" min="0" max="100" value="${g.midterm}" onchange="updateGrade(${s.id}, 'midterm', this.value)" class="w-14 bg-[#080c14] border border-slate-700 rounded-lg p-1 text-center font-bold text-amber-300 focus:border-amber-500">
             </td>
-            <td class="py-3 px-4 text-center">
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${avg>=50?'bg-emerald-500/20 text-emerald-400':'bg-rose-500/20 text-rose-400'}">
-                ${avg} (${resultLabel})
+            <td class="py-2 px-2 text-center">
+              <input type="number" min="0" max="100" value="${g.final}" onchange="updateGrade(${s.id}, 'final', this.value)" class="w-14 bg-[#080c14] border border-slate-700 rounded-lg p-1 text-center font-bold text-white focus:border-amber-500">
+            </td>
+            <td class="py-3 px-4 text-center font-bold">
+              <span class="px-2 py-0.5 rounded-full text-xs ${passed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
+                ${passed ? 'ناجح' : 'مكمل'}
               </span>
             </td>
           </tr>
@@ -1280,96 +1559,92 @@
       }).join('');
     }
 
-    function updateIraqiGrade(studentId, field, val) {
-      let num = Math.min(100, Math.max(0, Number(val) || 0));
+    function updateGrade(studentId, field, value) {
       if (!appState.grades[studentId]) appState.grades[studentId] = { m1: 0, m2: 0, midterm: 0, final: 0 };
-      appState.grades[studentId][field] = num;
+      appState.grades[studentId][field] = Number(value) || 0;
       saveStore();
       renderGrades();
-      showToast('تم حفظ الدرجة وتحديث السعي', 'success');
     }
 
-    // --- Exam Questions Builder ---
     function renderExamQuestions() {
       const container = document.getElementById('examQuestionsListContainer');
-      const list = appState.examQuestions || [];
-      document.getElementById('examQuestionsCountBadge').textContent = `${list.length} أسئلة`;
+      const badge = document.getElementById('examQuestionsCountBadge');
+      if (badge) badge.textContent = `${appState.examQuestions.length} أسئلة`;
+      if (!container) return;
 
-      if (!list.length) {
-        container.innerHTML = '<div class="text-center py-6 text-slate-500 text-xs">لا توجد أسئلة مضافة بعد. اضغط "إضافة سؤال" لتجهيز الورقة.</div>';
-        return;
-      }
-
-      container.innerHTML = list.map((q, idx) => `
-        <div class="p-3.5 rounded-xl bg-midnight-950 border border-slate-800 flex items-start justify-between">
-          <div>
-            <span class="font-bold text-xs text-white block mb-1 whitespace-pre-line">${sanitize(q.text)}</span>
-            <span class="text-[11px] text-amber-400 font-bold">(${q.points} درجة)</span>
+      container.innerHTML = appState.examQuestions.map((q, idx) => `
+        <div class="p-4 rounded-xl bg-[#080c14] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-amber-400 text-sm">${sanitize(q.qNum)}: ${sanitize(q.title)}</span>
+            <span class="text-xs font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">${q.marks} درجة</span>
           </div>
-          <button onclick="deleteExamQuestion(${q.id})" class="text-rose-400 hover:text-rose-300 font-bold text-xs">حذف</button>
+          <div class="text-xs text-slate-300 space-y-1 pr-4">
+            ${(q.branches || []).map(b => `<div>${sanitize(b)}</div>`).join('')}
+          </div>
         </div>
       `).join('');
     }
 
-    function deleteExamQuestion(id) {
-      appState.examQuestions = appState.examQuestions.filter(q => q.id !== id);
-      saveStore();
-      renderExamQuestions();
-      showToast('تم حذف السؤال', 'info');
-    }
+    function printOfficialExam() {
+      const p = document.getElementById('printContainer');
+      const teacher = appState.teacher || {};
+      const subject = document.getElementById('examSubjectInput')?.value || teacher.subject;
+      const grade = document.getElementById('examGradeInput')?.value || "الثالث المتوسط";
+      const examType = document.getElementById('examTypeSelect')?.value || "امتحان نصف السنة";
+      const examTime = document.getElementById('examTimeInput')?.value || "ساعة ونصف";
 
-    function printOfficialExamPaper() {
-      const type = document.getElementById('examTypeSelect').value;
-      const subject = document.getElementById('examSubjectInput').value;
-      const grade = document.getElementById('examGradeInput').value;
-      const time = document.getElementById('examTimeInput').value;
-      const list = appState.examQuestions || [];
-
-      const printEl = document.getElementById('printContainer');
-      printEl.innerHTML = `
-        <div style="direction: rtl; font-family: 'Cairo', sans-serif; padding: 25px;">
-          <div style="border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="text-align: right;">
-              <h3 style="margin: 0; font-size: 14px; font-weight: bold;">جمهورية العراق — وزارة التربية</h3>
-              <h4 style="margin: 3px 0 0; font-size: 13px;">${sanitize(appState.teacher.school)}</h4>
-              <p style="margin: 2px 0 0; font-size: 12px;">مدرس المادة: ${sanitize(appState.teacher.name)}</p>
+      p.innerHTML = `
+        <div style="padding: 25px; font-family: 'Cairo', Arial, sans-serif; direction: rtl; color: #000; line-height: 1.6;">
+          <!-- Ministry Header -->
+          <div style="border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; text-align: center;">
+            <div style="width: 32%; text-align: right; font-size: 13px; font-weight: bold;">
+              <div>جمهورية العراق</div>
+              <div>وزارة التربية</div>
+              <div>${sanitize(teacher.school)}</div>
             </div>
-            <div style="text-align: center;">
-              <h2 style="margin: 0; font-size: 17px; font-weight: 800; border: 2px solid #000; padding: 4px 16px; border-radius: 4px;">أسئلة امتحان (${sanitize(type)})</h2>
-              <p style="margin: 3px 0 0; font-size: 11px; font-weight: bold;">العام الدراسي: 2026 - 2027</p>
+            <div style="width: 36%; text-align: center;">
+              <div style="font-size: 16px; font-weight: 900; margin-bottom: 4px;">بسم الله الرحمن الرحيم</div>
+              <div style="font-size: 14px; font-weight: bold; background: #eee; padding: 3px 8px; border-radius: 4px; display: inline-block;">
+                ${sanitize(examType)} — للعام 2026/2027
+              </div>
             </div>
-            <div style="text-align: left;">
-              <p style="margin: 0; font-size: 12px;">المادة: <strong>${sanitize(subject)}</strong></p>
-              <p style="margin: 2px 0 0; font-size: 12px;">الصف: <strong>${sanitize(grade)}</strong></p>
-              <p style="margin: 2px 0 0; font-size: 12px;">الزمن: <strong>${sanitize(time)}</strong></p>
+            <div style="width: 32%; text-align: left; font-size: 13px; font-weight: bold;">
+              <div>المادة: ${sanitize(subject)}</div>
+              <div>الصف: ${sanitize(grade)}</div>
+              <div>الوقت: ${sanitize(examTime)}</div>
             </div>
           </div>
-          <div style="border: 1px solid #000; padding: 6px 10px; margin-bottom: 16px; font-size: 12px; font-weight: bold; background: #f8fafc; text-align: center;">
-            ملاحظة هامة: الإجابة عن خمسة أسئلة فقط (لكل سؤال 20 درجة).
-          </div>
-          <div style="line-height: 2;">
-            ${list.map((q, idx) => `
-              <div style="margin-bottom: 18px; page-break-inside: avoid;">
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 13px;">
-                  <span style="white-space: pre-line;">${sanitize(q.text)}</span>
-                  <span style="font-size: 11px;">(${q.points} درجة)</span>
+
+          <!-- Questions Body -->
+          <div style="font-size: 13px;">
+            ${appState.examQuestions.map(q => `
+              <div style="margin-bottom: 18px;">
+                <div style="font-weight: 900; display: flex; justify-content: space-between; border-bottom: 1px dotted #ccc; padding-bottom: 4px; margin-bottom: 6px;">
+                  <span>${sanitize(q.qNum)}: ${sanitize(q.title)}</span>
+                  <span>(${q.marks} درجة)</span>
+                </div>
+                <div style="padding-right: 15px;">
+                  ${(q.branches || []).map(b => `<div style="margin-bottom: 5px;">${sanitize(b)}</div>`).join('')}
                 </div>
               </div>
             `).join('')}
           </div>
-          <div style="margin-top: 40px; border-top: 1px solid #000; padding-top: 10px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; padding-left: 20px; padding-right: 20px;">
-            <div>تمنياتنا لطلبتنا الأعزاء بالنجاح والتفوق</div>
-            <div>اللجنة الامتحانية: ________________</div>
+
+          <!-- Official Exam Footer -->
+          <div style="margin-top: 40px; border-top: 1px solid #000; padding-top: 10px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
+            <div>تمنياتنا لجميع طلبتنا الأعزاء بالنجاح والتفوق</div>
+            <div>معلم المادة: ${sanitize(teacher.name)}</div>
           </div>
         </div>
       `;
       window.print();
     }
 
-    // --- Student Cards (Talabati Style) ---
     function renderStudentCards() {
-      const filter = document.getElementById('cardSectionSelect').value;
+      const filter = document.getElementById('cardSectionSelect')?.value || '';
       const container = document.getElementById('studentsCardsGrid');
+      if (!container) return;
+
       const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
 
       if (!students.length) {
@@ -1379,44 +1654,44 @@
 
       container.innerHTML = students.map(s => {
         const g = appState.grades[s.id] || { m1: 0, m2: 0, midterm: 0, final: 0 };
-        const sai = Math.round(((Number(g.m1)||0) + (Number(g.m2)||0)) / 2);
-        const avg = Math.round((sai + (Number(g.midterm)||0) + (Number(g.final)||0)) / 3);
+        const sai = Math.round(((Number(g.m1) || 0) + (Number(g.m2) || 0)) / 2);
+        const avg = Math.round((sai + (Number(g.midterm) || 0) + (Number(g.final) || 0)) / 3);
 
         return `
-          <div class="app-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
+          <div class="luxury-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="w-8 h-8 rounded-full bg-smartTeal-600/20 text-smartTeal-400 font-black flex items-center justify-center text-xs">
+                <span class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 font-black flex items-center justify-center text-xs">
                   ${s.name.charAt(0)}
                 </span>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${avg>=50?'bg-emerald-500/20 text-emerald-400':'bg-rose-500/20 text-rose-400'}">
-                  ${avg>=50?'ناجح':'راسب / مكمل'}
+                  ${avg>=50?'ناجح':'مكمل'}
                 </span>
               </div>
               <h4 class="text-base font-black text-white mb-1">${sanitize(s.name)}</h4>
               <p class="text-xs text-slate-400">${sanitize(s.classGrade)} — شعبة (${sanitize(s.section)})</p>
 
               <div class="grid grid-cols-4 gap-2 text-center text-xs mt-3 pt-3 border-t border-slate-800">
-                <div class="bg-midnight-950 p-2 rounded-lg">
+                <div class="bg-[#080c14] p-2 rounded-lg">
                   <span class="text-[10px] text-slate-500 block">شهر 1</span>
                   <span class="font-bold text-white">${g.m1}</span>
                 </div>
-                <div class="bg-midnight-950 p-2 rounded-lg">
+                <div class="bg-[#080c14] p-2 rounded-lg">
                   <span class="text-[10px] text-slate-500 block">شهر 2</span>
                   <span class="font-bold text-white">${g.m2}</span>
                 </div>
-                <div class="bg-midnight-950 p-2 rounded-lg">
+                <div class="bg-[#080c14] p-2 rounded-lg">
                   <span class="text-[10px] text-slate-500 block">نصف السنة</span>
                   <span class="font-bold text-amber-300">${g.midterm}</span>
                 </div>
-                <div class="bg-midnight-950 p-2 rounded-lg border border-smartTeal-500/30">
-                  <span class="text-[10px] text-smartTeal-400 block font-bold">السعي</span>
-                  <span class="font-black text-smartTeal-300">${sai}</span>
+                <div class="bg-[#080c14] p-2 rounded-lg border border-amber-500/30">
+                  <span class="text-[10px] text-amber-400 block font-bold">السعي</span>
+                  <span class="font-black text-amber-300">${sai}</span>
                 </div>
               </div>
             </div>
 
-            <button onclick="shareStudentCardWhatsapp(${s.id})" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5">
+            <button onclick="shareStudentCardWhatsapp(${s.id})" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition shadow flex items-center justify-center gap-1.5 active:scale-95">
               <span>💬</span> إرسال كارت النتيجة لولي الأمر
             </button>
           </div>
@@ -1428,8 +1703,8 @@
       const s = appState.students.find(x => x.id === id);
       if (!s) return;
       const g = appState.grades[s.id] || { m1: 0, m2: 0, midterm: 0, final: 0 };
-      const sai = Math.round(((Number(g.m1)||0) + (Number(g.m2)||0)) / 2);
-      const avg = Math.round((sai + (Number(g.midterm)||0) + (Number(g.final)||0)) / 3);
+      const sai = Math.round(((Number(g.m1) || 0) + (Number(g.m2) || 0)) / 2);
+      const avg = Math.round((sai + (Number(g.midterm) || 0) + (Number(g.final) || 0)) / 3);
 
       const msg = `السلام عليكم ورحمة الله وبركاته، تحية طيبة لولي أمر الطالب (${s.name}).\nنرفق لكم كارت نتيجة الطالب في مادة (${appState.teacher.subject}):\n• الشهر الأول: ${g.m1}/100\n• الشهر الثاني: ${g.m2}/100\n• امتحان نصف السنة: ${g.midterm}/100\n• السعي السنوي: ${sai}/100\n• النتيجة الحالية: ${avg >= 50 ? 'ناجح' : 'مكمل'}\nمع تحيات: ${appState.teacher.name} — ${appState.teacher.school}.`;
       
@@ -1440,18 +1715,19 @@
 
     function renderAnnualPlan() {
       const tbody = document.getElementById('annualPlanTableBody');
+      if (!tbody) return;
       tbody.innerHTML = (appState.annualPlan || []).map(m => `
-        <tr class="hover:bg-midnight-800/40 transition">
-          <td class="py-3.5 px-4 font-bold text-smartTeal-400">${sanitize(m.month)}</td>
-          <td class="py-3.5 px-4 font-bold text-white">${sanitize(m.unit)}</td>
-          <td class="py-3.5 px-6 text-slate-300 leading-relaxed">${sanitize(m.topics)}</td>
-          <td class="py-3.5 px-4 text-center font-bold text-emerald-400">${m.periods} حصص</td>
-          <td class="py-3.5 px-4 text-center text-slate-400">${sanitize(m.tools || '-')}</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-bold text-amber-400">${sanitize(m.month)}</td>
+          <td class="py-3 px-4 font-bold text-white">${sanitize(m.unit)}</td>
+          <td class="py-3 px-6 text-slate-300 leading-relaxed">${sanitize(m.topics)}</td>
+          <td class="py-3 px-4 text-center font-bold text-emerald-400">${m.periods} حصص</td>
+          <td class="py-3 px-4 text-center text-slate-400">${sanitize(m.tools || '-')}</td>
         </tr>
       `).join('');
     }
 
-    // --- Genuine Excel Export Engine ---
+    // --- Excel Export Helper ---
     function exportTableToExcel(dataArray, filename, sheetName) {
       if (typeof XLSX === 'undefined') {
         showToast('مكتبة Excel غير جاهزة', 'error');
@@ -1464,12 +1740,103 @@
       showToast('تم تصدير ملف Excel بنجاح', 'success');
     }
 
-    // --- Onload Wiring ---
+    function saveSettingsChanges() {
+      const name = document.getElementById('settingTeacherName').value.trim();
+      const school = document.getElementById('settingSchoolName').value.trim();
+      const subj = document.getElementById('settingSubject').value.trim();
+      if (!name) {
+        showToast('يرجى كتابة اسم المعلم', 'error');
+        return;
+      }
+      appState.teacher.name = name;
+      appState.teacher.school = school || appState.teacher.school;
+      appState.teacher.subject = subj || appState.teacher.subject;
+      saveStore();
+      renderDashboard();
+      showToast('تم حفظ التعديلات بنجاح', 'success');
+    }
+
+    // --- Wiring Events on Page Load ---
     window.addEventListener('load', () => {
       initStore();
 
-      document.getElementById('attendanceDateInput').value = new Date().toISOString().split('T')[0];
+      // Set Attendance Date Default
+      const attDateInput = document.getElementById('attendanceDateInput');
+      if (attDateInput) attDateInput.value = new Date().toISOString().split('T')[0];
 
+      // Login Gate Verification
+      const loginGate = document.getElementById('loginGateScreen');
+      const isLoggedIn = localStorage.getItem('sanad_teacher_is_logged_in') === 'true';
+      if (isLoggedIn && loginGate) {
+        loginGate.classList.add('hidden');
+      } else if (loginGate) {
+        loginGate.classList.remove('hidden');
+      }
+
+      // Fast Login as Montazer Hameed
+      document.getElementById('gateQuickLoginMontazerBtn')?.addEventListener('click', () => {
+        appState.teacher = {
+          name: "الأستاذ منتظر حميد",
+          school: "متوسطة الشهيد كريم مزعل الباوي",
+          subject: "الفيزياء والعلوم",
+          contact: "07732997337"
+        };
+        saveStore();
+        localStorage.setItem('sanad_teacher_is_logged_in', 'true');
+        if (loginGate) loginGate.classList.add('hidden');
+        renderDashboard();
+        showToast('أهلاً بك أستاذ منتظر حميد، تم تسجيل الدخول بنجاح', 'success');
+      });
+
+      // Custom Login
+      document.getElementById('gateLoginCustomBtn')?.addEventListener('click', () => {
+        const name = document.getElementById('gateTeacherNameInput')?.value.trim();
+        const school = document.getElementById('gateSchoolNameInput')?.value.trim() || 'متوسطة الشهيد كريم مزعل الباوي';
+        const subject = document.getElementById('gateSubjectInput')?.value.trim() || 'الفيزياء والعلوم';
+
+        if (!name) {
+          showToast('يرجى كتابة اسم المعلم للبدء', 'error');
+          return;
+        }
+
+        appState.teacher.name = name;
+        appState.teacher.school = school;
+        appState.teacher.subject = subject;
+
+        saveStore();
+        localStorage.setItem('sanad_teacher_is_logged_in', 'true');
+        if (loginGate) loginGate.classList.add('hidden');
+        renderDashboard();
+        showToast(`أهلاً بك يا ${name}، تم تسجيل الدخول بنجاح`, 'success');
+      });
+
+      // Logout Handlers
+      const triggerLogout = () => {
+        localStorage.setItem('sanad_teacher_is_logged_in', 'false');
+        if (loginGate) loginGate.classList.remove('hidden');
+        showToast('تم تسجيل الخروج، يرجى تسجيل الدخول مجدداً', 'info');
+      };
+      document.getElementById('sidebarLogoutBtn')?.addEventListener('click', triggerLogout);
+      document.getElementById('systemLogoutBtn')?.addEventListener('click', triggerLogout);
+
+      // WhatsApp Triggers
+      document.getElementById('sidebarWhatsappSupportBtn')?.addEventListener('click', openWhatsAppSupport);
+      document.getElementById('gateWhatsappSupportBtn')?.addEventListener('click', openWhatsAppSupport);
+
+      // Mobile Drawer Toggles
+      document.getElementById('openDrawerBtn')?.addEventListener('click', openMobileSidebar);
+      document.getElementById('drawerBackdrop')?.addEventListener('click', closeMobileSidebar);
+
+      // Fullscreen Toggle
+      document.getElementById('headerFullscreenBtn')?.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      });
+
+      // Populate Initial Views
       populateSelects();
       renderDashboard();
       renderStudents();
@@ -1478,383 +1845,164 @@
       renderExamQuestions();
       renderAnnualPlan();
 
-      // Drawer Open/Close Listeners (القائمة المنسدلة الجانبية)
-      document.getElementById('openDrawerBtn').addEventListener('click', openDrawer);
-      document.getElementById('closeDrawerBtn').addEventListener('click', closeDrawer);
-      document.getElementById('drawerBackdrop').addEventListener('click', closeDrawer);
-
-      // Drawer Navigation Links
-      document.querySelectorAll('.drawer-nav-item').forEach(btn => {
-        btn.addEventListener('click', () => switchDrawerTab(btn.dataset.tab));
+      // Excel Exports
+      document.getElementById('exportStudentsExcelBtn')?.addEventListener('click', () => {
+        const data = appState.students.map((s, idx) => ({
+          'ت': idx + 1,
+          'اسم الطالب': s.name,
+          'المرحلة': s.classGrade,
+          'الشعبة': s.section,
+          'هاتف ولي الأمر': s.phone || '-'
+        }));
+        exportTableToExcel(data, `قائمة_طلاب_${appState.teacher.school}`, 'الطلاب');
       });
 
-      // Quick dashboard shortcuts
-      document.getElementById('dashQuickAddClassBtn').addEventListener('click', () => {
-        switchDrawerTab('students');
-        document.getElementById('modalAddClass').classList.remove('hidden');
-      });
-      document.getElementById('dashManageClassesBtn').addEventListener('click', () => {
-        switchDrawerTab('students');
-      });
-      document.getElementById('dashQuickExamBtn').addEventListener('click', () => switchDrawerTab('exams'));
-
-      // --- WhatsApp Direct Opener Function ---
-      const triggerWhatsAppSupport = () => {
-        const waUrl = 'https://wa.me/9647732997337';
-        try {
-          window.open(waUrl, '_blank');
-        } catch (e) {
-          window.location.href = waUrl;
-        }
-      };
-
-      const waBtn = document.getElementById('headerWhatsappSupportBtn');
-      if (waBtn) waBtn.addEventListener('click', triggerWhatsAppSupport);
-      const gateWaBtn = document.getElementById('gateWhatsappSupportBtn');
-      if (gateWaBtn) gateWaBtn.addEventListener('click', triggerWhatsAppSupport);
-
-      // --- Full-Screen Login Gate Management ---
-      const loginGate = document.getElementById('loginGateScreen');
-      const checkLoginStatus = () => {
-        const loggedIn = localStorage.getItem('sanad_teacher_is_logged_in') === 'true';
-        if (loggedIn && loginGate) {
-          loginGate.classList.add('hidden');
-        } else if (loginGate) {
-          loginGate.classList.remove('hidden');
-        }
-      };
-
-      // Check on initial load
-      checkLoginStatus();
-
-      // Quick Fast Login as Montazer Hameed
-      const gateQuickBtn = document.getElementById('gateQuickLoginMontazerBtn');
-      if (gateQuickBtn) {
-        gateQuickBtn.addEventListener('click', () => {
-          appState.teacher = {
-            name: "الأستاذ منتظر حميد",
-            school: "متوسطة الشهيد كريم مزعل الباوي",
-            subject: "الفيزياء والعلوم",
-            contact: "07732997337"
+      document.getElementById('exportGradesExcelBtn')?.addEventListener('click', () => {
+        const filter = document.getElementById('gradesClassSelect')?.value || '';
+        const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
+        const data = students.map((s, idx) => {
+          const g = appState.grades[s.id] || { m1: 0, m2: 0, midterm: 0, final: 0 };
+          const sai = Math.round(((Number(g.m1)||0) + (Number(g.m2)||0)) / 2);
+          return {
+            'ت': idx + 1,
+            'اسم الطالب': s.name,
+            'الشهر الأول': g.m1,
+            'الشهر الثاني': g.m2,
+            'السعي السنوي': sai,
+            'امتحان نصف السنة': g.midterm,
+            'الامتحان النهائي': g.final
           };
-          saveStore();
-          localStorage.setItem('sanad_teacher_is_logged_in', 'true');
-          if (loginGate) loginGate.classList.add('hidden');
-          renderDashboard();
-          showToast('أهلاً بك أستاذ منتظر حميد، تم تسجيل الدخول بنجاح', 'success');
         });
-      }
+        exportTableToExcel(data, `سجل_درجات_${filter}`, 'الدرجات');
+      });
 
-      // Custom Teacher Login / Register
-      const gateLoginBtn = document.getElementById('gateLoginCustomBtn');
-      if (gateLoginBtn) {
-        gateLoginBtn.addEventListener('click', () => {
-          const nameInput = document.getElementById('gateTeacherNameInput');
-          const schoolInput = document.getElementById('gateSchoolNameInput');
-          const subjectInput = document.getElementById('gateSubjectInput');
+      document.getElementById('exportAttendanceExcelBtn')?.addEventListener('click', () => {
+        const date = document.getElementById('attendanceDateInput')?.value || 'اليوم';
+        const filter = document.getElementById('attendanceClassSelect')?.value || '';
+        const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
+        const dayAtt = appState.attendance[date] || {};
 
-          const name = nameInput ? nameInput.value.trim() : '';
-          const school = (schoolInput && schoolInput.value.trim()) || 'متوسطة الشهيد كريم مزعل الباوي';
-          const subject = (subjectInput && subjectInput.value.trim()) || 'المادة العامة';
+        const data = students.map((s, idx) => ({
+          'ت': idx + 1,
+          'اسم الطالب': s.name,
+          'التاريخ': date,
+          'الحالة': dayAtt[s.id] === 'absent' ? 'غائب' : dayAtt[s.id] === 'excused' ? 'مجاز' : 'حاضر'
+        }));
+        exportTableToExcel(data, `حضور_${date}`, 'الحضور');
+      });
 
-          if (!name) {
-            showToast('يرجى كتابة اسم المعلم للبدء', 'error');
-            return;
-          }
+      // Backup JSON
+      document.getElementById('dashBackupJsonBtn')?.addEventListener('click', () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+        const dl = document.createElement('a');
+        dl.setAttribute("href", dataStr);
+        dl.setAttribute("download", `نسخة_احتياطية_سند_${new Date().toISOString().split('T')[0]}.json`);
+        dl.click();
+        showToast('تم تحميل ملف النسخة الاحتياطية بنجاح', 'success');
+      });
 
-          appState.teacher.name = name;
-          appState.teacher.school = school;
-          appState.teacher.subject = subject;
-
-          saveStore();
-          localStorage.setItem('sanad_teacher_is_logged_in', 'true');
-          if (loginGate) loginGate.classList.add('hidden');
-          renderDashboard();
-          showToast(`أهلاً بك يا ${name}، تم تسجيل الدخول بنجاح`, 'success');
-        });
-      }
-
-      // Header Logout Button
-      const logoutBtn = document.getElementById('headerLogoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-          localStorage.setItem('sanad_teacher_is_logged_in', 'false');
-          if (loginGate) loginGate.classList.remove('hidden');
-          showToast('تم تسجيل الخروج، يرجى تسجيل الدخول مجدداً', 'info');
-        });
-      }
-
-      // Add Class Modal
-      const modalAddClass = document.getElementById('modalAddClass');
-      document.getElementById('openAddClassModalBtn').addEventListener('click', () => modalAddClass.classList.remove('hidden'));
-      document.getElementById('closeAddClassModalBtn').addEventListener('click', () => modalAddClass.classList.add('hidden'));
-      document.getElementById('cancelAddClassModalBtn').addEventListener('click', () => modalAddClass.classList.add('hidden'));
-      document.getElementById('saveAddClassModalBtn').addEventListener('click', () => {
-        const grade = document.getElementById('inputClassGrade').value.trim();
-        const subject = document.getElementById('inputClassSubject').value.trim() || 'المادة العامة';
-        const sectionsRaw = document.getElementById('inputClassSections').value.trim();
-
-        if (!grade) {
-          showToast('يرجى إدخال اسم الصف الدراسي', 'error');
+      // Add Class Handler
+      document.getElementById('saveNewClassBtn')?.addEventListener('click', () => {
+        const grade = document.getElementById('newClassGradeInput').value;
+        const section = document.getElementById('newClassSectionInput').value.trim();
+        if (!section) {
+          showToast('يرجى تحديد اسم الشعبة', 'error');
           return;
         }
-
-        const sections = sectionsRaw.split(/[,،]/).map(s => s.trim()).filter(Boolean);
-        if (!sections.length) sections.push('أ');
-
-        appState.classes.push({
-          id: `c_${Date.now()}`,
-          grade,
-          subject,
-          sections
-        });
-
+        appState.classes.push({ id: Date.now(), grade, section, studentCount: 0 });
         saveStore();
         populateSelects();
-        renderDashboard();
-        renderStudents();
-        renderAttendance();
-        renderGrades();
-        modalAddClass.classList.add('hidden');
-        document.getElementById('inputClassGrade').value = '';
-        showToast('تم حفظ الصف والشعب بنجاح', 'success');
+        renderClassesList();
+        document.getElementById('modalAddClass').classList.add('hidden');
+        document.getElementById('newClassSectionInput').value = '';
+        showToast('تمت إضافة الشعبة بنجاح', 'success');
       });
 
-      // Add Single Student Modal
-      const modalAddStudent = document.getElementById('modalAddStudent');
-      document.getElementById('openSingleStudentModalBtn').addEventListener('click', () => modalAddStudent.classList.remove('hidden'));
-      document.getElementById('closeAddStudentModalBtn').addEventListener('click', () => modalAddStudent.classList.add('hidden'));
-      document.getElementById('cancelAddStudentModalBtn').addEventListener('click', () => modalAddStudent.classList.add('hidden'));
-      document.getElementById('saveAddStudentModalBtn').addEventListener('click', () => {
-        const name = document.getElementById('inputStudentName').value.trim();
-        const sel = document.getElementById('selectStudentClassTarget').value;
-        const phone = document.getElementById('inputStudentPhone').value.trim();
+      // Add Student Handler
+      document.getElementById('saveNewStudentBtn')?.addEventListener('click', () => {
+        const name = document.getElementById('newStudentNameInput').value.trim();
+        const classSel = document.getElementById('newStudentClassSelect').value;
+        const phone = document.getElementById('newStudentPhoneInput').value.trim();
 
         if (!name) {
-          showToast('يرجى إدخال اسم الطالب', 'error');
+          showToast('يرجى كتابة اسم الطالب', 'error');
           return;
         }
 
-        const gradeMatch = sel.split(' - شعبة (')[0] || 'الصف العام';
-        const secMatch = (sel.split(' - شعبة (')[1] || 'أ)').split(')')[0] || 'أ';
+        const match = classSel.match(/^(.*?)\s*—\s*شعبة\s*\((.*?)\)$/);
+        const grade = match ? match[1].trim() : classSel;
+        const section = match ? match[2].trim() : 'أ';
 
-        appState.students.push({
-          id: Date.now(),
-          name,
-          classGrade: gradeMatch,
-          section: secMatch,
-          phone
-        });
+        const id = Date.now();
+        appState.students.push({ id, name, classGrade: grade, section, phone });
+        appState.grades[id] = { m1: 0, m2: 0, midterm: 0, final: 0 };
 
         saveStore();
-        modalAddStudent.classList.add('hidden');
-        document.getElementById('inputStudentName').value = '';
         renderStudents();
         renderDashboard();
-        renderGrades();
+        document.getElementById('modalAddStudent').classList.add('hidden');
+        document.getElementById('newStudentNameInput').value = '';
+        document.getElementById('newStudentPhoneInput').value = '';
         showToast('تمت إضافة الطالب بنجاح', 'success');
       });
 
-      // Bulk Paste Modal
-      const modalBulkPaste = document.getElementById('modalBulkPaste');
-      document.getElementById('openBulkPasteModalBtn').addEventListener('click', () => modalBulkPaste.classList.remove('hidden'));
-      document.getElementById('closeBulkPasteModalBtn').addEventListener('click', () => modalBulkPaste.classList.add('hidden'));
-      document.getElementById('cancelBulkPasteModalBtn').addEventListener('click', () => modalBulkPaste.classList.add('hidden'));
-      document.getElementById('saveBulkPasteModalBtn').addEventListener('click', () => {
-        const raw = document.getElementById('textareaBulkNames').value.trim();
-        const sel = document.getElementById('selectBulkSectionTarget').value;
+      // Bulk Students Handler
+      document.getElementById('saveBulkStudentsBtn')?.addEventListener('click', () => {
+        const text = document.getElementById('bulkStudentsTextarea').value.trim();
+        const classSel = document.getElementById('bulkClassSelect').value;
 
-        if (!raw) {
+        if (!text) {
           showToast('يرجى لصق الأسماء أولاً', 'error');
           return;
         }
 
-        const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-        if (!lines.length) return;
+        const match = classSel.match(/^(.*?)\s*—\s*شعبة\s*\((.*?)\)$/);
+        const grade = match ? match[1].trim() : classSel;
+        const section = match ? match[2].trim() : 'أ';
 
-        const gradeMatch = sel.split(' - شعبة (')[0] || 'الصف الافتراضي';
-        const secMatch = (sel.split(' - شعبة (')[1] || 'أ)').split(')')[0] || 'أ';
-
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         lines.forEach(name => {
-          appState.students.push({
-            id: Date.now() + Math.floor(Math.random() * 100000),
-            name,
-            classGrade: gradeMatch,
-            section: secMatch,
-            phone: ''
-          });
+          const id = Date.now() + Math.floor(Math.random() * 1000);
+          appState.students.push({ id, name, classGrade: grade, section, phone: '' });
+          appState.grades[id] = { m1: 0, m2: 0, midterm: 0, final: 0 };
         });
 
         saveStore();
-        modalBulkPaste.classList.add('hidden');
-        document.getElementById('textareaBulkNames').value = '';
         renderStudents();
         renderDashboard();
-        renderGrades();
-        showToast(`تمت إضافة ${lines.length} طالباً دفعة واحدة بنجاح`, 'success');
+        document.getElementById('modalBulkPaste').classList.add('hidden');
+        document.getElementById('bulkStudentsTextarea').value = '';
+        showToast(`تمت إضافة ${lines.length} طالباً بنجاح`, 'success');
       });
 
-      // Questions Modal
-      const modalAddQ = document.getElementById('modalAddQuestion');
-      document.getElementById('openNewQuestionBtn').addEventListener('click', () => modalAddQ.classList.remove('hidden'));
-      document.getElementById('closeAddQuestionModalBtn').addEventListener('click', () => modalAddQ.classList.add('hidden'));
-      document.getElementById('cancelAddQuestionModalBtn').addEventListener('click', () => modalAddQ.classList.add('hidden'));
-      document.getElementById('saveAddQuestionModalBtn').addEventListener('click', () => {
-        const text = document.getElementById('inputQuestionText').value.trim();
-        const points = Number(document.getElementById('inputQuestionPoints').value) || 20;
+      // Add Question Handler
+      document.getElementById('saveNewQuestionBtn')?.addEventListener('click', () => {
+        const qNum = document.getElementById('newQNumInput').value.trim() || 'س';
+        const marks = Number(document.getElementById('newQMarksInput').value) || 20;
+        const title = document.getElementById('newQTitleInput').value.trim();
+        const body = document.getElementById('newQBodyTextarea').value.trim();
 
-        if (!text) {
-          showToast('يرجى كتابة نص السؤال', 'error');
+        if (!title) {
+          showToast('يرجى كتابة عنوان السؤال', 'error');
           return;
         }
 
-        appState.examQuestions.push({
-          id: Date.now(),
-          text,
-          points
-        });
-
+        const branches = body ? body.split('\n').map(b => b.trim()).filter(b => b.length > 0) : [];
+        appState.examQuestions.push({ id: Date.now(), qNum, marks, title, branches });
         saveStore();
-        modalAddQ.classList.add('hidden');
-        document.getElementById('inputQuestionText').value = '';
         renderExamQuestions();
-        showToast('تمت إضافة السؤال لورقة الاختبار', 'success');
+        document.getElementById('modalAddQuestion').classList.add('hidden');
+        document.getElementById('newQTitleInput').value = '';
+        document.getElementById('newQBodyTextarea').value = '';
+        showToast('تمت إضافة السؤال للامتحان بنجاح', 'success');
       });
 
-      document.getElementById('printExamDocBtn').addEventListener('click', printOfficialExamPaper);
-
-      // Section Filter events
-      document.getElementById('studentsFilterSelect').addEventListener('change', renderStudents);
-      document.getElementById('attendanceSectionSelect').addEventListener('change', renderAttendance);
-      document.getElementById('gradesSectionSelect').addEventListener('change', renderGrades);
-      document.getElementById('cardSectionSelect').addEventListener('change', renderStudentCards);
-
-      // Attendance controls
-      document.getElementById('attendanceDateInput').addEventListener('change', () => {
-        renderAttendance();
-        renderDashboard();
-      });
-      document.getElementById('attPrevDayBtn').addEventListener('click', () => {
-        const input = document.getElementById('attendanceDateInput');
-        const d = new Date(input.value || new Date());
-        d.setDate(d.getDate() - 1);
-        input.value = d.toISOString().split('T')[0];
-        renderAttendance();
-        renderDashboard();
-      });
-      document.getElementById('attNextDayBtn').addEventListener('click', () => {
-        const input = document.getElementById('attendanceDateInput');
-        const d = new Date(input.value || new Date());
-        d.setDate(d.getDate() + 1);
-        input.value = d.toISOString().split('T')[0];
-        renderAttendance();
-        renderDashboard();
-      });
-      document.getElementById('attMarkAllPresentBtn').addEventListener('click', () => {
-        const sel = document.getElementById('attendanceSectionSelect').value;
-        const dateStr = document.getElementById('attendanceDateInput').value;
-        if (!appState.attendance[dateStr]) appState.attendance[dateStr] = {};
-
-        appState.students.forEach(s => {
-          if (sel.includes(s.classGrade) && sel.includes(`(${s.section})`)) {
-            appState.attendance[dateStr][s.id] = { status: 'present' };
-          }
-        });
-
-        saveStore();
-        renderAttendance();
-        renderDashboard();
-        showToast('تم رصد حضور الشعبة بالكامل', 'success');
-      });
-
-      // Excel Exports
-      document.getElementById('exportStudentsXlsxBtn').addEventListener('click', () => {
-        const filter = document.getElementById('studentsFilterSelect').value;
-        const filtered = appState.students.filter(s => !filter || (filter.includes(s.classGrade) && filter.includes(`(${s.section})`)));
-        const rows = filtered.map((s, idx) => ({
-          "ت": idx + 1,
-          "اسم الطالب": s.name,
-          "الصف": s.classGrade,
-          "الشعبة": s.section,
-          "هاتف ولي الأمر": s.phone || ''
-        }));
-        exportTableToExcel(rows, "قائمة_الطلاب_سند", "الطلاب");
-      });
-
-      document.getElementById('exportGradesXlsxBtn').addEventListener('click', () => {
-        const filter = document.getElementById('gradesSectionSelect').value;
-        const students = appState.students.filter(s => filter.includes(s.classGrade) && filter.includes(`(${s.section})`));
-        const rows = students.map((s, idx) => {
-          const g = appState.grades[s.id] || { m1: 0, m2: 0, midterm: 0, final: 0 };
-          const sai = Math.round(((Number(g.m1)||0) + (Number(g.m2)||0)) / 2);
-          const avg = Math.round((sai + (Number(g.midterm)||0) + (Number(g.final)||0)) / 3);
-          return {
-            "ت": idx + 1,
-            "اسم الطالب": s.name,
-            "الصف والشعبة": `${s.classGrade} - ${s.section}`,
-            "الشهر الأول": g.m1,
-            "الشهر الثاني": g.m2,
-            "امتحان نصف السنة": g.midterm,
-            "السعي السنوي": sai,
-            "الامتحان النهائي": g.final,
-            "المعدل والنتيجة": `${avg} (${avg >= 50 ? 'ناجح' : 'مكمل'})`
-          };
-        });
-        exportTableToExcel(rows, "سجل_الدرجات_العراقي", "الدرجات");
-      });
-
-      // Print annual plan
-      document.getElementById('printAnnualPlanBtn').addEventListener('click', () => {
-        const printEl = document.getElementById('printContainer');
-        printEl.innerHTML = `
-          <div style="direction: rtl; font-family: 'Cairo', sans-serif; padding: 25px;">
-            <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
-              <h2 style="margin: 0; font-size: 18px; font-weight: bold;">جمهورية العراق — وزارة التربية</h2>
-              <h3 style="margin: 4px 0; font-size: 15px; font-weight: bold;">${sanitize(appState.teacher.school)}</h3>
-              <h4 style="margin: 2px 0; font-size: 14px;">الخطة السنوية وتوزيع المنهج الدراسي</h4>
-              <p style="margin: 2px 0 0; font-size: 12px;">مدرس المادة: ${sanitize(appState.teacher.name)} | العام الدراسي: 2026 - 2027</p>
-            </div>
-            <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 11px;">
-              <thead>
-                <tr style="background: #f1f5f9; font-weight: bold;">
-                  <th style="border: 1px solid #000; padding: 6px;">الشهر</th>
-                  <th style="border: 1px solid #000; padding: 6px;">الفصل المقرر</th>
-                  <th style="border: 1px solid #000; padding: 6px;">المفردات والمواضيع</th>
-                  <th style="border: 1px solid #000; padding: 6px; text-align: center;">الحصص</th>
-                  <th style="border: 1px solid #000; padding: 6px;">الوسائل</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${(appState.annualPlan || []).map(m => `
-                  <tr>
-                    <td style="border: 1px solid #000; padding: 6px; font-weight: bold;">${sanitize(m.month)}</td>
-                    <td style="border: 1px solid #000; padding: 6px; font-weight: bold;">${sanitize(m.unit)}</td>
-                    <td style="border: 1px solid #000; padding: 6px;">${sanitize(m.topics)}</td>
-                    <td style="border: 1px solid #000; padding: 6px; text-align: center;">${m.periods}</td>
-                    <td style="border: 1px solid #000; padding: 6px;">${sanitize(m.tools || '-')}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
-        window.print();
-      });
-
-      // Backup JSON
-      document.getElementById('dashBackupJsonBtn').addEventListener('click', () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
-        const a = document.createElement('a');
-        a.href = dataStr;
-        a.download = `sanad_smart_teacher_backup_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        showToast('تم تنزيل النسخة الاحتياطية', 'success');
-      });
-
-      // Theme toggle
-      document.getElementById('themeToggleBtn').addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
+      // Search student filter listener
+      document.getElementById('studentSearchInput')?.addEventListener('input', renderStudents);
+      document.getElementById('studentClassFilterSelect')?.addEventListener('change', renderStudents);
+      document.getElementById('attendanceClassSelect')?.addEventListener('change', renderAttendance);
+      document.getElementById('gradesClassSelect')?.addEventListener('change', renderGrades);
+      document.getElementById('attendanceDateInput')?.addEventListener('change', renderAttendance);
     });
   </script>
 </body>

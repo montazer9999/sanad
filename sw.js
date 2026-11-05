@@ -1,5 +1,5 @@
 // Sanad Platform Service Worker (PWA Offline Cache)
-const CACHE_NAME = 'sanad-cache-v3';
+const CACHE_NAME = 'sanad-cache-v1';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
