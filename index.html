@@ -25,6 +25,8 @@
   <!-- Chart.js 4.4.1 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   
+    <!-- Supabase JS Client v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- SheetJS (xlsx) for Genuine Excel Import/Export -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -148,6 +150,11 @@
       <!-- Left: Harmonized Clean Action Group (Unified Heights, No Misaligned Loose Icons) -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
         
+                <!-- Supabase Cloud Live Indicator -->
+        <div id="cloudSyncStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span>سحابة متصلة</span>
+        </div>
         <!-- Demo Mode Minimalist Toggle -->
         <button id="demoModeToggleBtn" title="التبديل بين بيانات التجربة وقاعدة البيانات الحقيقية" class="px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-700/80 bg-midnight-850 hover:bg-midnight-800 text-slate-300 hover:text-white text-[11px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
           <span class="w-2 h-2 rounded-full bg-slate-500" id="demoModeDot"></span>
@@ -1142,6 +1149,73 @@
       activityLog: []
     };
 
+    
+    // ==========================================
+    // SUPABASE CLOUD DATABASE INTEGRATION
+    // ==========================================
+    const SUPABASE_URL = "https://eeenyedzfywfwfvpuxlr.supabase.co";
+    const SUPABASE_ANON_KEY = "Sb_publishable_F2GGs_QLN87RtElS_2QxLw_CEq4-FfN";
+    
+    let supabaseClient = null;
+    let isCloudConnected = false;
+
+    try {
+      if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        isCloudConnected = true;
+        console.log("Sanad: Supabase Cloud Client Initialized Successfully!");
+      }
+    } catch (e) {
+      console.warn("Sanad: Supabase init notice:", e);
+    }
+
+    async function syncCloudData() {
+      if (!supabaseClient || isDemoActive) return;
+      try {
+        const cloudBadge = document.getElementById('cloudSyncStatusBadge');
+        if (cloudBadge) {
+          cloudBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> مزامنة سحابية...';
+        }
+
+        // 1. Fetch Cloud Classes
+        const { data: cData, error: cErr } = await supabaseClient.from('classes').select('*');
+        if (!cErr && cData && cData.length > 0) {
+          appState.classes = cData.map(c => ({
+            id: c.id,
+            grade: c.grade,
+            subject: c.subject,
+            sections: c.sections || ['أ']
+          }));
+        }
+
+        // 2. Fetch Cloud Students
+        const { data: sData, error: sErr } = await supabaseClient.from('students').select('*');
+        if (!sErr && sData && sData.length > 0) {
+          appState.students = sData.map(s => ({
+            id: s.id,
+            name: s.name,
+            classGrade: s.class_grade,
+            section: s.section,
+            phone: s.phone || ''
+          }));
+        }
+
+        saveState();
+        populateAllSelects();
+        renderDashboard();
+        renderClassesList();
+        renderStudentsTable();
+        renderAttendanceTable();
+        renderGradebookTable();
+
+        if (cloudBadge) {
+          cloudBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> سحابة متصلة';
+        }
+      } catch (err) {
+        console.warn("Cloud sync background notice:", err);
+      }
+    }
+
     // --- State Storage & Auto-Migration ---
     let appState = null;
     let isDemoActive = false;
@@ -2102,6 +2176,7 @@
       renderQuizzes();
       drawWheel();
       updateTimerDisplay();
+      syncCloudData();
 
       // Mobile Drawer Toggle
       document.getElementById('toggleSidebarMobileBtn').addEventListener('click', () => {
@@ -2673,6 +2748,7 @@
           if (timerRemaining > 0) {
             timerRemaining--;
             updateTimerDisplay();
+      syncCloudData();
           } else {
             clearInterval(timerInterval);
             timerRunning = false;
@@ -2690,6 +2766,7 @@
         timerRunning = false;
         timerRemaining = timerDuration;
         updateTimerDisplay();
+      syncCloudData();
       });
 
       // Parent Communication Generator
