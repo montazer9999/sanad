@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>منصة سَنَد التعليمية — SANAD PRO</title>
+  <title>منصة سَنَد الذكية — متوسطة الشهيد كريم مزعل الباوي</title>
   
   <!-- PWA Meta -->
   <link rel="manifest" href="manifest.json">
@@ -141,7 +141,7 @@
               PRO
             </span>
           </div>
-          <p class="text-[10px] sm:text-[11px] text-slate-400 truncate">إعداد: الأستاذ منتظر حميد</p>
+          <p class="text-[10px] sm:text-[11px] text-slate-400 truncate">متوسطة الشهيد كريم مزعل الباوي | إعداد: أ. منتظر حميد</p>
         </div>
       </div>
 
@@ -1050,7 +1050,7 @@
 
     // --- Isolated Demo Dataset (Coherent, 3 classes, 15 students, realistic stats) ---
     const DEMO_STATE = {
-      teacher: { name: "الأستاذ منتظر حميد", contact: "07732997337", academicYear: "2026 - 2027" },
+      teacher: { name: "الأستاذ منتظر حميد", school: "متوسطة الشهيد كريم مزعل الباوي", directorate: "المديرية العامة لتربية ميسان", contact: "07732997337", academicYear: "2026 - 2027" }, activeSchool: "متوسطة الشهيد كريم مزعل الباوي", userRole: "school_admin",
       classes: [
         { id: "c_demo_1", grade: "الثالث متوسط", subject: "الفيزياء", sections: ["أ", "ب"] },
         { id: "c_demo_2", grade: "الرابع علمي", subject: "الكيمياء", sections: ["أ", "ب"] },
@@ -1130,7 +1130,7 @@
 
     // --- Clean Production Baseline (Starts Pure & Empty) ---
     const CLEAN_PRODUCTION_STATE = {
-      teacher: { name: "الأستاذ منتظر حميد", contact: "07732997337", academicYear: "2026 - 2027" },
+      teacher: { name: "الأستاذ منتظر حميد", school: "متوسطة الشهيد كريم مزعل الباوي", directorate: "المديرية العامة لتربية ميسان", contact: "07732997337", academicYear: "2026 - 2027" }, activeSchool: "متوسطة الشهيد كريم مزعل الباوي", userRole: "school_admin",
       classes: [],
       students: [],
       attendance: {},
@@ -1881,6 +1881,7 @@
         <div style="direction: rtl; font-family: 'Cairo', sans-serif; padding: 25px;">
           <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 18px;">
             <h2 style="margin: 0; font-size: 18px; font-weight: bold;">جمهورية العراق — وزارة التربية</h2>
+            <h3 style="margin: 3px 0; font-size: 14px; font-weight: bold;">متوسطة الشهيد كريم مزعل الباوي</h3>
             <h3 style="margin: 4px 0; font-size: 15px; font-weight: bold;">خطة درس يومية نموذجية</h3>
             <p style="margin: 2px 0 0; font-size: 12px;">إعداد المدرس: ${sanitize(state.teacher.name)} | العام الدراسي: ${sanitize(state.teacher.academicYear)}</p>
           </div>
@@ -2488,6 +2489,7 @@
           <div style="direction: rtl; font-family: 'Cairo', sans-serif; padding: 25px;">
             <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
               <h2 style="margin: 0; font-size: 18px; font-weight: bold;">جمهورية العراق — وزارة التربية</h2>
+            <h3 style="margin: 3px 0; font-size: 14px; font-weight: bold;">متوسطة الشهيد كريم مزعل الباوي</h3>
               <h3 style="margin: 4px 0; font-size: 15px; font-weight: bold;">الخطة السنوية وتوزيع مفردات المنهج الدراسي</h3>
               <p style="margin: 2px 0 0; font-size: 12px;">إعداد المدرس: ${sanitize(state.teacher.name)} | العام الدراسي: ${sanitize(state.teacher.academicYear)}</p>
             </div>
