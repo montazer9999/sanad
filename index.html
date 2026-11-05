@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة سَنَد الملكية - إعداد الأستاذ منتظر حميد</title>
+  <title>سَنَد | المنصة التعليمية الذكية - إعداد الأستاذ منتظر حميد</title>
   <!-- PWA & Mobile Web App Meta -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#090d16">
@@ -81,6 +81,23 @@
       #printArea { position: absolute; left: 0; top: 0; width: 100%; }
       .no-print { display: none !important; }
     }
+
+    /* SANAD PRO visual system */
+    :root { color-scheme:dark; --sanad-line:rgba(148,163,184,.16); }
+    body { background:radial-gradient(ellipse at 12% 0%,rgba(20,184,166,.12),transparent 34%),linear-gradient(145deg,#08111f,#0d1728 55%,#101b2d)!important; }
+    .glass-panel { background:linear-gradient(145deg,rgba(20,33,53,.95),rgba(13,24,41,.93)); border:1px solid var(--sanad-line); border-radius:1.25rem; box-shadow:0 14px 38px rgba(0,0,0,.18); }
+    header { background:rgba(8,17,31,.95)!important; border-color:rgba(45,212,191,.18)!important; }
+    .nav-tab.active { background:linear-gradient(135deg,#0f766e,#115e59)!important;color:#fff!important;box-shadow:0 8px 22px rgba(13,148,136,.2); }
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:2px solid #2dd4bf!important;outline-offset:2px; }
+    .sanad-date-control { display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin:0 0 1rem;padding:.85rem 1rem;border:1px solid var(--sanad-line);border-radius:1rem;background:rgba(15,23,42,.55); }
+    .sanad-date-control input { background:#0b1627;border:1px solid #334155;color:#f8fafc;border-radius:.7rem;padding:.55rem .75rem; }
+    @media(max-width:640px){ main{padding:.85rem!important} header .max-w-7xl{padding-left:.75rem!important;padding-right:.75rem!important} .nav-tab{flex:0 0 auto;font-size:11px!important;padding:.55rem .7rem!important} .glass-panel{border-radius:1rem} table{min-width:650px} .overflow-x-auto{-webkit-overflow-scrolling:touch} }
+    .light body{background:#f1f5f9!important;color:#0f172a!important}
+    .light .glass-panel{background:rgba(255,255,255,.97);border-color:#dbe4ee;box-shadow:0 10px 28px rgba(15,23,42,.06)}
+    .light header{background:rgba(248,250,252,.97)!important;border-color:#dbe4ee!important}
+    .light .sanad-date-control{background:#fff;border-color:#dbe4ee}
+    .light .sanad-date-control input{background:#fff;color:#0f172a;border-color:#cbd5e1}
+
   </style>
 </head>
 <body class="bg-[#080c14] text-slate-100 min-h-screen flex flex-col transition-colors duration-300 selection:bg-brand-500 selection:text-white">
@@ -466,7 +483,8 @@
 
       <div class="glass-panel rounded-3xl border border-slate-800 shadow-2xl overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse text-xs">
+          <div class="sanad-date-control"><label for="attendanceDate" class="text-sm font-bold text-slate-300">تاريخ سجل الحضور</label><input id="attendanceDate" type="date"><span class="text-xs text-slate-400">سجل مستقل لكل يوم مع إمكانية مراجعة الأيام السابقة.</span></div>
+        <table class="w-full text-right border-collapse text-xs">
             <thead>
               <tr class="bg-slate-900/60 text-slate-400 font-extrabold border-b border-slate-800">
                 <th class="py-3 px-4">#</th>
@@ -934,17 +952,9 @@
         contact: "07732997337",
         academicYear: "2026 - 2027"
       },
-      classes: [
-        { id: "cls-1", grade: "الثالث متوسط", subject: "الفيزياء", sections: ["أ", "ب", "ج", "د"] },
-        { id: "cls-2", grade: "الرابع علمي", subject: "الكيمياء", sections: ["أ", "ب"] }
-      ],
-      students: [
-        { id: 1, name: "علي حسين كاظم", classGrade: "الثالث متوسط", section: "أ", phone: "07711111111", attendance: "present", absentCount: 0, participation: 10, homework: 20, activity: 20, exam: 50, status: "ملتزم" },
-        { id: 2, name: "حيدر جعفر صادق", classGrade: "الثالث متوسط", section: "أ", phone: "07722222222", attendance: "present", absentCount: 0, participation: 9, homework: 19, activity: 19, exam: 48, status: "ملتزم" },
-        { id: 3, name: "سجاد فاضل عباس", classGrade: "الثالث متوسط", section: "أ", phone: "07733333333", attendance: "present", absentCount: 1, participation: 8, homework: 16, activity: 17, exam: 42, status: "تنبيه واجب" },
-        { id: 4, name: "محمد باقر سلام", classGrade: "الثالث متوسط", section: "ب", phone: "07744444444", attendance: "absent", absentCount: 2, participation: 7, homework: 14, activity: 15, exam: 36, status: "يحتاج متابعة" },
-        { id: 5, name: "يوسف عمار هادي", classGrade: "الثالث متوسط", section: "ب", phone: "07755555555", attendance: "present", absentCount: 0, participation: 9, homework: 18, activity: 18, exam: 45, status: "ملتزم" }
-      ],
+      // بيانات البداية فارغة؛ بيانات أي مستخدم سابق محفوظة في المتصفح تبقى كما هي.
+      classes: [],
+      students: [],
       annualPlan: [
         { month: "تشرين الأول (10)", unit: "الفصل الأول: الأساسيات والمفاهيم", topics: "التعريفات والمبادئ والقوانين الأساسية", periods: 12, tools: "الكتاب ووسائل الإيضاح" },
         { month: "تشرين الثاني (11)", unit: "الفصل الثاني: التطبيقات والمسائل", topics: "حل التمارين والمسائل النموذجية", periods: 12, tools: "أوراق عمل وتجارب" },
@@ -955,43 +965,50 @@
         { month: "نيسان (4)", unit: "الفصل السادس: المسائل الشاملة", topics: "قوانين وحسابات وتدريبات", periods: 14, tools: "أوراق تدريبية" },
         { month: "أيار (5)", unit: "المراجعة العامة والامتحان النهائي", topics: "مراجعة شاملة واستعداد للامتحانات", periods: 10, tools: "نماذج اختبارات شاملة" }
       ],
-      plans: [
-        {
-          id: 1,
-          title: "الدرس الأول: مدخل ومفاهيم أساسية",
-          subject: "الفيزياء",
-          grade: "الثالث متوسط - أ",
-          date: "2026-11-05",
-          objectives: "1. أن يفهم الطالب المفهوم الأساسي.\n2. أن يطبق القوانين الرياضية في حل المسائل.",
-          steps: "• التهيئة والعصف الذهني (5د)\n• العرض والشرح التفاعلي (25د)\n• التقويم الختامي (15د)"
-        }
-      ],
-      questions: [
-        { id: 1, text: "عرف المفهوم الأساسي واذكر قانونه الرياضي ووحدات القياس؟", answer: "الإجابة النموذجية المعتمدة في الكتاب الوزاري." },
-        { id: 2, text: "علل: ما سبب حدوث الظاهرة المحددة في الدرس؟", answer: "التعليل العلمي النموذجي." }
-      ],
-      timetable: [
-        { classLabel: "الثالث متوسط - أ", p1: "الفيزياء", p2: "الرياضيات", p3: "اللغة العربية", p4: "الكيمياء", p5: "اللغة الإنجليزية", p6: "الأحياء" },
-        { classLabel: "الثالث متوسط - ب", p1: "الرياضيات", p2: "الفيزياء", p3: "اللغة الإنجليزية", p4: "اللغة العربية", p5: "الأحياء", p6: "الاجتماعيات" },
-        { classLabel: "الرابع علمي - أ", p1: "الكيمياء", p2: "اللغة العربية", p3: "الفيزياء", p4: "الرياضيات", p5: "الحاسوب", p6: "التربية الإسلامية" }
-      ]
+      plans: [],
+      questions: [],
+      timetable: []
     };
 
     // --- State Storage ---
+    const SANAD_STORAGE_KEY = 'sanad_teacher_state_legendary_v4';
     let appState = (function() {
       try {
-        const saved = localStorage.getItem('sanad_teacher_state_legendary_v4');
-        if (saved) return JSON.parse(saved);
-      } catch (e) {
-        console.warn('Storage unavailable:', e);
-      }
-      return DEFAULT_DATA;
+        const saved = localStorage.getItem(SANAD_STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') return { ...DEFAULT_DATA, ...parsed,
+            teacher: { ...DEFAULT_DATA.teacher, ...(parsed.teacher || {}) },
+            classes: Array.isArray(parsed.classes) ? parsed.classes : [],
+            students: Array.isArray(parsed.students) ? parsed.students : [],
+            plans: Array.isArray(parsed.plans) ? parsed.plans : [],
+            questions: Array.isArray(parsed.questions) ? parsed.questions : [],
+            attendanceRecords: parsed.attendanceRecords && typeof parsed.attendanceRecords === 'object' ? parsed.attendanceRecords : {}
+          };
+        }
+      } catch (e) { console.warn('تعذر قراءة البيانات المحلية:', e); }
+      return { ...DEFAULT_DATA, attendanceRecords: {} };
     })();
-
     function saveState() {
       try {
-        localStorage.setItem('sanad_teacher_state_legendary_v4', JSON.stringify(appState));
-      } catch (e) {}
+        localStorage.setItem(SANAD_STORAGE_KEY, JSON.stringify(appState));
+        const status = document.getElementById('saveStatus');
+        if (status) status.textContent = 'تم الحفظ محلياً';
+      } catch (e) { showToast('تعذر الحفظ: مساحة التخزين ممتلئة أو غير متاحة', 'error'); }
+    }
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function getSelectedAttendanceDate() {
+      const field = document.getElementById('attendanceDate');
+      return field && field.value ? field.value : todayKey();
+    }
+    function getAttendanceRecord(student, date) {
+      appState.attendanceRecords ||= {}; appState.attendanceRecords[date] ||= {};
+      if (date === todayKey() && appState.attendanceRecords[date][student.id] == null && student.attendance)
+        appState.attendanceRecords[date][student.id] = student.attendance;
+      return appState.attendanceRecords[date][student.id] || 'unmarked';
     }
 
     // --- Sound ---
@@ -1128,8 +1145,8 @@
       document.getElementById('dashStudentCount').innerText = `${appState.students.length} طالب`;
       document.getElementById('dashPlansCount').innerText = `${appState.plans.length} خطط`;
       const present = appState.students.filter(s => s.attendance === 'present').length;
-      const rate = appState.students.length ? ((present / appState.students.length) * 100).toFixed(0) : '100';
-      document.getElementById('dashAttendanceRate').innerText = `${rate}%`;
+      const rate = appState.students.length ? ((present / appState.students.length) * 100).toFixed(0) + '%' : '—';
+      document.getElementById('dashAttendanceRate').innerText = rate;
     }
 
     function renderClassesList() {
@@ -1158,12 +1175,17 @@
     }
 
     function deleteClass(classId) {
-      appState.classes = appState.classes.filter(c => c.id !== classId);
-      saveState();
-      populateAllSelects();
-      renderClassesList();
-      renderDashboard();
-      showToast('تم حذف الصف بنجاح', 'info');
+      const target = appState.classes.find(c => String(c.id) === String(classId));
+      if (!target) return;
+      const linked = appState.students.filter(s => s.classGrade === target.grade && (target.sections || []).includes(s.section));
+      if (!confirm(`سيتم حذف الصف (${target.grade}) و${linked.length} من سجلات طلابه. نزّل نسخة احتياطية أولاً. هل تريد المتابعة؟`)) return;
+      const ids = new Set(linked.map(s => String(s.id)));
+      appState.classes = appState.classes.filter(c => String(c.id) !== String(classId));
+      appState.students = appState.students.filter(s => !ids.has(String(s.id)));
+      Object.values(appState.attendanceRecords || {}).forEach(day => ids.forEach(id => delete day[id]));
+      saveState(); populateAllSelects(); renderClassesList(); renderStudentsManagerTable();
+      renderAttendanceTable(); renderGradebookTable(); renderFollowupTable(); renderDashboard();
+      showToast('تم حذف الصف وسجلات طلابه المرتبطة', 'info');
     }
 
     function renderStudentsManagerTable() {
@@ -1197,7 +1219,8 @@
     }
 
     function deleteStudent(id) {
-      appState.students = appState.students.filter(s => s.id !== id);
+      appState.students = appState.students.filter(s => String(s.id) !== String(id));
+      Object.values(appState.attendanceRecords || {}).forEach(day => { delete day[id]; });
       saveState();
       renderStudentsManagerTable();
       renderAttendanceTable();
@@ -1212,11 +1235,12 @@
       const sel = document.getElementById('attClassSelect').value;
       const tbody = document.getElementById('attendanceTableBody');
       const students = appState.students.filter(s => sel.includes(s.classGrade) && sel.includes(`(${s.section})`));
-
-      const pres = students.filter(s => s.attendance === 'present').length;
-      const abs = students.filter(s => s.attendance === 'absent').length;
-      const late = students.filter(s => s.attendance === 'late').length;
-      const exc = students.filter(s => s.attendance === 'excused').length;
+      const attendanceDate = getSelectedAttendanceDate();
+      const statusOf = s => getAttendanceRecord(s, attendanceDate);
+      const pres = students.filter(s => statusOf(s) === 'present').length;
+      const abs = students.filter(s => statusOf(s) === 'absent').length;
+      const late = students.filter(s => statusOf(s) === 'late').length;
+      const exc = students.filter(s => statusOf(s) === 'excused').length;
 
       document.getElementById('attPresentCount').innerText = pres;
       document.getElementById('attAbsentCount').innerText = abs;
@@ -1233,16 +1257,17 @@
           <td class="py-3 px-4 font-mono text-slate-500">${idx + 1}</td>
           <td class="py-3 px-4 font-bold text-white">${s.name}</td>
           <td class="py-3 px-4 text-center">
-            <span class="px-3 py-1 rounded-full text-xs font-bold ${s.attendance==='present'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':s.attendance==='absent'?'bg-rose-500/20 text-rose-300 border border-rose-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
-              ${s.attendance==='present'?'حاضر':s.attendance==='absent'?'غائب':s.attendance==='late'?'متأخر':'إجازة'}
+            <span class="px-3 py-1 rounded-full text-xs font-bold ${statusOf(s)==='present'?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30':statusOf(s)==='absent'?'bg-rose-500/20 text-rose-300 border border-rose-500/30':'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+              ${statusOf(s)==='present'?'حاضر':statusOf(s)==='absent'?'غائب':statusOf(s)==='late'?'متأخر':statusOf(s)==='excused'?'إجازة':'غير مسجل'}
             </span>
           </td>
-          <td class="py-3 px-4 text-center font-bold text-slate-300">${s.absentCount || 0} أيام</td>
+          <td class="py-3 px-4 text-center font-bold text-slate-300">${Math.max(Number(s.absentCount)||0, Object.values(appState.attendanceRecords || {}).filter(day => day && day[s.id] === 'absent').length)} أيام</td>
           <td class="py-3 px-4 text-center">
             <div class="inline-flex rounded-xl border border-slate-700 p-0.5 bg-[#080c14]">
-              <button onclick="setAttendance(${s.id}, 'present')" class="px-2.5 py-1 rounded-lg ${s.attendance==='present'?'bg-emerald-600 text-white font-bold':''}">حاضر</button>
-              <button onclick="setAttendance(${s.id}, 'absent')" class="px-2.5 py-1 rounded-lg ${s.attendance==='absent'?'bg-rose-600 text-white font-bold':''}">غائب</button>
-              <button onclick="setAttendance(${s.id}, 'late')" class="px-2.5 py-1 rounded-lg ${s.attendance==='late'?'bg-amber-500 text-slate-950 font-bold':''}">تأخر</button>
+              <button onclick="setAttendance(${s.id}, 'present')" class="px-2.5 py-1 rounded-lg ${statusOf(s)==='present'?'bg-emerald-600 text-white font-bold':''}">حاضر</button>
+              <button onclick="setAttendance(${s.id}, 'absent')" class="px-2.5 py-1 rounded-lg ${statusOf(s)==='absent'?'bg-rose-600 text-white font-bold':''}">غائب</button>
+              <button onclick="setAttendance(${s.id}, 'late')" class="px-2.5 py-1 rounded-lg ${statusOf(s)==='late'?'bg-amber-500 text-slate-950 font-bold':''}">تأخر</button>
+              <button onclick="setAttendance(${s.id}, 'excused')" class="px-2.5 py-1 rounded-lg ${statusOf(s)==='excused'?'bg-sky-600 text-white font-bold':''}">إجازة</button>
             </div>
           </td>
         </tr>
@@ -1250,14 +1275,15 @@
     }
 
     function setAttendance(id, status) {
-      const s = appState.students.find(x => x.id === id);
-      if (s) {
-        if (s.attendance !== status && status === 'absent') s.absentCount = (s.absentCount || 0) + 1;
-        s.attendance = status;
-        saveState();
-        renderAttendanceTable();
-        renderDashboard();
-      }
+      if (!['present','absent','late','excused'].includes(status)) return;
+      const student = appState.students.find(x => String(x.id) === String(id));
+      if (!student) return;
+      const date = getSelectedAttendanceDate();
+      appState.attendanceRecords ||= {}; appState.attendanceRecords[date] ||= {};
+      appState.attendanceRecords[date][student.id] = status;
+      if (date === todayKey()) student.attendance = status;
+      student.absentCount = Object.values(appState.attendanceRecords).filter(day => day && day[student.id] === 'absent').length;
+      saveState(); renderAttendanceTable(); renderDashboard();
     }
 
     function renderGradebookTable() {
@@ -1302,12 +1328,13 @@
 
     function updateGrade(id, field, val) {
       const s = appState.students.find(x => x.id === id);
-      if (s) {
-        s[field] = Number(val);
-        saveState();
-        renderGradebookTable();
-        showToast('تم حفظ الدرجة تلقائياً', 'success');
+      const limits = { participation:10, homework:20, activity:20, exam:50 };
+      if (!s || !Object.prototype.hasOwnProperty.call(limits, field)) return;
+      const numeric = Number(val);
+      if (!Number.isFinite(numeric) || numeric < 0 || numeric > limits[field]) {
+        showToast(`الدرجة يجب أن تكون بين 0 و${limits[field]}`, 'error'); renderGradebookTable(); return;
       }
+      s[field] = numeric; saveState(); renderGradebookTable(); showToast('تم حفظ الدرجة تلقائياً', 'success');
     }
 
     function renderFollowupTable() {
@@ -1753,11 +1780,11 @@
         reader.onload = (event) => {
           try {
             const parsed = JSON.parse(event.target.result);
-            if (parsed && parsed.students) {
-              appState = parsed;
-              saveState();
-              location.reload();
-            }
+            if (parsed && typeof parsed === 'object' && Array.isArray(parsed.students) && Array.isArray(parsed.classes)) {
+              if (!confirm('سيتم استبدال البيانات الحالية بمحتويات النسخة الاحتياطية. هل تريد المتابعة؟')) return;
+              appState = { ...DEFAULT_DATA, ...parsed, teacher:{ ...DEFAULT_DATA.teacher, ...(parsed.teacher || {}) }, attendanceRecords: parsed.attendanceRecords && typeof parsed.attendanceRecords === 'object' ? parsed.attendanceRecords : {} };
+              saveState(); location.reload();
+            } else { showToast('النسخة الاحتياطية لا تحتوي على بنية بيانات صالحة', 'error'); }
           } catch (err) {
             showToast('الملف غير صالح', 'error');
           }
@@ -1765,18 +1792,26 @@
         reader.readAsText(e.target.files[0]);
       });
 
+      const attendanceDateInput = document.getElementById('attendanceDate');
+      if (attendanceDateInput) {
+        attendanceDateInput.value = todayKey();
+        attendanceDateInput.addEventListener('change', () => { renderAttendanceTable(); renderDashboard(); });
+      }
+
       document.getElementById('resetAllDataBtn').addEventListener('click', () => {
-        appState.classes = [];
-        appState.students = [];
-        appState.plans = [];
-        saveState();
+        if (!confirm('سيتم حذف جميع بيانات سَنَد المحلية من هذا المتصفح. هل نزّلت نسخة احتياطية وتريد المتابعة؟')) return;
+        try { localStorage.removeItem(SANAD_STORAGE_KEY); } catch (e) {}
         location.reload();
       });
 
       // Theme toggle
+      const savedTheme = localStorage.getItem('sanad_theme') || 'dark';
+      document.documentElement.classList.toggle('light', savedTheme === 'light');
+      document.documentElement.classList.toggle('dark', savedTheme !== 'light');
       document.getElementById('themeToggleBtn').addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-        drawWheel();
+        const isLight = document.documentElement.classList.toggle('light');
+        document.documentElement.classList.toggle('dark', !isLight);
+        localStorage.setItem('sanad_theme', isLight ? 'light' : 'dark'); drawWheel();
       });
 
       // Sound toggle
@@ -2082,5 +2117,10 @@
       }
     });
   </script>
+<script>
+  if ('serviceWorker' in navigator) window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('PWA registration failed:', err));
+  });
+</script>
 </body>
 </html>
