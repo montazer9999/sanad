@@ -65,6 +65,13 @@
       preview.innerHTML=qs.length?header+qs.map(function(q){return '<div class="exam-q"><div style="display:flex;justify-content:space-between;gap:12px;font-weight:900"><span>'+esc(q.qNum)+' — '+esc(q.title)+'</span><span style="white-space:nowrap">('+ (Number(q.marks)||0)+' درجة)</span></div><div style="font-size:13px;padding-right:14px;margin-top:5px">'+(q.branches||[]).map(function(b){return '<div style="margin:3px 0">'+esc(b)+'</div>';}).join('')+'</div>'+answerHtml(q)+'</div>';}).join('')+'<div style="border-top:1px solid #9ca3af;padding-top:8px;text-align:left;font-weight:900;font-size:12px">المجموع: '+total+' درجة</div>':'<div style="text-align:center;color:#64748b;padding:32px 8px;font-size:12px">أضف سؤالاً لتظهر معاينة ورقة الامتحان هنا.</div>';
     }
   }
+  function renderQuestionCards() {
+    var s=read(), container=el('examQuestionsListContainer'), badge=el('examQuestionsCountBadge');
+    if(badge) badge.textContent=s.examQuestions.length+' أسئلة';
+    if(!container) return;
+    container.innerHTML=s.examQuestions.length?s.examQuestions.map(function(q){return '<article class="p-4 rounded-xl bg-[#080c14] border border-slate-800 space-y-2"><div class="flex flex-wrap items-start justify-between gap-2"><div class="min-w-0"><div class="font-black text-amber-300 text-sm">'+esc(q.qNum)+' — '+esc(q.title)+'</div><div class="text-[10px] text-slate-500 mt-1">'+esc(typeName(q.type))+' · '+esc(answerName(q.answerStyle))+'</div></div><div class="flex items-center gap-1 shrink-0"><span class="text-xs font-bold text-slate-300 bg-slate-700 px-2 py-1 rounded">'+(Number(q.marks)||0)+' درجة</span><button class="exam-studio-btn text-cyan-200" data-question-save="'+q.id+'">حفظ بالبنك</button><button class="exam-studio-btn text-rose-300" data-question-delete="'+q.id+'">حذف</button></div></div><div class="text-xs text-slate-300 space-y-1 pr-3">'+(q.branches||[]).map(function(b){return '<div>'+esc(b)+'</div>';}).join('')+'</div></article>';}).join(''):'<div class="text-center text-xs text-slate-500 py-8">ابدأ بإضافة أول سؤال إلى الامتحان.</div>';
+    refresh();
+  }
   function saveDraft() {
     var name=prompt('اسم الامتحان الذي تريد حفظه:','امتحان '+(el('examSubjectInput')?el('examSubjectInput').value:'جديد'));
     if(!name) return;
@@ -80,10 +87,18 @@
     window.print();
   }
   function handleActions(e) {
-    var b=e.target.closest('[data-bank-add],[data-bank-delete],[data-draft-open]');
+    var b=e.target.closest('[data-bank-add],[data-bank-delete],[data-draft-open],[data-question-save],[data-question-delete]');
     if(!b) return;
     var s=read();
-    if(b.hasAttribute('data-bank-add')) {
+    if(b.hasAttribute('data-question-save')) {
+      var current=s.examQuestions.find(function(x){return String(x.id)===b.getAttribute('data-question-save');});
+      if(current){
+        if(s.questionBank.some(function(x){return x.title===current.title && x.type===current.type;})){if(window.showToast)showToast('السؤال موجود مسبقاً في البنك','info');return;}
+        s.questionBank.push(Object.assign({},current,{id:Date.now(),savedAt:new Date().toISOString()}));save();renderQuestionCards();if(window.showToast)showToast('تم حفظ السؤال في بنك الأسئلة','success');
+      }
+    } else if(b.hasAttribute('data-question-delete')) {
+      s.examQuestions=s.examQuestions.filter(function(x){return String(x.id)!==b.getAttribute('data-question-delete');});save();renderQuestionCards();
+    } else if(b.hasAttribute('data-bank-add')) {
       var q=s.questionBank.find(function(x){return String(x.id)===b.getAttribute('data-bank-add');});
       if(q){s.examQuestions.push(Object.assign({},q,{id:Date.now(),qNum:'س '+(s.examQuestions.length+1)}));save();if(window.renderExamQuestions)window.renderExamQuestions();refresh();}
     } else if(b.hasAttribute('data-bank-delete')) {
@@ -108,7 +123,8 @@
         if(q){q.type=type;q.answerStyle=answer;save();if(window.renderExamQuestions)window.renderExamQuestions();refresh();}
       },0);
     });
-    refresh();
+    if(window.renderExamQuestions) window.renderExamQuestions=renderQuestionCards;
+    renderQuestionCards();
   }
   window.addEventListener('load',function(){attach();});
   window.addEventListener('storage',function(){read();refresh();});
