@@ -16,7 +16,19 @@
   function answerName(t) { return ({lines:'أسطر منظمة',blank:'إطار فارغ',grid:'شبكة مربعات',none:'بدون مساحة'})[t] || 'أسطر منظمة'; }
   function injectStyles() {
     var css = '.exam-studio{background:radial-gradient(circle at 10% 0%,rgba(14,165,233,.22),transparent 32%),linear-gradient(135deg,#07142e,#102d66 52%,#07142e);border:1px solid rgba(96,165,250,.35);box-shadow:0 18px 55px rgba(2,8,23,.35)}.exam-studio-card{background:linear-gradient(145deg,rgba(15,35,75,.96),rgba(8,18,40,.96));border:1px solid rgba(96,165,250,.22);border-radius:18px}.exam-studio-btn{border:1px solid rgba(96,165,250,.35);background:rgba(30,64,175,.22);border-radius:10px;padding:7px 11px;font-weight:800;font-size:11px}.exam-studio-btn:hover{background:rgba(37,99,235,.4)}.exam-studio-preview{background:#fff;color:#111827;border-radius:14px;padding:18px;box-shadow:inset 0 1px 4px #cbd5e1}.exam-studio-preview .exam-q{break-inside:avoid;margin:0 0 16px}.exam-studio-field{width:100%;background:#071225;border:1px solid #29436d;border-radius:10px;padding:9px;color:#fff}';
+    css += 'body{background:#06132c!important}.luxury-card{background:linear-gradient(145deg,rgba(12,31,68,.97),rgba(7,18,42,.98))!important;border-color:rgba(96,165,250,.22)!important}.active-nav-item{background:linear-gradient(90deg,#0757c8,#0ea5e9)!important;box-shadow:0 4px 18px rgba(14,165,233,.3)!important}.tab-view{scroll-margin-top:80px}#mainAppSidebar{background:#07142e!important;border-color:rgba(96,165,250,.25)!important}';
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  }
+  function injectDashboardHero() {
+    var dash=el('viewDashboard');
+    if(!dash || el('sanadWelcomeHero')) return;
+    var hero=document.createElement('section');
+    hero.id='sanadWelcomeHero';
+    hero.className='exam-studio rounded-3xl p-5 sm:p-7 mb-5 relative overflow-hidden';
+    var teacher=read().teacher||{};
+    hero.innerHTML='<div class="flex flex-col md:flex-row md:items-center justify-between gap-4"><div class="flex items-center gap-4"><div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-3xl">🏫</div><div><div class="text-cyan-200 text-xs font-black">منصة سَنَد التعليمية</div><h2 class="text-xl sm:text-2xl font-black text-white mt-1">'+esc(teacher.school||'متوسطة الشهيد كريم مزعل الباوي')+'</h2><p class="text-blue-100/75 text-xs mt-1">إدارة المدرسة والطلاب والاختبارات من مكان واحد</p></div></div><button id="welcomeCreateExam" class="rounded-xl bg-amber-400 text-slate-950 font-black text-xs px-5 py-3 shadow-lg">＋ إنشاء امتحان جديد</button></div>';
+    dash.insertBefore(hero,dash.firstChild);
+    el('welcomeCreateExam').addEventListener('click',function(){if(window.switchTab)window.switchTab('exams');});
   }
   function addComposerFields() {
     var modal = el('modalAddQuestion');
@@ -109,7 +121,7 @@
     }
   }
   function attach() {
-    read(); injectStyles(); insertStudio(); addComposerFields();
+    read(); injectStyles(); injectDashboardHero(); insertStudio(); addComposerFields();
     if(el('studioSaveDraft'))el('studioSaveDraft').addEventListener('click',saveDraft);
     if(el('studioPrint'))el('studioPrint').addEventListener('click',printExam);
     document.addEventListener('click',handleActions);
@@ -124,6 +136,7 @@
       },0);
     });
     if(window.renderExamQuestions) window.renderExamQuestions=renderQuestionCards;
+    window.printOfficialExam=printExam;
     renderQuestionCards();
   }
   window.addEventListener('load',function(){attach();});
