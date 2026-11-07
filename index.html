@@ -1759,6 +1759,13 @@
     // --- Wiring Events on Page Load ---
     window.addEventListener('load', () => {
       initStore();
+      // Bridge for the modular exam studio; keep all new exam data in the same app state.
+      appState.questionBank = Array.isArray(appState.questionBank) ? appState.questionBank : [];
+      appState.savedExams = Array.isArray(appState.savedExams) ? appState.savedExams : [];
+      window.sanadSyncState = function(nextState) {
+        appState = { ...appState, ...nextState };
+        saveStore();
+      };
 
       // Set Attendance Date Default
       const attDateInput = document.getElementById('attendanceDateInput');
