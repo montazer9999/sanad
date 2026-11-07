@@ -1,0 +1,14 @@
+(function(){
+ 'use strict';
+ function addHero(){
+  var dashboard=document.getElementById('viewDashboard');
+  if(!dashboard||document.getElementById('sanadWelcomeHero'))return;
+  var hero=document.createElement('section');hero.id='sanadWelcomeHero';hero.setAttribute('aria-label','ترحيب منصة سند');
+  hero.innerHTML='<div class="relative z-10 flex items-center justify-between gap-4"><div class="min-w-0 flex-1"><span class="hero-chip">✦ منصة سَنَد التعليمية</span><h1 class="hero-title mt-3">مرحباً بكم في<br><span style="color:#ffda67">متوسطة الشهيد كريم مزعل الباوي</span></h1><p class="hero-subtitle mt-2">إدارة مدرسية أسهل، متابعة أدق، وتعليم نحو مستقبل أفضل.</p><div class="flex flex-wrap gap-2 mt-4"><button type="button" class="hero-action primary" id="sanadHeroAddStudent">＋ إضافة طالب</button><button type="button" class="hero-action secondary" id="sanadHeroExam">إنشاء امتحان ←</button></div></div><div class="hero-school-visual" aria-hidden="true"><svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="schoolWall" x2="0" y2="1"><stop stop-color="#fff4d9"/><stop offset="1" stop-color="#d8e7f4"/></linearGradient></defs><circle cx="255" cy="38" r="23" fill="#ffdf77"/><path d="M12 90 158 26l150 64v112H12Z" fill="url(#schoolWall)" stroke="#d2e7ff" stroke-width="3"/><path d="M12 90 158 26l150 64" fill="none" stroke="#fff" stroke-width="8"/><path d="M42 110h236v92H42z" fill="#f7fbff"/><path d="M52 120h216v11H52z" fill="#0c5cb8"/><g fill="#78b9ef" stroke="#fff" stroke-width="4"><path d="M60 143h34v35H60zM112 143h34v35h-34zM174 143h34v35h-34zM226 143h34v35h-34zM60 99h34v28H60zM112 99h34v28h-34zM174 99h34v28h-34zM226 99h34v28h-34z"/></g><path d="M139 202v-45q19-26 38 0v45" fill="#0a3e82"/><path d="M147 202v-39q11-13 22 0v39" fill="#f4c94e"/><path d="M158 26V5" stroke="#fff" stroke-width="3"/><path d="M160 7h43v23h-43z" fill="#fff"/><path d="M160 7h43v8h-43z" fill="#d92636"/><path d="M160 22h43v8h-43z" fill="#15965c"/><path d="M0 203h320" stroke="#d7edff" stroke-width="5"/></svg></div></div>';
+  dashboard.insertBefore(hero,dashboard.firstChild);
+  var add=document.getElementById('sanadHeroAddStudent');if(add)add.addEventListener('click',function(){var m=document.getElementById('modalAddStudent');if(m)m.classList.remove('hidden');});
+  var exam=document.getElementById('sanadHeroExam');if(exam)exam.addEventListener('click',function(){if(typeof window.switchTab==='function')window.switchTab('exams');});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addHero);else addHero();
+ window.addEventListener('load',addHero);
+})();
