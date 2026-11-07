@@ -9,7 +9,7 @@
     if (!Array.isArray(state.savedExams)) state.savedExams = [];
     return state;
   }
-  function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+  function save() { if(window.sanadSyncState) window.sanadSyncState(state); localStorage.setItem(KEY, JSON.stringify(state)); }
   function esc(v) { return String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function el(id) { return document.getElementById(id); }
   function typeName(t) { return ({essay:'مقالي / تعليل',multiple:'اختيار من متعدد',truefalse:'صح أو خطأ',fill:'أكمل الفراغ',definition:'تعريفات',problem:'مسألة حسابية'})[t] || 'سؤال'; }
